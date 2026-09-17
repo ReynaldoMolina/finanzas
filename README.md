@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Next.js template
 
 This is a Next.js template with shadcn/ui.
@@ -19,3 +20,6 @@ To use the components in your app, import them as follows:
 ```tsx
 import { Button } from "@/components/ui/button";
 ```
+=======
+# finanzas
+>>>>>>> 173a7096b729111040448ff64c43a6cd4ca295f4
