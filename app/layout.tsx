@@ -1,15 +1,18 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google"
-
+import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/toast"
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
+export const metadata = {
+  title: {
+    template: "%s",
+    default: "Finanzas",
+  },
+  description: "Aplicación de gestión de finanzas personales.",
+}
 
 export default function RootLayout({
   children,
@@ -20,10 +23,13 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
+      className={cn("antialiased", "font-sans", inter.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="system">
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
