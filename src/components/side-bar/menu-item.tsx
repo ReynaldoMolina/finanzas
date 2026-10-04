@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
+import { SidebarMenuButton, SidebarMenuItem, useSidebar } from "../ui/sidebar"
 import { MenuOption } from "./app-sidebar"
 
 interface MenuItem {
@@ -8,6 +8,7 @@ interface MenuItem {
 }
 
 export function MenuItem({ option }: MenuItem) {
+  const { setOpenMobile } = useSidebar()
   const pathname = usePathname()
   const optionPathname = option.url.split("?")[0]
   const isActive =
@@ -18,6 +19,7 @@ export function MenuItem({ option }: MenuItem) {
       <SidebarMenuButton
         render={<Link href={option.url} />}
         isActive={isActive}
+        onClick={() => setOpenMobile(false)}
       >
         <option.icon />
         <span className="text-sm">{option.name}</span>

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/src/lib/utils"
 import React from "react"
 
 interface PageWrapper {
@@ -8,7 +8,7 @@ interface PageWrapper {
 
 export function PageWrapper({ children, className }: PageWrapper) {
   return (
-    <div className={cn("flex flex-col gap-2 p-2 md:gap-3 md:p-3", className)}>
+    <div className={cn("flex flex-col gap-2 p-2 md:gap-3 md:p-4", className)}>
       {children}
     </div>
   )

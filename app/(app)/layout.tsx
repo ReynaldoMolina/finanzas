@@ -1,5 +1,5 @@
-import { AppSidebar } from "@/components/side-bar/app-sidebar"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/src/components/side-bar/app-sidebar"
+import { SidebarProvider } from "@/src/components/ui/sidebar"
 
 export default async function Layout({
   children,

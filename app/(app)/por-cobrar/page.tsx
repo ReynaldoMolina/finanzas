@@ -1,7 +1,7 @@
 import { AppHeader } from "@/src/components/header"
 import { PageWrapper } from "@/src/components/page-wrapper"
 
-const title = "Arqueo"
+const title = "Por cobrar"
 
 export const metadata = {
   title: title,

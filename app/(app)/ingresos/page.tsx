@@ -1,7 +1,7 @@
-import { AppHeader } from "@/components/header"
-import { PageWrapper } from "@/components/page-wrapper"
+import { AppHeader } from "@/src/components/header"
+import { PageWrapper } from "@/src/components/page-wrapper"
 
-const title = "Cuentas"
+const title = "Ingresos"
 
 export const metadata = {
   title: title,

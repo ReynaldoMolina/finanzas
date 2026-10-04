@@ -1,8 +1,8 @@
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils"
-import { Toaster } from "@/components/ui/toast"
+import { ThemeProvider } from "@/src/components/theme-provider"
+import { cn } from "@/src/lib/utils"
+import { Toaster } from "@/src/components/ui/toast"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 

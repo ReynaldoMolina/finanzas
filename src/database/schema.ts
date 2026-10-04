@@ -11,7 +11,7 @@ export const cuentaGrupo = pgTable("cuenta_grupo", {
   nombre: text().notNull(),
 })
 
-export const cuentaSubgrupo = pgTable("cuenta_subgrupo", {
+export const cuenta = pgTable("cuenta", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   id_grupo: integer().references(() => cuentaGrupo.id),
   nombre: text().notNull(),
