@@ -13,7 +13,7 @@ import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { FormSelect } from "@/components/form-elements/form-select"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { cuentaTipos } from "@/lib/tipos"
+import { cuentaTipo } from "@/lib/tipos"
 
 interface EditCategoriaFormProps {
   categoria: CategoriaById
@@ -56,7 +56,7 @@ export function EditCategoriaForm({ categoria }: EditCategoriaFormProps) {
             control={form.control}
             name="tipo"
             label="Tipo"
-            items={cuentaTipos}
+            items={cuentaTipo}
           />
           <FormInputText
             control={form.control}

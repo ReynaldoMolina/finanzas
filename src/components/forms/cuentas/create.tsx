@@ -13,10 +13,11 @@ import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { FormInputText } from "@/components/form-elements/form-input-text"
 import { Input } from "@/components/ui/input"
+import { CuentaTipo } from "@/lib/tipos"
 
 interface CreateCuentaFormProps {
   categorias: SelectItemType[]
-  tipo?: string
+  tipo?: CuentaTipo
   id_categoria?: string
 }
 

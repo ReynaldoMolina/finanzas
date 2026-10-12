@@ -1,10 +1,9 @@
-import { CuentaTipos, TransaccionTipo } from "./lib/tipos"
+import { CuentaTipo, TransaccionTipo } from "./lib/tipos"
 
 export interface ServerStatus {
   success: boolean | undefined
   title: string
   description?: string
-  returningId?: string | number
 }
 
 export type SortOrder = "asc" | "desc"
@@ -16,6 +15,7 @@ export interface SearchParamsProps {
   direction?: SortOrder
   id_categoria?: string
   tipo?: TransaccionTipo
+  cuenta_tipo?: CuentaTipo
   monto?: string
   origen?: string
   destino?: string
@@ -44,17 +44,19 @@ export type FormAction = "edit" | "create"
 export type Cuenta = {
   id: number
   nombre: string
-  total: number
+  saldo: number
 }
 
 export type CuentaCategoria = {
   id: number
   nombre: string
+  subtotal: number
   cuentas: Cuenta[]
 }
 
-export type CuentaTipo = {
+export type CuentaTipos = {
   nombre: string
+  subtotal: number
   categorias: CuentaCategoria[]
 }
 
@@ -63,17 +65,17 @@ export type CuentaTipoSelect = {
   nombre: string
 }
 
-export interface CategoriaById {
-  id: number
-  tipo: CuentaTipos
-  nombre: string
-}
-
 export interface CuentaById {
   id: number
   id_categoria: number
   nombre: string
-  tipo?: string
+  tipo?: CuentaTipo
+}
+
+export interface CategoriaById {
+  id: number
+  tipo: CuentaTipo
+  nombre: string
 }
 
 export interface TransaccionById {

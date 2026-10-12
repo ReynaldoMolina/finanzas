@@ -12,10 +12,10 @@ import { CategoriaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { CuentaTipos } from "@/lib/tipos"
+import { CuentaTipo } from "@/lib/tipos"
 
 interface CreateCategoriaFormProps {
-  tipo?: CuentaTipos
+  tipo?: CuentaTipo
 }
 
 export function CreateCategoriaForm({ tipo }: CreateCategoriaFormProps) {

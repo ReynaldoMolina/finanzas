@@ -1,7 +1,7 @@
 import {
-  CUENTA_TIPOS,
-  CuentaTipos,
-  TRANSACCION_TIPOS,
+  CUENTA_TIPO,
+  CuentaTipo,
+  TRANSACCION_TIPO,
   TransaccionTipo,
 } from "@/lib/tipos"
 import {
@@ -13,11 +13,11 @@ import {
   text,
 } from "drizzle-orm/pg-core"
 
-export const tipoCuentaEnum = pgEnum("tipo_categoria", CUENTA_TIPOS)
+export const tipoCuentaEnum = pgEnum("cuenta_tipo", CUENTA_TIPO)
 
 export const cuentaCategoria = pgTable("cuenta_categoria", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  tipo: tipoCuentaEnum("tipo").$type<CuentaTipos>().notNull(),
+  tipo: tipoCuentaEnum("tipo").$type<CuentaTipo>().notNull(),
   nombre: text().notNull(),
 })
 
@@ -29,7 +29,7 @@ export const cuenta = pgTable("cuenta", {
   nombre: text().notNull(),
 })
 
-export const tipoTransaccionEnum = pgEnum("tipo_transaccion", TRANSACCION_TIPOS)
+export const tipoTransaccionEnum = pgEnum("transaccion_tipo", TRANSACCION_TIPO)
 
 export const transaccion = pgTable("transaccion", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -81,11 +81,4 @@ export const arqueo = pgTable("arqueo", {
   nio_050: integer(),
   nio_025: integer(),
   nio_010: integer(),
-})
-
-export const transaccionesPeya = pgTable("transaccion_peya", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  fecha: date().notNull(),
-  monto: numeric().notNull(),
-  descripcion: text().notNull(),
 })

@@ -14,7 +14,7 @@ import { ResponsiveDrawer } from "../../responsive-drawer"
 import { SelectUpdateParam } from "@/components/form-elements/select-update-param"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { cuentaTipos } from "@/lib/tipos"
+import { cuentaTipo } from "@/lib/tipos"
 
 interface EditCuentaForm {
   cuenta: CuentaById
@@ -57,8 +57,8 @@ export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
           <FieldGroup>
             <SelectUpdateParam
               label="Tipo"
-              items={cuentaTipos}
-              paramKey="tipo"
+              items={cuentaTipo}
+              paramKey="cuenta_tipo"
               initialTipo={cuenta.tipo}
               onChangeExtra={() =>
                 form.setValue("id_categoria", "" as unknown as number)

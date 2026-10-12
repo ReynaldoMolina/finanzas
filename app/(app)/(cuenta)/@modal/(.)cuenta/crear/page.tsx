@@ -7,17 +7,17 @@ export const metadata = {
 }
 
 export default async function Page({ searchParams }: PageProps) {
+  const { id_categoria, cuenta_tipo } = await searchParams
+
   const { data } = await getCategoriasByTipo({
     searchParams: await searchParams,
   })
 
-  const { id_categoria, tipo } = await searchParams
-
   return (
     <CreateCuentaForm
-      categorias={data}
+      tipo={cuenta_tipo}
       id_categoria={id_categoria}
-      tipo={tipo}
+      categorias={data}
     />
   )
 }

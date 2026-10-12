@@ -17,8 +17,6 @@ export const metadata = {
 export default async function Page({ searchParams }: PageProps) {
   const { data } = await getCuentas(await searchParams)
 
-  console.log(data)
-
   return (
     <>
       <AppHeader title={title} />
@@ -30,14 +28,16 @@ export default async function Page({ searchParams }: PageProps) {
             <section key={tipo.nombre} className="relative space-y-3">
               {/* Nivel 1: Tipo */}
               <div className="sticky top-10 flex items-center gap-2 bg-background py-1.5">
-                <Link href={`/categoria/crear?tipo=${tipo.nombre}`}>
+                <Link href={`/categoria/crear?cuenta_tipo=${tipo.nombre}`}>
                   <Button variant="outline" size="icon-xs">
                     <PlusIcon />
                   </Button>
                 </Link>
                 <h2>{tipo.nombre}s</h2>
                 {/* <Tag size="16" /> */}
-                <span className="mr-3 ml-auto text-xs">0.00</span>
+                <span className="mr-3 ml-auto text-xs">
+                  {formatNumber(tipo.subtotal)}
+                </span>
               </div>
 
               {/* Nivel 2: Categoría */}
@@ -47,7 +47,7 @@ export default async function Page({ searchParams }: PageProps) {
                     <div key={categoria.id} className="space-y-3">
                       <div className="flex items-center gap-2">
                         <Link
-                          href={`/cuenta/crear?tipo=${tipo.nombre}&id_categoria=${categoria.id}`}
+                          href={`/cuenta/crear?cuenta_tipo=${tipo.nombre}&id_categoria=${categoria.id}`}
                         >
                           <Button variant="outline" size="icon-xs">
                             <PlusIcon />
@@ -59,7 +59,9 @@ export default async function Page({ searchParams }: PageProps) {
                         >
                           {categoria.nombre}
                         </Link>
-                        <span className="ml-auto text-xs">0.00</span>
+                        <span className="ml-auto text-xs">
+                          {formatNumber(categoria.subtotal)}
+                        </span>
                       </div>
                       {/* Nivel 3: Cuentas */}
                       {categoria.cuentas && categoria.cuentas.length > 0 ? (
@@ -77,7 +79,7 @@ export default async function Page({ searchParams }: PageProps) {
                                 {cuenta.nombre}
                               </Link>
                               <span className="ml-auto">
-                                {formatNumber(cuenta.total)}
+                                {formatNumber(cuenta.saldo)}
                               </span>
                             </li>
                           ))}

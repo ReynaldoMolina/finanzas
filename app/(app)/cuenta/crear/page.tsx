@@ -11,13 +11,13 @@ export default async function Page({ searchParams }: PageProps) {
     searchParams: await searchParams,
   })
 
-  const { id_categoria, tipo } = await searchParams
+  const { id_categoria, cuenta_tipo } = await searchParams
 
   return (
     <CreateCuentaForm
       categorias={data}
       id_categoria={id_categoria}
-      tipo={tipo}
+      tipo={cuenta_tipo}
     />
   )
 }

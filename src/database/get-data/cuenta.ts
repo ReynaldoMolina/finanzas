@@ -1,61 +1,59 @@
 import {
   CuentaById,
   CuentaCategoria,
-  CuentaTipo,
+  CuentaTipos,
   GroupedSelectResult,
   SearchParamsProps,
   SelectItemType,
 } from "@/types"
 import { db } from ".."
 import { cuentaCategoria, cuenta, transaccion } from "../schema"
-import { eq, and, asc, sql } from "drizzle-orm"
+import { eq, and, asc, sql, isNotNull } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
-import { CUENTA_TIPOS, TransaccionTipo } from "@/lib/tipos"
+import { CUENTA_TIPO, TransaccionTipo } from "@/lib/tipos"
 
 export async function getCuentas(
   searchParams: SearchParamsProps
-): Promise<{ data: CuentaTipo[] }> {
-  // 1. Definimos el CTE para unificar todos los movimientos (Debe y Haber) por cuenta
+): Promise<{ data: CuentaTipos[] }> {
   const movimientosCTE = db.$with("movimientos").as(
     db
       .select({
         cuentaId: transaccion.id_cuenta_origen,
-        debe: sql<number>`CASE WHEN ${transaccion.tipo} = 'Gasto' THEN ${transaccion.monto} ELSE 0 END`.as(
-          "debe"
-        ),
-        haber:
-          sql<number>`CASE WHEN ${transaccion.tipo} IN ('Ingreso', 'Transferencia') THEN ${transaccion.monto} ELSE 0 END`.as(
-            "haber"
-          ),
+        montoEfectivo: sql<number>`
+          CASE 
+            WHEN ${transaccion.tipo} IN ('Gasto', 'Ingreso') THEN ${transaccion.monto}
+            WHEN ${transaccion.tipo} = 'Transferencia' THEN -${transaccion.monto}
+            ELSE 0 
+          END
+        `.as("monto_efectivo"),
       })
       .from(transaccion)
+      .where(isNotNull(transaccion.id_cuenta_origen))
       .unionAll(
         db
           .select({
             cuentaId: transaccion.id_cuenta_destino,
-            debe: sql<number>`CASE WHEN ${transaccion.tipo} IN ('Ingreso', 'Transferencia') THEN ${transaccion.monto} ELSE 0 END`.as(
-              "debe"
-            ),
-            haber:
-              sql<number>`CASE WHEN ${transaccion.tipo} = 'Gasto' THEN ${transaccion.monto} ELSE 0 END`.as(
-                "haber"
-              ),
+            montoEfectivo: sql<number>`
+              CASE 
+                WHEN ${transaccion.tipo} IN ('Ingreso', 'Transferencia') THEN ${transaccion.monto}
+                WHEN ${transaccion.tipo} = 'Gasto' THEN -${transaccion.monto}
+                ELSE 0 
+              END
+            `.as("monto_efectivo"),
           })
           .from(transaccion)
+          .where(isNotNull(transaccion.id_cuenta_destino))
       )
   )
 
-  // 2. CTE para sumarizar los totales de Debe y Haber por cada cuenta
   const totalesCTE = db.$with("totales_cuenta").as(
     db
       .select({
         cuentaId: movimientosCTE.cuentaId,
-        totalDebe: sql<number>`COALESCE(SUM(${movimientosCTE.debe}), 0)`.as(
-          "total_debe"
-        ),
-        totalHaber: sql<number>`COALESCE(SUM(${movimientosCTE.haber}), 0)`.as(
-          "total_haber"
-        ),
+        totalCuenta:
+          sql<number>`COALESCE(SUM(${movimientosCTE.montoEfectivo}), 0)`.as(
+            "total_cuenta"
+          ),
       })
       .from(movimientosCTE)
       .groupBy(movimientosCTE.cuentaId)
@@ -67,8 +65,7 @@ export async function getCuentas(
     categoriaNombre: cuentaCategoria.nombre,
     cuentaId: cuenta.id,
     cuentaNombre: cuenta.nombre,
-    debe: sql<number>`COALESCE(${totalesCTE.totalDebe}, 0)`,
-    haber: sql<number>`COALESCE(${totalesCTE.totalHaber}, 0)`,
+    total: sql<number>`COALESCE(${totalesCTE.totalCuenta}, 0)`,
   }
 
   const filterBySearch = buildSearchFilter(searchParams, [
@@ -87,29 +84,37 @@ export async function getCuentas(
       .where(and(filterBySearch))
       .orderBy(asc(cuentaCategoria.nombre), asc(cuenta.nombre))
 
-    // 1. Inicializamos el Map con los 4 tipos obligatorios garantizados
     const dataMap = new Map<
       string,
       {
         nombre: string
-        categorias: Map<number, CuentaCategoria>
+        subtotal: number
+        categorias: Map<
+          number,
+          {
+            id: number
+            nombre: string
+            subtotal: number
+            cuentas: { id: number; nombre: string; saldo: number }[]
+          }
+        >
       }
     >()
 
-    for (const tipoNombre of CUENTA_TIPOS) {
+    for (const tipoNombre of CUENTA_TIPO) {
       dataMap.set(tipoNombre, {
         nombre: tipoNombre,
-        categorias: new Map<number, CuentaCategoria>(),
+        subtotal: 0,
+        categorias: new Map(),
       })
     }
 
-    // 2. Poblamos el mapa con las filas devueltas por la consulta
     for (const row of rows) {
-      // Por si acaso viene un tipo que no estuviera contemplado de forma estática
       if (!dataMap.has(row.tipo)) {
         dataMap.set(row.tipo, {
           nombre: row.tipo,
-          categorias: new Map<number, CuentaCategoria>(),
+          subtotal: 0,
+          categorias: new Map(),
         })
       }
 
@@ -120,6 +125,7 @@ export async function getCuentas(
           tipoEntry.categorias.set(row.categoriaId, {
             id: row.categoriaId,
             nombre: row.categoriaNombre,
+            subtotal: 0,
             cuentas: [],
           })
         }
@@ -127,19 +133,28 @@ export async function getCuentas(
         const categoriaEntry = tipoEntry.categorias.get(row.categoriaId)!
 
         if (row.cuentaId !== null) {
+          const cuentaTotal = Number(row.total)
+
           categoriaEntry.cuentas.push({
             id: row.cuentaId,
             nombre: row.cuentaNombre!,
-            total: Number(row.debe) > 0 ? Number(row.debe) : Number(row.haber),
+            saldo: cuentaTotal,
           })
+
+          // Acumulamos en la categoría y en el tipo
+          categoriaEntry.subtotal += cuentaTotal
+          tipoEntry.subtotal += cuentaTotal
         }
       }
     }
 
-    const data: CuentaTipo[] = Array.from(dataMap.values()).map((tipoItem) => ({
-      nombre: tipoItem.nombre,
-      categorias: Array.from(tipoItem.categorias.values()),
-    }))
+    const data: CuentaTipos[] = Array.from(dataMap.values()).map(
+      (tipoItem) => ({
+        nombre: tipoItem.nombre,
+        subtotal: tipoItem.subtotal,
+        categorias: Array.from(tipoItem.categorias.values()),
+      })
+    )
 
     return { data }
   } catch (error) {

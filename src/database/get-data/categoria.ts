@@ -2,17 +2,20 @@ import { CategoriaById, SearchParamsProps, SelectItemType } from "@/types"
 import { cuentaCategoria } from "../schema"
 import { db } from ".."
 import { eq, sql } from "drizzle-orm"
+import { CuentaTipo } from "@/lib/tipos"
 
 interface GetCategoriasByTipoParams {
   searchParams?: SearchParamsProps
-  initialTipo?: string
+  initialTipo?: CuentaTipo
 }
 
 export async function getCategoriasByTipo({
   searchParams,
   initialTipo,
 }: GetCategoriasByTipoParams = {}): Promise<{ data: SelectItemType[] }> {
-  const tipo = searchParams?.tipo ?? initialTipo ?? ""
+  const tipo = searchParams?.cuenta_tipo ?? initialTipo ?? ""
+
+  console.log(tipo)
 
   if (!tipo) {
     return Promise.resolve({ data: [] })
