@@ -7,8 +7,6 @@ import { toast } from "../components/ui/toast"
 
 interface FeedbackOptions {
   back?: boolean
-  // redirectTo?: string
-  // redirectToId?: string
   refresh?: boolean
   hardReload?: boolean
 }
@@ -28,14 +26,6 @@ export function useServerActionFeedback(
         title: state.title ?? "Éxito",
         description: state.description,
       })
-
-      // if (options.redirectToId) {
-      //   router.push(`${options.redirectToId}/${state.returningId}`)
-      // }
-
-      // if (options.redirectTo) {
-      //   router.push(options.redirectTo)
-      // }
 
       if (options.hardReload) {
         window.location.reload()

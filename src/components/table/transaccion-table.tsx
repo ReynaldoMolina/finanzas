@@ -1,0 +1,121 @@
+"use client"
+
+import { formatDate, formatNumber } from "@/lib/formatters"
+import { PencilIcon } from "lucide-react"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table"
+import { Button } from "../ui/button"
+import Link from "next/link"
+import { TransaccionTablaType } from "@/types"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card"
+import { getTransaccionStyle } from "./get-transaccion-style"
+import { cn } from "cn"
+import { Badge } from "../ui/badge"
+
+interface DataTableProps {
+  data: TransaccionTablaType[]
+}
+
+export function TransaccionTable({ data }: DataTableProps) {
+  const isMobile = useIsMobile()
+
+  if (isMobile)
+    return data.map((item) => {
+      const { textColor, sign } = getTransaccionStyle(item.tipo)
+
+      return (
+        <Link key={item.id} href={`/transaccion/${item.id}`}>
+          <Card className="py-3 dark:border-0">
+            <CardHeader>
+              <CardTitle className="truncate text-xs font-normal">
+                {item.categoria_origen} · {item.cuenta_origen}
+              </CardTitle>
+              <CardDescription className="flex flex-col gap-1">
+                <span className="text-xxs">{item.descripcion}</span>
+                <Badge variant="secondary" className="text-xxs">
+                  {item.categoria_destino} · {item.cuenta_destino}
+                </Badge>
+              </CardDescription>
+              <CardAction className="flex flex-col items-end">
+                <span className={cn("text-sm", textColor)}>
+                  {sign} {formatNumber(Number(item.monto))}
+                </span>
+                <span className="text-xxs text-muted-foreground">
+                  {formatDate(item.fecha)}
+                </span>
+              </CardAction>
+            </CardHeader>
+          </Card>
+        </Link>
+      )
+    })
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Editar</TableHead>
+          <TableHead>Fecha</TableHead>
+          <TableHead className="text-right">Monto</TableHead>
+          <TableHead>Categoría</TableHead>
+          <TableHead>Cuenta</TableHead>
+          <TableHead className="w-full">Descripción</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {data.map((item) => {
+          const { textColor, sign } = getTransaccionStyle(item.tipo)
+
+          return (
+            <TableRow key={item.id}>
+              <TableCell>
+                <Link href={`/transaccion/${item.id}`}>
+                  <Button variant="outline" size="icon-xs">
+                    <PencilIcon />
+                  </Button>
+                </Link>
+              </TableCell>
+              <TableCell className="text-muted-foreground">
+                {formatDate(item.fecha)}
+              </TableCell>
+              <TableCell className={cn("text-right", textColor)}>
+                {sign} {formatNumber(Number(item.monto))}
+              </TableCell>
+              <TableCell>
+                {item.categoria_origen} · {item.cuenta_origen}
+              </TableCell>
+              <TableCell className="text-muted-foreground">
+                <Badge variant="secondary" className="text-muted-foreground">
+                  {item.categoria_destino} · {item.cuenta_destino}
+                </Badge>
+              </TableCell>
+              <TableCell className="max-w-xs truncate text-muted-foreground">
+                {item.descripcion}
+              </TableCell>
+            </TableRow>
+          )
+        })}
+      </TableBody>
+      {/* <TableFooter>
+        <TableRow>
+          <TableCell colSpan={2}>Total</TableCell>
+          <TableCell className="text-right">{formatNumber(total)}</TableCell>
+          <TableCell colSpan={3}></TableCell>
+        </TableRow>
+      </TableFooter> */}
+    </Table>
+  )
+}

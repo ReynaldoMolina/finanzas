@@ -1,5 +1,6 @@
-import { AppHeader } from "@/src/components/header"
-import { PageWrapper } from "@/src/components/page-wrapper"
+import { AppHeader } from "@/components/header"
+import { PageWrapper } from "@/components/page-wrapper"
+import Link from "next/link"
 
 const title = "Configuración"
 
@@ -12,7 +13,7 @@ export default function Page() {
     <>
       <AppHeader title={title} />
       <PageWrapper>
-        <p>Hola</p>
+        <Link href="/configuracion/frecuentes">Frecuentes</Link>
       </PageWrapper>
     </>
   )

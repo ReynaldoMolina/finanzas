@@ -1,5 +1,5 @@
-import { AppHeader } from "@/src/components/header"
-import { PageWrapper } from "@/src/components/page-wrapper"
+import { AppHeader } from "@/components/header"
+import { PageWrapper } from "@/components/page-wrapper"
 
 const title = "Arqueo"
 

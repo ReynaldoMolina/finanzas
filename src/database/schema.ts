@@ -1,28 +1,61 @@
-import { date, integer, numeric, pgTable, text } from "drizzle-orm/pg-core"
+import {
+  CUENTA_TIPOS,
+  CuentaTipos,
+  TRANSACCION_TIPOS,
+  TransaccionTipo,
+} from "@/lib/tipos"
+import {
+  date,
+  integer,
+  numeric,
+  pgEnum,
+  pgTable,
+  text,
+} from "drizzle-orm/pg-core"
 
-export const cuentaTipo = pgTable("cuenta_tipo", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  nombre: text().notNull(),
-})
+export const tipoCuentaEnum = pgEnum("tipo_categoria", CUENTA_TIPOS)
 
-export const cuentaGrupo = pgTable("cuenta_grupo", {
+export const cuentaCategoria = pgTable("cuenta_categoria", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  id_tipo: integer().references(() => cuentaTipo.id),
+  tipo: tipoCuentaEnum("tipo").$type<CuentaTipos>().notNull(),
   nombre: text().notNull(),
 })
 
 export const cuenta = pgTable("cuenta", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  id_grupo: integer().references(() => cuentaGrupo.id),
+  id_categoria: integer()
+    .notNull()
+    .references(() => cuentaCategoria.id),
   nombre: text().notNull(),
 })
 
+export const tipoTransaccionEnum = pgEnum("tipo_transaccion", TRANSACCION_TIPOS)
+
 export const transaccion = pgTable("transaccion", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  tipo: tipoTransaccionEnum("tipo").$type<TransaccionTipo>().notNull(),
   fecha: date().notNull(),
-  monto: numeric().notNull(),
-  id_cuenta_origen: numeric().notNull(),
-  id_cuenta_destino: numeric().notNull(),
+  monto: numeric({ precision: 8, scale: 2 }).notNull(),
+  id_cuenta_origen: integer()
+    .notNull()
+    .references(() => cuenta.id),
+  id_cuenta_destino: integer()
+    .notNull()
+    .references(() => cuenta.id),
+  descripcion: text().notNull(),
+})
+
+export const transaccionFrecuente = pgTable("transaccion_frecuente", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  tipo: tipoTransaccionEnum("tipo").$type<TransaccionTipo>().notNull(),
+  nombre: text().notNull(),
+  monto: numeric({ precision: 8, scale: 2 }).notNull(),
+  id_cuenta_origen: integer()
+    .references(() => cuenta.id)
+    .notNull(),
+  id_cuenta_destino: integer()
+    .references(() => cuenta.id)
+    .notNull(),
   descripcion: text().notNull(),
 })
 

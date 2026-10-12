@@ -1,4 +1,4 @@
-import { ServerStatus } from "@/src/types"
+import { ServerStatus } from "@/types"
 
 export const stateDefault: ServerStatus = {
   success: undefined,
