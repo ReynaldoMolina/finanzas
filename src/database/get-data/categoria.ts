@@ -15,20 +15,16 @@ export async function getCategoriasByTipo({
 }: GetCategoriasByTipoParams = {}): Promise<{ data: SelectItemType[] }> {
   const tipo = searchParams?.cuenta_tipo ?? initialTipo ?? ""
 
-  console.log(tipo)
-
   if (!tipo) {
     return Promise.resolve({ data: [] })
   }
 
-  const selectFields = {
-    value: sql<string>`CAST(${cuentaCategoria.id} AS TEXT)`,
-    label: cuentaCategoria.nombre,
-  }
-
   try {
     const data = await db
-      .select(selectFields)
+      .select({
+        value: sql<string>`CAST(${cuentaCategoria.id} AS TEXT)`,
+        label: cuentaCategoria.nombre,
+      })
       .from(cuentaCategoria)
       .where(eq(cuentaCategoria.tipo, tipo))
 
@@ -50,5 +46,23 @@ export async function getCategoriaById(
     return { data }
   } catch (error) {
     throw new Error("No se pudo obtener la categoría.")
+  }
+}
+
+export async function getCategoriasActivo(): Promise<{
+  data: SelectItemType[]
+}> {
+  try {
+    const data = await db
+      .select({
+        value: sql<string>`CAST(${cuentaCategoria.id} AS TEXT)`,
+        label: cuentaCategoria.nombre,
+      })
+      .from(cuentaCategoria)
+      .where(eq(cuentaCategoria.tipo, "Activo"))
+
+    return { data }
+  } catch (error) {
+    throw new Error("No se pudieron obtener las categorías.")
   }
 }

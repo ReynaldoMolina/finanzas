@@ -18,17 +18,11 @@ import { FormSelect } from "@/components/form-elements/form-select"
 import { useUpdateParams } from "@/hooks/use-update-params"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from "@/components/ui/item"
-import { TrashIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { updateTransaccionFrecuente } from "@/database/actions/transaccion-frecuente"
+  deleteTransaccionFrecuente,
+  updateTransaccionFrecuente,
+} from "@/database/actions/transaccion-frecuente"
 import { getLabels } from "../transaccion/get-labels"
+import { DeleteFormItem } from "@/components/form-elements/form-delete"
 
 interface EditTransaccionFrecuenteForm {
   transaccion: TransaccionFrecuenteById
@@ -139,20 +133,10 @@ export function EditTransaccionFrecuenteForm({
             />
           </FieldGroup>
           <FieldGroup>
-            <Item variant="outline">
-              <ItemMedia variant="icon">
-                <TrashIcon />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Borrar</ItemTitle>
-                <ItemDescription>Borrar el registro</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <Button size="sm" variant="destructive">
-                  Borrar
-                </Button>
-              </ItemActions>
-            </Item>
+            <DeleteFormItem
+              id={transaccion.id}
+              handleDelete={deleteTransaccionFrecuente}
+            />
           </FieldGroup>
         </FieldSet>
       </form>

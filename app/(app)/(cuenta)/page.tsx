@@ -29,7 +29,7 @@ export default async function Page({ searchParams }: PageProps) {
               {/* Nivel 1: Tipo */}
               <div className="sticky top-10 flex items-center gap-2 bg-background py-1.5">
                 <Link href={`/categoria/crear?cuenta_tipo=${tipo.nombre}`}>
-                  <Button variant="outline" size="icon-xs">
+                  <Button size="icon-xs">
                     <PlusIcon />
                   </Button>
                 </Link>

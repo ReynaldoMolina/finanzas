@@ -24,12 +24,11 @@ export default async function Page({ searchParams }: PageProps) {
       <PageWrapper>
         <div className="flex gap-2">
           <SearchInput />
-
           <ButtonGroup>
             <Link href="/transaccion/crear">
               <Button>
                 <PlusIcon />
-                <span className="hidden sm:block">Nuevo</span>
+                <span className="hidden xs:block">Nuevo</span>
               </Button>
             </Link>
             <Link href="/transaccion/frecuentes">

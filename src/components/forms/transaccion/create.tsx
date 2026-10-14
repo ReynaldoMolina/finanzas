@@ -88,7 +88,8 @@ export function CreateTransaccionForm({
     >
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
-          <FieldGroup className="flex flex-row">
+          <FieldGroup>
+            <FormDatePicker control={form.control} name="fecha" label="Fecha" />
             <FormSelect
               control={form.control}
               name="tipo"
@@ -102,7 +103,6 @@ export function CreateTransaccionForm({
                 form.setValue("id_cuenta_origen", "" as unknown as number)
               }}
             />
-            <FormDatePicker control={form.control} name="fecha" label="Fecha" />
           </FieldGroup>
           <FieldGroup>
             <FormInputText

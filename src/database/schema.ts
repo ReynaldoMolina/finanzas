@@ -42,7 +42,7 @@ export const transaccion = pgTable("transaccion", {
   id_cuenta_destino: integer()
     .notNull()
     .references(() => cuenta.id),
-  descripcion: text().notNull(),
+  descripcion: text(),
 })
 
 export const transaccionFrecuente = pgTable("transaccion_frecuente", {
@@ -56,12 +56,14 @@ export const transaccionFrecuente = pgTable("transaccion_frecuente", {
   id_cuenta_destino: integer()
     .references(() => cuenta.id)
     .notNull(),
-  descripcion: text().notNull(),
+  descripcion: text(),
 })
 
 export const arqueo = pgTable("arqueo", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  nombre: text().notNull(),
+  id_cuenta: integer()
+    .notNull()
+    .references(() => cuenta.id),
   dolar_100: integer(),
   dolar_50: integer(),
   dolar_20: integer(),
@@ -81,4 +83,12 @@ export const arqueo = pgTable("arqueo", {
   nio_050: integer(),
   nio_025: integer(),
   nio_010: integer(),
+})
+
+export const configuracion = pgTable("configuracion", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  cambio_dolar: numeric({ precision: 8, scale: 2 }).notNull(),
+  id_categoria_efectivo: integer()
+    .references(() => cuenta.id)
+    .notNull(),
 })

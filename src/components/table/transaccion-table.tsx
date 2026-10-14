@@ -44,7 +44,9 @@ export function TransaccionTable({ data }: DataTableProps) {
                 {item.categoria_origen} · {item.cuenta_origen}
               </CardTitle>
               <CardDescription className="flex flex-col gap-1">
-                <span className="text-xxs">{item.descripcion}</span>
+                {item.descripcion && (
+                  <span className="text-xxs">{item.descripcion}</span>
+                )}
                 <Badge variant="secondary" className="text-xxs">
                   {item.categoria_destino} · {item.cuenta_destino}
                 </Badge>
@@ -103,7 +105,7 @@ export function TransaccionTable({ data }: DataTableProps) {
                 </Badge>
               </TableCell>
               <TableCell className="max-w-xs truncate text-muted-foreground">
-                {item.descripcion}
+                {item.descripcion ? item.descripcion : "-"}
               </TableCell>
             </TableRow>
           )

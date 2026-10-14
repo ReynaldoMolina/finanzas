@@ -2,6 +2,14 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ResponsiveDrawerMenu } from "@/components/responsive-drawer-menu"
 import { getTransaccionesFrecuentesPage } from "@/database/get-data/transaccion-frecuente"
+import {
+  Item,
+  ItemMedia,
+  ItemContent,
+  ItemTitle,
+  ItemActions,
+} from "@/components/ui/item"
+import { ListIcon, ChevronRightIcon, RepeatIcon, ZapIcon } from "lucide-react"
 
 const title = "Transacciones frecuentes"
 
@@ -32,6 +40,20 @@ export default async function Page() {
               </div>
             </div>
           ))}
+          <Item
+            variant="outline"
+            render={<Link href="/transaccion-frecuente" />}
+          >
+            <ItemMedia variant="icon">
+              <ZapIcon />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>Transacciones frecuentes</ItemTitle>
+            </ItemContent>
+            <ItemActions>
+              <ChevronRightIcon size="16" />
+            </ItemActions>
+          </Item>
         </div>
       </ResponsiveDrawerMenu>
     </>

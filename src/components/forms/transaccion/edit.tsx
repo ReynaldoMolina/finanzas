@@ -11,7 +11,10 @@ import { SelectItemType, TransaccionById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { TransaccionTipo, transaccionTipos } from "@/lib/tipos"
-import { updateTransaccion } from "@/database/actions/transaccion"
+import {
+  deleteTransaccion,
+  updateTransaccion,
+} from "@/database/actions/transaccion"
 import { FormDatePicker } from "@/components/form-elements/form-date-picker"
 import { FormInputText } from "@/components/form-elements/form-input-text"
 import { FormTextArea } from "@/components/form-elements/form-text-area"
@@ -20,16 +23,7 @@ import { useSearchParams } from "next/navigation"
 import { FormSelect } from "@/components/form-elements/form-select"
 import { useUpdateParams } from "@/hooks/use-update-params"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from "@/components/ui/item"
-import { TrashIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { DeleteFormItem } from "@/components/form-elements/form-delete"
 
 interface EditTransaccionForm {
   transaccion: TransaccionById
@@ -86,7 +80,8 @@ export function EditTransaccionForm({
     >
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
-          <FieldGroup className="flex flex-row">
+          <FieldGroup>
+            <FormDatePicker control={form.control} name="fecha" label="Fecha" />
             <FormSelect
               control={form.control}
               name="tipo"
@@ -100,7 +95,6 @@ export function EditTransaccionForm({
                 form.setValue("id_cuenta_origen", "" as unknown as number)
               }}
             />
-            <FormDatePicker control={form.control} name="fecha" label="Fecha" />
           </FieldGroup>
           <FieldGroup>
             <FormInputText
@@ -132,20 +126,10 @@ export function EditTransaccionForm({
             />
           </FieldGroup>
           <FieldGroup>
-            <Item variant="outline">
-              <ItemMedia variant="icon">
-                <TrashIcon />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>Borrar</ItemTitle>
-                <ItemDescription>Borrar el registro</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <Button size="sm" variant="destructive">
-                  Borrar
-                </Button>
-              </ItemActions>
-            </Item>
+            <DeleteFormItem
+              id={transaccion.id}
+              handleDelete={deleteTransaccion}
+            />
           </FieldGroup>
         </FieldSet>
       </form>

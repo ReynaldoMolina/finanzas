@@ -5,6 +5,8 @@ import {
   stateUpdateSuccess,
   stateUpdateError,
   stateCreateError,
+  stateDeleteSuccess,
+  stateDeleteError,
 } from "./state-message"
 import { ServerStatus, TransaccionFrecuenteById } from "@/types"
 import { db } from ".."
@@ -49,5 +51,27 @@ export async function updateTransaccionFrecuente(
   } catch (error) {
     console.error(error)
     return stateUpdateError
+  }
+}
+
+interface DeleteTransaccionFrecuente {
+  id: number | string
+}
+
+export async function deleteTransaccionFrecuente(
+  prevState: ServerStatus,
+  data: DeleteTransaccionFrecuente
+) {
+  try {
+    await db
+      .delete(transaccionFrecuente)
+      .where(eq(transaccionFrecuente.id, Number(data.id)))
+    return {
+      ...stateDeleteSuccess,
+      title: "Se eliminó la transacción frecuente.",
+    }
+  } catch (error) {
+    console.error(error)
+    return stateDeleteError
   }
 }

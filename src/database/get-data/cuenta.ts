@@ -1,64 +1,20 @@
 import {
   CuentaById,
-  CuentaCategoria,
   CuentaTipos,
   GroupedSelectResult,
   SearchParamsProps,
   SelectItemType,
 } from "@/types"
 import { db } from ".."
-import { cuentaCategoria, cuenta, transaccion } from "../schema"
-import { eq, and, asc, sql, isNotNull } from "drizzle-orm"
+import { cuentaCategoria, cuenta } from "../schema"
+import { eq, and, asc, sql } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
 import { CUENTA_TIPO, TransaccionTipo } from "@/lib/tipos"
+import { movimientosCTE, totalesCTE } from "./ctes"
 
 export async function getCuentas(
   searchParams: SearchParamsProps
 ): Promise<{ data: CuentaTipos[] }> {
-  const movimientosCTE = db.$with("movimientos").as(
-    db
-      .select({
-        cuentaId: transaccion.id_cuenta_origen,
-        montoEfectivo: sql<number>`
-          CASE 
-            WHEN ${transaccion.tipo} IN ('Gasto', 'Ingreso') THEN ${transaccion.monto}
-            WHEN ${transaccion.tipo} = 'Transferencia' THEN -${transaccion.monto}
-            ELSE 0 
-          END
-        `.as("monto_efectivo"),
-      })
-      .from(transaccion)
-      .where(isNotNull(transaccion.id_cuenta_origen))
-      .unionAll(
-        db
-          .select({
-            cuentaId: transaccion.id_cuenta_destino,
-            montoEfectivo: sql<number>`
-              CASE 
-                WHEN ${transaccion.tipo} IN ('Ingreso', 'Transferencia') THEN ${transaccion.monto}
-                WHEN ${transaccion.tipo} = 'Gasto' THEN -${transaccion.monto}
-                ELSE 0 
-              END
-            `.as("monto_efectivo"),
-          })
-          .from(transaccion)
-          .where(isNotNull(transaccion.id_cuenta_destino))
-      )
-  )
-
-  const totalesCTE = db.$with("totales_cuenta").as(
-    db
-      .select({
-        cuentaId: movimientosCTE.cuentaId,
-        totalCuenta:
-          sql<number>`COALESCE(SUM(${movimientosCTE.montoEfectivo}), 0)`.as(
-            "total_cuenta"
-          ),
-      })
-      .from(movimientosCTE)
-      .groupBy(movimientosCTE.cuentaId)
-  )
-
   const selectFields = {
     tipo: cuentaCategoria.tipo,
     categoriaId: cuentaCategoria.id,
@@ -69,7 +25,6 @@ export async function getCuentas(
   }
 
   const filterBySearch = buildSearchFilter(searchParams, [
-    cuentaCategoria.tipo,
     cuentaCategoria.nombre,
     cuenta.nombre,
   ])
@@ -186,7 +141,6 @@ export async function getTipoCuentaById(
   id: string
 ): Promise<{ initialTipo: string }> {
   try {
-    // 1. Obtener el 'tipo' de la categoría asociada a la cuenta recibida
     const [accountCategory] = await db
       .select({ tipo: cuentaCategoria.tipo })
       .from(cuenta)

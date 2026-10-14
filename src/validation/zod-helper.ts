@@ -1,13 +1,14 @@
 import { z } from "zod"
 
-export const zTextToNumber = (message = "No debe estar vacío.") =>
-  z.preprocess(
+export function zTextToNumber(message = "No debe estar vacío.") {
+  return z.preprocess(
     (value) =>
       value === "" || value === null || value === undefined
         ? undefined
         : Number(value),
-    z.number({ message })
+    z.number({ message }).positive()
   ) as unknown as z.ZodNumber
+}
 
 export function moneyAmountString() {
   return z
@@ -18,4 +19,22 @@ export function moneyAmountString() {
     .refine((val) => Number.parseFloat(val) > 0, {
       message: "Debe ser mayor que cero.",
     })
+}
+
+export function zNumberNullable() {
+  return z.string().transform((value, ctx) => {
+    if (value === "") return null
+
+    const number = Number(value)
+    if (!Number.isInteger(number) || number < 0) {
+      ctx.issues.push({
+        code: "custom",
+        message: "Enter a nonnegative integer",
+        input: value,
+      })
+      return z.NEVER
+    }
+
+    return number
+  })
 }

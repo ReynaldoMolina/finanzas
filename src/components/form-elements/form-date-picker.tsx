@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { useState } from "react"
 import { Button } from "../ui/button"
 import { dateIsoToDate, dateToIso, formatDate } from "@/lib/formatters"
-import { CalendarIcon } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { Calendar } from "../ui/calendar"
 import { es } from "date-fns/locale"
 
@@ -40,7 +40,7 @@ export function FormDatePicker<T extends FieldValues>({
                   className="w-full justify-between font-normal"
                 >
                   {field.value ? formatDate(field.value) : "Seleccionar fecha"}
-                  <CalendarIcon className="text-muted-foreground" />
+                  <ChevronDown className="text-muted-foreground" />
                 </Button>
               }
             />

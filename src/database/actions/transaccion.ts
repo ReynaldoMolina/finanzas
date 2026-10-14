@@ -5,6 +5,8 @@ import {
   stateUpdateSuccess,
   stateUpdateError,
   stateCreateError,
+  stateDeleteSuccess,
+  stateDeleteError,
 } from "./state-message"
 import { ServerStatus, TransaccionById } from "@/types"
 import { db } from ".."
@@ -49,5 +51,25 @@ export async function updateTransaccion(
   } catch (error) {
     console.error(error)
     return stateUpdateError
+  }
+}
+
+interface DeleteTransaccion {
+  id: number | string
+}
+
+export async function deleteTransaccion(
+  prevState: ServerStatus,
+  data: DeleteTransaccion
+) {
+  try {
+    await db.delete(transaccion).where(eq(transaccion.id, Number(data.id)))
+    return {
+      ...stateDeleteSuccess,
+      title: "Se eliminó la transacción.",
+    }
+  } catch (error) {
+    console.error(error)
+    return stateDeleteError
   }
 }

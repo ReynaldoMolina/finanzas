@@ -85,7 +85,7 @@ export interface TransaccionById {
   monto: string
   id_cuenta_origen: number
   id_cuenta_destino: number
-  descripcion: string
+  descripcion: string | null
 }
 
 export interface TransaccionTablaType {
@@ -97,7 +97,7 @@ export interface TransaccionTablaType {
   cuenta_origen: string
   categoria_destino: string
   cuenta_destino: string
-  descripcion: string
+  descripcion: string | null
 }
 
 export interface TransaccionFrecuenteTable {
@@ -128,7 +128,46 @@ interface TransaccionFrecuenteById {
   tipo: TransaccionTipo
   nombre: string
   monto: string
-  id_cuenta_origen: number | undefined
-  id_cuenta_destino: number | undefined
-  descripcion: string
+  id_cuenta_origen: number
+  id_cuenta_destino: number
+  descripcion: string | null
+}
+
+export interface ArqueoType {
+  dolar_100: number | null
+  dolar_50: number | null
+  dolar_20: number | null
+  dolar_10: number | null
+  dolar_5: number | null
+  dolar_2: number | null
+  dolar_1: number | null
+  nio_1000: number | null
+  nio_500: number | null
+  nio_200: number | null
+  nio_100: number | null
+  nio_50: number | null
+  nio_20: number | null
+  nio_10: number | null
+  nio_5: number | null
+  nio_1: number | null
+  nio_050: number | null
+  nio_025: number | null
+  nio_010: number | null
+}
+
+export interface ArqueoById {
+  id: number
+  id_cuenta: number
+}
+
+export interface ArqueoPage extends ArqueoType {
+  id: number
+  cuenta: string
+  saldo: number
+}
+
+export interface Configuracion {
+  id: number
+  cambio_dolar: string
+  id_categoria_efectivo: number
 }

@@ -8,6 +8,8 @@ interface PageWrapper {
 
 export function PageWrapper({ children, className }: PageWrapper) {
   return (
-    <div className={cn("flex flex-col gap-2 p-4", className)}>{children}</div>
+    <div className={cn("flex flex-col gap-2 p-2 md:p-3", className)}>
+      {children}
+    </div>
   )
 }
