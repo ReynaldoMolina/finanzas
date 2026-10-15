@@ -24,6 +24,7 @@ import {
 import { Badge } from "../ui/badge"
 import { getTransaccionStyle } from "./get-transaccion-style"
 import { cn } from "cn"
+import EmptyList from "./empty-list"
 
 interface DataTableProps {
   data: TransaccionFrecuenteTable[]
@@ -31,6 +32,10 @@ interface DataTableProps {
 
 export function TransaccionFrecuenteTabla({ data }: DataTableProps) {
   const isMobile = useIsMobile()
+
+  if (data.length <= 0) {
+    return <EmptyList />
+  }
 
   if (isMobile)
     return data.map((item) => {

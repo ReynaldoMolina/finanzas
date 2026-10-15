@@ -1,12 +1,16 @@
-import { ArqueoById, ArqueoPage } from "@/types"
+import { ArqueoById, ArqueoPage, SearchParamsProps } from "@/types"
 import { db } from ".."
-import { arqueo, cuenta, transaccion } from "../schema"
-import { asc, eq, getColumns, sql, isNotNull } from "drizzle-orm"
-import { movimientosCTE, totalesCTE } from "./ctes"
+import { arqueo, cuenta } from "../schema"
+import { asc, eq, getColumns, sql } from "drizzle-orm"
+import { getAccountTotals } from "./ctes"
+import { getSearchParams } from "./get-search-params"
 
-export async function getArqueos(): Promise<{
+export async function getArqueos(searchParams: SearchParamsProps): Promise<{
   data: ArqueoPage[]
 }> {
+  const { start, end } = getSearchParams(searchParams)
+  const { movimientosCTE, totalesCTE } = getAccountTotals({ start, end })
+
   try {
     const data = await db
       .with(movimientosCTE, totalesCTE)

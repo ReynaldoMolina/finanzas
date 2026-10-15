@@ -7,12 +7,19 @@ import { db } from ".."
 import { cuentaCategoria, cuenta, transaccion } from "../schema"
 import { aliasedTable, desc, eq, and, sql } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
+import { buildDateFilter } from "./build-date-filter"
+import { getSearchParams } from "./get-search-params"
 
 export async function getTransacciones(
   searchParams: SearchParamsProps
 ): Promise<{
   data: TransaccionTablaType[]
+  totalPages: number
 }> {
+  const filterByDate = buildDateFilter(searchParams, transaccion.fecha)
+
+  const { limit, offset } = getSearchParams(searchParams)
+
   try {
     const cuentaOrigen = aliasedTable(cuenta, "cuenta_origen")
     const cuentaDestino = aliasedTable(cuenta, "cuenta_destino")
@@ -59,10 +66,35 @@ export async function getTransacciones(
         categoriaDestino,
         eq(cuentaDestino.id_categoria, categoriaDestino.id)
       )
-      .where(and(filterBySearch))
+      .where(and(filterBySearch, filterByDate))
       .orderBy(desc(transaccion.fecha))
+      .limit(limit)
+      .offset(offset)
 
-    return { data }
+    const [{ count }] = await db
+      .select({ count: sql<number>`COUNT(*)` })
+      .from(transaccion)
+      .innerJoin(
+        cuentaOrigen,
+        eq(transaccion.id_cuenta_origen, cuentaOrigen.id)
+      )
+      .innerJoin(
+        cuentaDestino,
+        eq(transaccion.id_cuenta_destino, cuentaDestino.id)
+      )
+      .innerJoin(
+        categoriaOrigen,
+        eq(cuentaOrigen.id_categoria, categoriaOrigen.id)
+      )
+      .innerJoin(
+        categoriaDestino,
+        eq(cuentaDestino.id_categoria, categoriaDestino.id)
+      )
+      .where(and(filterBySearch, filterByDate))
+
+    const totalPages = Math.ceil(count / limit) || 1
+
+    return { data, totalPages }
   } catch (error) {
     console.error(error)
     throw new Error("No se pudieron obtener las transacciones.")

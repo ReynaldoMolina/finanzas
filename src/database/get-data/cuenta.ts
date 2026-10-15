@@ -10,11 +10,13 @@ import { cuentaCategoria, cuenta } from "../schema"
 import { eq, and, asc, sql } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
 import { CUENTA_TIPO, TransaccionTipo } from "@/lib/tipos"
-import { movimientosCTE, totalesCTE } from "./ctes"
+import { getAccountTotals } from "./ctes"
 
 export async function getCuentas(
   searchParams: SearchParamsProps
 ): Promise<{ data: CuentaTipos[] }> {
+  const { movimientosCTE, totalesCTE } = getAccountTotals(searchParams)
+
   const selectFields = {
     tipo: cuentaCategoria.tipo,
     categoriaId: cuentaCategoria.id,

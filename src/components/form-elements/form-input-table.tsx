@@ -1,15 +1,18 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form"
 import { Field, FieldError } from "../ui/field"
 import { Input } from "../ui/input"
-import { ContadorInput, ContadorOutput } from "@/validation/schema"
 
-interface FormInputText {
-  control: Control<ContadorInput, unknown, ContadorOutput>
-  name: Path<ContadorInput>
+interface FormInputText<T extends FieldValues> {
+  control: Control<T>
+  name: Path<T>
   className?: string
 }
 
-export function FormInputTable({ control, name, className }: FormInputText) {
+export function FormInputTable<T extends FieldValues>({
+  control,
+  name,
+  className,
+}: FormInputText<T>) {
   return (
     <Controller
       name={name}

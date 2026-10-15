@@ -30,11 +30,11 @@ export function SelectUpdateParam({
   onChangeExtra,
 }: SelectUpdateParamProps) {
   const searchParams = useSearchParams()
-  const { updateParam } = useUpdateParams()
+  const { updateParams } = useUpdateParams()
   const currentValue = searchParams.get(paramKey) ?? initialTipo ?? ""
 
   function handleSelectChange(newValue: string | null) {
-    updateParam({ newValue, paramKey: paramKey })
+    updateParams({ [paramKey]: newValue })
     onChangeExtra?.(newValue)
   }
 

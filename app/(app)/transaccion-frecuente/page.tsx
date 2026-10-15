@@ -1,6 +1,6 @@
 import { AppHeader } from "@/components/header"
 import { PageWrapper } from "@/components/page-wrapper"
-import { SearchInput } from "@/components/data-actions/search-input"
+import { SearchInput } from "@/components/search-input"
 import { PageProps } from "@/types"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: PageProps) {
           <Link href="/transaccion-frecuente/crear">
             <Button>
               <PlusIcon />
-              <span className="hidden sm:block">Nuevo</span>
+              <span className="hidden xs:block">Nuevo</span>
             </Button>
           </Link>
         </div>

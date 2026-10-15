@@ -70,7 +70,7 @@ export function EditTransaccionFrecuenteForm({
     (searchParams.get("tipo") as TransaccionTipo) ?? transaccion.tipo
   )
 
-  const { updateParam } = useUpdateParams()
+  const { updateParams } = useUpdateParams()
 
   return (
     <ResponsiveDrawer
@@ -89,9 +89,8 @@ export function EditTransaccionFrecuenteForm({
               label="Tipo"
               items={transaccionTipos}
               onChangeExtra={(value) => {
-                updateParam({
-                  paramKey: "tipo",
-                  newValue: value != null ? String(value) : null,
+                updateParams({
+                  tipo: value != null ? String(value) : null,
                 })
                 form.setValue("id_cuenta_origen", "" as unknown as number)
               }}

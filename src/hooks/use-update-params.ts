@@ -12,23 +12,30 @@ export function useUpdateParams() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const updateParam = ({ newValue, paramKey }: UpdateParamsProps) => {
-    // 1. Obtener el valor actual del parámetro
-    const currentValue = searchParams.get(paramKey)
-
-    // 2. Si el valor nuevo es idéntico al actual (o ambos son nulos/vacíos), no hacer nada
-    if ((newValue ?? null) === (currentValue ?? null)) {
-      return
-    }
-
-    // 3. Modificar los parámetros solo si hubo un cambio real
+  const updateParams = (
+    newParams: Record<string, string | null | undefined>
+  ) => {
     const params = new URLSearchParams(searchParams.toString())
+    let hasChanges = false
 
-    if (newValue) {
-      params.set(paramKey, newValue)
-    } else {
-      params.delete(paramKey)
-    }
+    Object.entries(newParams).forEach(([key, value]) => {
+      const currentValue = searchParams.get(key)
+      const normalizedValue = value ?? null
+      const normalizedCurrent = currentValue ?? null
+
+      // Only mark for update if the value actually changed
+      if (normalizedValue !== normalizedCurrent) {
+        hasChanges = true
+        if (value) {
+          params.set(key, value)
+        } else {
+          params.delete(key)
+        }
+      }
+    })
+
+    // Skip router push/replace if no parameters actually changed
+    if (!hasChanges) return
 
     const newQuery = params.toString()
     const targetUrl = newQuery ? `${pathname}?${newQuery}` : pathname
@@ -36,5 +43,5 @@ export function useUpdateParams() {
     router.replace(targetUrl, { scroll: false })
   }
 
-  return { updateParam }
+  return { updateParams }
 }

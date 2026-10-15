@@ -13,6 +13,10 @@ export interface SearchParamsProps {
   search?: string
   orderBy?: string
   direction?: SortOrder
+  page?: string
+  limit?: string
+  start?: string
+  end?: string
   id_categoria?: string
   tipo?: TransaccionTipo
   cuenta_tipo?: CuentaTipo
@@ -134,25 +138,25 @@ interface TransaccionFrecuenteById {
 }
 
 export interface ArqueoType {
-  dolar_100: number | null
-  dolar_50: number | null
-  dolar_20: number | null
-  dolar_10: number | null
-  dolar_5: number | null
-  dolar_2: number | null
-  dolar_1: number | null
-  nio_1000: number | null
-  nio_500: number | null
-  nio_200: number | null
-  nio_100: number | null
-  nio_50: number | null
-  nio_20: number | null
-  nio_10: number | null
-  nio_5: number | null
-  nio_1: number | null
-  nio_050: number | null
-  nio_025: number | null
-  nio_010: number | null
+  dolar_100: string | null
+  dolar_50: string | null
+  dolar_20: string | null
+  dolar_10: string | null
+  dolar_5: string | null
+  dolar_2: string | null
+  dolar_1: string | null
+  nio_1000: string | null
+  nio_500: string | null
+  nio_200: string | null
+  nio_100: string | null
+  nio_50: string | null
+  nio_20: string | null
+  nio_10: string | null
+  nio_5: string | null
+  nio_1: string | null
+  nio_050: string | null
+  nio_025: string | null
+  nio_010: string | null
 }
 
 export interface ArqueoById {

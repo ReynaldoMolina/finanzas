@@ -38,9 +38,9 @@ export function formatDateShort(isoDateStr: string) {
 }
 
 export function dateIsoToDate(date: string) {
-  return date ? new Date(`${date}T00:00:00`) : undefined
+  return new Date(`${date}T00:00:00`)
 }
 
-export function dateToIso(date?: Date) {
-  return date ? date.toISOString().split("T")[0] : undefined
+export function dateToIso(date: Date) {
+  return date.toISOString().split("T")[0]
 }

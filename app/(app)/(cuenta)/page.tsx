@@ -1,4 +1,4 @@
-import { SearchInput } from "@/components/data-actions/search-input"
+import { SearchInput } from "@/components/search-input"
 import { AppHeader } from "@/components/header"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Button } from "@/components/ui/button"
@@ -7,6 +7,7 @@ import { DotIcon, PlusIcon } from "lucide-react"
 import { PageProps } from "@/types"
 import Link from "next/link"
 import { formatNumber } from "@/lib/formatters"
+import { DateRangeButtons } from "@/components/date-range-buttons"
 
 const title = "Cuentas"
 
@@ -21,7 +22,10 @@ export default async function Page({ searchParams }: PageProps) {
     <>
       <AppHeader title={title} />
       <PageWrapper>
-        <SearchInput />
+        <div className="flex flex-wrap gap-2">
+          <SearchInput />
+          <DateRangeButtons searchParams={await searchParams} />
+        </div>
 
         <div className="mt-2 space-y-12">
           {data.map((tipo) => (
@@ -34,7 +38,6 @@ export default async function Page({ searchParams }: PageProps) {
                   </Button>
                 </Link>
                 <h2>{tipo.nombre}s</h2>
-                {/* <Tag size="16" /> */}
                 <span className="mr-3 ml-auto text-xs">
                   {formatNumber(tipo.subtotal)}
                 </span>

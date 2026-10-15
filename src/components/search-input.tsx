@@ -9,7 +9,7 @@ import {
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "../ui/input-group"
+} from "./ui/input-group"
 import { SearchIcon, XIcon } from "lucide-react"
 
 export function SearchInput() {

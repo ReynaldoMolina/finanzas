@@ -7,14 +7,11 @@ import { Spinner } from "@/components/ui/spinner"
 import { updateArqueoConteo } from "@/database/actions/arqueo"
 import { stateDefault } from "@/database/actions/state-message"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
+import { evaluarSuma } from "@/lib/evaluar-suma"
 import { formatNumber } from "@/lib/formatters"
 import { cn } from "@/lib/utils"
 import { ArqueoPage, ArqueoType } from "@/types"
-import {
-  ContadorInput,
-  ContadorOutput,
-  contadorSchema,
-} from "@/validation/schema"
+import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PencilIcon, SaveIcon } from "lucide-react"
 import Link from "next/link"
@@ -60,28 +57,28 @@ const DENOMINATIONS: DenominationConfig[] = [
 
 export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
   const formId = `edit-contador-${arqueo.cuenta}`
-  const form = useForm<ContadorInput, unknown, ContadorOutput>({
+  const form = useForm<z.infer<typeof contadorSchema>>({
     resolver: zodResolver(contadorSchema),
     defaultValues: {
-      dolar_100: arqueo.dolar_100?.toString() ?? "",
-      dolar_50: arqueo.dolar_50?.toString() ?? "",
-      dolar_20: arqueo.dolar_20?.toString() ?? "",
-      dolar_10: arqueo.dolar_10?.toString() ?? "",
-      dolar_5: arqueo.dolar_5?.toString() ?? "",
-      dolar_2: arqueo.dolar_2?.toString() ?? "",
-      dolar_1: arqueo.dolar_1?.toString() ?? "",
-      nio_1000: arqueo.nio_1000?.toString() ?? "",
-      nio_500: arqueo.nio_500?.toString() ?? "",
-      nio_200: arqueo.nio_200?.toString() ?? "",
-      nio_100: arqueo.nio_100?.toString() ?? "",
-      nio_50: arqueo.nio_50?.toString() ?? "",
-      nio_20: arqueo.nio_20?.toString() ?? "",
-      nio_10: arqueo.nio_10?.toString() ?? "",
-      nio_5: arqueo.nio_5?.toString() ?? "",
-      nio_1: arqueo.nio_1?.toString() ?? "",
-      nio_050: arqueo.nio_050?.toString() ?? "",
-      nio_025: arqueo.nio_025?.toString() ?? "",
-      nio_010: arqueo.nio_010?.toString() ?? "",
+      dolar_100: arqueo.dolar_100 ?? "",
+      dolar_50: arqueo.dolar_50 ?? "",
+      dolar_20: arqueo.dolar_20 ?? "",
+      dolar_10: arqueo.dolar_10 ?? "",
+      dolar_5: arqueo.dolar_5 ?? "",
+      dolar_2: arqueo.dolar_2 ?? "",
+      dolar_1: arqueo.dolar_1 ?? "",
+      nio_1000: arqueo.nio_1000 ?? "",
+      nio_500: arqueo.nio_500 ?? "",
+      nio_200: arqueo.nio_200 ?? "",
+      nio_100: arqueo.nio_100 ?? "",
+      nio_50: arqueo.nio_50 ?? "",
+      nio_20: arqueo.nio_20 ?? "",
+      nio_10: arqueo.nio_10 ?? "",
+      nio_5: arqueo.nio_5 ?? "",
+      nio_1: arqueo.nio_1 ?? "",
+      nio_050: arqueo.nio_050 ?? "",
+      nio_025: arqueo.nio_025 ?? "",
+      nio_010: arqueo.nio_010 ?? "",
     },
   })
 
@@ -90,7 +87,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
     stateDefault
   )
 
-  function onSubmit(values: ContadorOutput) {
+  function onSubmit(values: z.infer<typeof contadorSchema>) {
     startTransition(() => {
       formAction({ id: arqueo.id, values: values as ArqueoType })
     })
@@ -103,14 +100,11 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
   const { totalDolares, totalCordobas, granTotalNIO } = DENOMINATIONS.reduce(
     (acc, { name, value, isDollar }) => {
       const inputValue = formValues[name]
-      const numericValue = Number(inputValue)
-      const isValid =
-        inputValue !== "" &&
-        inputValue !== null &&
-        inputValue !== undefined &&
-        !isNaN(numericValue)
+      const numericValue = evaluarSuma(inputValue)
+      const hasValue =
+        inputValue !== "" && inputValue !== null && inputValue !== undefined
 
-      if (isValid) {
+      if (hasValue && numericValue !== 0) {
         if (isDollar) {
           acc.totalDolares += numericValue * value
           acc.granTotalNIO += numericValue * value * cambio_dolar
@@ -148,15 +142,14 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
         <tbody className="dark:bg-muted/50">
           {DENOMINATIONS.map(({ name, label, value, isDollar }) => {
             const inputValue = formValues[name]
-            const numericValue = Number(inputValue)
+            const numericValue = evaluarSuma(inputValue)
 
-            const isValidNumber =
+            const isValid =
               inputValue !== "" &&
               inputValue !== null &&
-              inputValue !== undefined &&
-              !isNaN(numericValue)
+              inputValue !== undefined
 
-            const subtotal = isValidNumber
+            const subtotal = isValid
               ? isDollar
                 ? numericValue * value * cambio_dolar
                 : numericValue * value

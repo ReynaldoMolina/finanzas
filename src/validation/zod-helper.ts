@@ -21,20 +21,29 @@ export function moneyAmountString() {
     })
 }
 
+// export function zNumberNullable() {
+//   return z.string().transform((value, ctx) => {
+//     if (value === "") return null
+
+//     const number = Number(value)
+//     if (!Number.isInteger(number) || number < 0) {
+//       ctx.issues.push({
+//         code: "custom",
+//         message: "Enter a nonnegative integer",
+//         input: value,
+//       })
+//       return z.NEVER
+//     }
+
+//     return number
+//   })
+// }
+
 export function zNumberNullable() {
-  return z.string().transform((value, ctx) => {
-    if (value === "") return null
-
-    const number = Number(value)
-    if (!Number.isInteger(number) || number < 0) {
-      ctx.issues.push({
-        code: "custom",
-        message: "Enter a nonnegative integer",
-        input: value,
-      })
-      return z.NEVER
-    }
-
-    return number
-  })
+  return z
+    .string()
+    .regex(/^\d+(\+\d+)*$/, "Formato inválido (ej: 100+20)")
+    .optional()
+    .nullable()
+    .or(z.literal(""))
 }
