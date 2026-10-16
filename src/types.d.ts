@@ -113,7 +113,7 @@ export interface TransaccionFrecuenteTable {
   cuenta_origen: string
   categoria_destino: string
   cuenta_destino: string
-  descripcion: string
+  descripcion: string | null
 }
 
 interface TransaccionFrecuentePage {
@@ -123,7 +123,7 @@ interface TransaccionFrecuentePage {
     monto: string
     id_cuenta_origen: number
     id_cuenta_destino: number
-    descripcion: string
+    descripcion: string | null
   }[]
 }
 

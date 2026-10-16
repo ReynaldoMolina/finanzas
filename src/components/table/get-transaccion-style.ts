@@ -1,5 +1,4 @@
 import { TransaccionTipo } from "@/lib/tipos"
-import { MoveUp, MoveDown } from "lucide-react"
 
 interface StyleConfig {
   textColor: string
@@ -11,15 +10,7 @@ const TRANSACCION_STYLES: Record<TransaccionTipo, StyleConfig> = {
     textColor: "text-green-600 dark:text-green-400",
     sign: "+",
   },
-  "Por pagar": {
-    textColor: "text-green-600 dark:text-green-400",
-    sign: "+",
-  },
   Gasto: {
-    textColor: "text-red-600 dark:text-red-400",
-    sign: "-",
-  },
-  "Por cobrar": {
     textColor: "text-red-600 dark:text-red-400",
     sign: "-",
   },

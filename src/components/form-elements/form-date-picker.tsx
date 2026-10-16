@@ -49,7 +49,7 @@ export function FormDatePicker<T extends FieldValues>({
                 mode="single"
                 selected={dateIsoToDate(field.value)}
                 onSelect={(date) => {
-                  field.onChange(dateToIso(date))
+                  field.onChange(date ? dateToIso(date) : undefined)
                   setOpen(false)
                 }}
                 captionLayout="dropdown"
