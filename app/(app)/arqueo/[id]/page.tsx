@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { EditArqueoForm } from "@/components/forms/arqueo/edit"
 import { getArqueoById } from "@/database/get-data/arqueo"
 import { getCuentasActivos } from "@/database/get-data/cuenta"

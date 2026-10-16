@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { CreateTransaccionForm } from "@/components/forms/transaccion/create"
 import { getCategoriasByTipoTransaccion } from "@/database/get-data/cuenta"
 import { TransaccionTipo } from "@/lib/tipos"

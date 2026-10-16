@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { EditTransaccionForm } from "@/components/forms/transaccion/edit"
 import { getCategoriasByTipoTransaccion } from "@/database/get-data/cuenta"
 import { getTransaccionById } from "@/database/get-data/transaccion"

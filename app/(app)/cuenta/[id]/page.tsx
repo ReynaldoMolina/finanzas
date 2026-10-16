@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { EditCuentaForm } from "@/components/forms/cuentas/edit"
 import { getCategoriasByTipo } from "@/database/get-data/categoria"
 import { getCuentaById } from "@/database/get-data/cuenta"
