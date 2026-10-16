@@ -17,9 +17,11 @@ import { ToggleGroupItem } from "./ui/toggle-group"
 import { Button } from "./ui/button"
 import { useUpdateParams } from "@/hooks/use-update-params"
 import { DatePicker } from "./date-picker"
+import { cn } from "@/lib/utils"
 
 interface DateSelector {
   searchParams: SearchParamsProps
+  active?: boolean
 }
 
 interface DateFilter {
@@ -27,7 +29,7 @@ interface DateFilter {
   end: string
 }
 
-export function DateSelector({ searchParams }: DateSelector) {
+export function DateSelector({ searchParams, active }: DateSelector) {
   const { firstDay, lastDay } = getCurrentMonth()
   const { updateParams } = useUpdateParams()
 
@@ -42,7 +44,10 @@ export function DateSelector({ searchParams }: DateSelector) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <ToggleGroupItem value="5" className="text-xs">
+          <ToggleGroupItem
+            value="5"
+            className={cn("text-xs", active && "bg-muted dark:bg-muted")}
+          >
             <Calendar className="size-3.5" />
             Rango
           </ToggleGroupItem>
@@ -109,6 +114,7 @@ function DatePickerForm({ name, label, filter, setFilter }: DatePickerForm) {
       label={label}
       initialDate={dateIsoToDate(filter[name])}
       handleChange={handleChange}
+      disabled={{ before: new Date(2026, 0, 1) }}
     />
   )
 }

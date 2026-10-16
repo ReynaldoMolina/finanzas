@@ -1,6 +1,12 @@
 "use client"
 
-import { lastMonth, thisMonth, thisWeek, today } from "@/lib/get-date"
+import {
+  getCurrentMonth,
+  lastMonth,
+  thisMonth,
+  thisWeek,
+  today,
+} from "@/lib/get-date"
 import { cn } from "@/lib/utils"
 import { SearchParamsProps } from "@/types"
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group"
@@ -14,11 +20,11 @@ export function DateRangeButtons({
   searchParams: SearchParamsProps
 }) {
   const { updateParams } = useUpdateParams()
-  const { start, end } = getSearchParams(searchParams)
+  const { start: startParam, end: endParam } = getSearchParams(searchParams)
+  const { firstDay, lastDay } = getCurrentMonth()
 
-  function applyRange(start: string, end: string) {
-    updateParams({ start, end })
-  }
+  let start = startParam ?? firstDay
+  let end = endParam ?? lastDay
 
   const rangeOptions = [
     { value: "1", label: "Mes", range: thisMonth() },
@@ -31,6 +37,11 @@ export function DateRangeButtons({
     return start === a && end === b
   }
 
+  // Check if none of the predefined options match the current dates
+  const isCustomActive = !rangeOptions.some(({ range }) =>
+    isActive(start, end, range.start, range.end)
+  )
+
   return (
     <ToggleGroup variant="outline" className="overflow-auto">
       {rangeOptions.map(({ value, label, range }) => {
@@ -41,14 +52,14 @@ export function DateRangeButtons({
             key={value}
             value={value}
             className={cn(active && "bg-muted dark:bg-muted")}
-            onClick={() => applyRange(range.start, range.end)}
+            onClick={() => updateParams({ start: range.start, end: range.end })}
           >
             {label}
           </ToggleGroupItem>
         )
       })}
 
-      <DateSelector searchParams={searchParams} />
+      <DateSelector searchParams={searchParams} active={isCustomActive} />
     </ToggleGroup>
   )
 }

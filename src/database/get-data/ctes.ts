@@ -1,11 +1,18 @@
-import { and, isNotNull, sql } from "drizzle-orm"
+import { and, eq, isNotNull, or, sql } from "drizzle-orm"
 import { db } from ".."
-import { transaccion } from "../schema"
+import { cuenta, cuentaCategoria, transaccion } from "../schema"
 import { SearchParamsProps } from "@/types"
 import { buildDateFilter } from "./build-date-filter"
 
 export function getAccountTotals(searchParams: SearchParamsProps) {
   const filterByDate = buildDateFilter(searchParams, transaccion.fecha)
+
+  // Condición unificada: Si la cuenta es 'Activo', ignora el filtro de fecha (es verdadero siempre).
+  // Si es 'Ingreso' o 'Gasto', se aplica rigurosamente el filtro de fechas.
+  const conditionalDateFilter = or(
+    eq(cuentaCategoria.tipo, "Activo"),
+    filterByDate
+  )
 
   const movimientosCTE = db.$with("movimientos").as(
     db
@@ -20,7 +27,11 @@ export function getAccountTotals(searchParams: SearchParamsProps) {
         `.as("monto_efectivo"),
       })
       .from(transaccion)
-      .where(and(isNotNull(transaccion.id_cuenta_origen), filterByDate))
+      .innerJoin(cuenta, eq(transaccion.id_cuenta_origen, cuenta.id))
+      .innerJoin(cuentaCategoria, eq(cuenta.id_categoria, cuentaCategoria.id))
+      .where(
+        and(isNotNull(transaccion.id_cuenta_origen), conditionalDateFilter)
+      )
       .unionAll(
         db
           .select({
@@ -34,7 +45,14 @@ export function getAccountTotals(searchParams: SearchParamsProps) {
             `.as("monto_efectivo"),
           })
           .from(transaccion)
-          .where(and(isNotNull(transaccion.id_cuenta_destino), filterByDate))
+          .innerJoin(cuenta, eq(transaccion.id_cuenta_destino, cuenta.id))
+          .innerJoin(
+            cuentaCategoria,
+            eq(cuenta.id_categoria, cuentaCategoria.id)
+          )
+          .where(
+            and(isNotNull(transaccion.id_cuenta_destino), conditionalDateFilter)
+          )
       )
   )
 

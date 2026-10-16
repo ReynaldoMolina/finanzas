@@ -19,8 +19,7 @@ interface FilterLimitProps {
 }
 
 export function FilterLimit({ searchParams, totalPages }: FilterLimitProps) {
-  const limitParam = searchParams.get("limit")
-
+  const limitParam = searchParams.get("limit") || "20"
   const { updateParams } = useUpdateParams()
   const options = [20, 50, 100]
 
@@ -35,7 +34,6 @@ export function FilterLimit({ searchParams, totalPages }: FilterLimitProps) {
     <Select
       value={limitParam}
       onValueChange={handleChange}
-      defaultValue="20"
       disabled={totalPages <= 1}
     >
       <SelectTrigger size="sm" className="text-xs">
@@ -46,7 +44,7 @@ export function FilterLimit({ searchParams, totalPages }: FilterLimitProps) {
           <SelectLabel>Por página</SelectLabel>
           {options.map((value) => (
             <SelectItem key={value} value={String(value)} className="text-xs">
-              {value === 1 ? "Todo" : value}
+              {value}
             </SelectItem>
           ))}
         </SelectGroup>

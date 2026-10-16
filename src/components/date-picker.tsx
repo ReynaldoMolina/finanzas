@@ -12,14 +12,21 @@ import {
 } from "@/components/ui/popover"
 import { es } from "date-fns/locale"
 import { dateToIso, formatDate } from "@/lib/formatters"
+import { Matcher } from "react-day-picker"
 
 interface DatePicker {
   label: string
   initialDate: Date | undefined
+  disabled?: Matcher | Matcher[]
   handleChange?: (date: Date | undefined) => void
 }
 
-export function DatePicker({ label, initialDate, handleChange }: DatePicker) {
+export function DatePicker({
+  label,
+  initialDate,
+  disabled,
+  handleChange,
+}: DatePicker) {
   const [open, setOpen] = React.useState(false)
   const [date, setDate] = React.useState<Date | undefined>(initialDate)
 
@@ -52,6 +59,7 @@ export function DatePicker({ label, initialDate, handleChange }: DatePicker) {
               if (handleChange) handleChange(date)
             }}
             locale={es}
+            disabled={disabled}
           />
         </PopoverContent>
       </Popover>
