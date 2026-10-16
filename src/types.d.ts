@@ -175,3 +175,8 @@ export interface Configuracion {
   cambio_dolar: string
   id_categoria_efectivo: number
 }
+
+export interface PageWrapperType {
+  id?: string
+  searchParams: SearchParamsProps
+}

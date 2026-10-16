@@ -67,7 +67,7 @@ export async function getTransacciones(
         eq(cuentaDestino.id_categoria, categoriaDestino.id)
       )
       .where(and(filterBySearch, filterByDate))
-      .orderBy(desc(transaccion.fecha))
+      .orderBy(desc(transaccion.fecha), desc(transaccion.id))
       .limit(limit)
       .offset(offset)
 

@@ -1,7 +1,5 @@
 import { AppHeader } from "@/components/header"
 import { PageWrapper } from "@/components/page-wrapper"
-import { getTransacciones } from "@/database/get-data/transaccion"
-import { TransaccionTable } from "@/components/table/transaccion-table"
 import { SearchInput } from "@/components/search-input"
 import { PageProps } from "@/types"
 import Link from "next/link"
@@ -9,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import { ChevronDown, PlusIcon } from "lucide-react"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { DateRangeButtons } from "@/components/date-range-buttons"
+import { Suspense } from "react"
+import { Loading } from "@/components/loading"
+import TransaccionWrapper from "@/components/wrappers/transaccion"
 
 const title = "Transacciones"
 
@@ -17,8 +18,6 @@ export const metadata = {
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const { data, totalPages } = await getTransacciones(await searchParams)
-
   return (
     <>
       <AppHeader title={title} />
@@ -43,7 +42,9 @@ export default async function Page({ searchParams }: PageProps) {
           <DateRangeButtons searchParams={await searchParams} />
         </div>
 
-        <TransaccionTable data={data} totalPages={totalPages} />
+        <Suspense fallback={<Loading />}>
+          <TransaccionWrapper searchParams={await searchParams} />
+        </Suspense>
       </PageWrapper>
     </>
   )

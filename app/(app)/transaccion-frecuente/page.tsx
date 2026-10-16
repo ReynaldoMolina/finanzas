@@ -5,8 +5,9 @@ import { PageProps } from "@/types"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
-import { getTransaccionesFrecuentes } from "@/database/get-data/transaccion-frecuente"
-import { TransaccionFrecuenteTabla } from "@/components/table/transaccion-frecuente-table"
+import { Loading } from "@/components/loading"
+import { Suspense } from "react"
+import TransaccionFrecuenteWrapper from "@/components/wrappers/transaccion-frecuente"
 
 const title = "Transacciones frecuentes"
 
@@ -15,8 +16,6 @@ export const metadata = {
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const { data } = await getTransaccionesFrecuentes(await searchParams)
-
   return (
     <>
       <AppHeader title={title} />
@@ -31,7 +30,9 @@ export default async function Page({ searchParams }: PageProps) {
             </Button>
           </Link>
         </div>
-        <TransaccionFrecuenteTabla data={data} />
+        <Suspense fallback={<Loading />}>
+          <TransaccionFrecuenteWrapper searchParams={await searchParams} />
+        </Suspense>
       </PageWrapper>
     </>
   )
