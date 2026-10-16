@@ -10,7 +10,7 @@ import {
 } from "./state-message"
 import { ServerStatus, TransaccionById } from "@/types"
 import { db } from ".."
-import { transaccion } from "../schema"
+import { transaccion } from "../schema/schema"
 
 interface CreateTransaccion {
   values: TransaccionById

@@ -1,6 +1,6 @@
 import { ArqueoById, ArqueoPage, SearchParamsProps } from "@/types"
 import { db } from ".."
-import { arqueo, cuenta } from "../schema"
+import { arqueo, cuenta } from "../schema/schema"
 import { asc, eq, getColumns, sql } from "drizzle-orm"
 import { getAccountTotals } from "./ctes"
 import { getSearchParams } from "./get-search-params"

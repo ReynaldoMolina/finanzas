@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm"
 import { stateUpdateSuccess, stateUpdateError } from "./state-message"
 import { Configuracion, ServerStatus } from "@/types"
 import { db } from ".."
-import { configuracion } from "../schema"
+import { configuracion } from "../schema/schema"
 
 interface UpdateConfiguracion {
   values: Configuracion

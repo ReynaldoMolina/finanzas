@@ -4,7 +4,7 @@ import {
   TransaccionTablaType,
 } from "@/types"
 import { db } from ".."
-import { cuentaCategoria, cuenta, transaccion } from "../schema"
+import { cuentaCategoria, cuenta, transaccion } from "../schema/schema"
 import { aliasedTable, desc, eq, and, sql } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
 import { buildDateFilter } from "./build-date-filter"

@@ -8,7 +8,7 @@ import {
 } from "./state-message"
 import { CategoriaById, ServerStatus } from "@/types"
 import { db } from ".."
-import { cuentaCategoria } from "../schema"
+import { cuentaCategoria } from "../schema/schema"
 
 interface CreateCategoria {
   values: CategoriaById

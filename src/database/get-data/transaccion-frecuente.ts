@@ -5,7 +5,7 @@ import {
   TransaccionFrecuenteTable,
 } from "@/types"
 import { db } from ".."
-import { cuentaCategoria, cuenta, transaccionFrecuente } from "../schema"
+import { cuentaCategoria, cuenta, transaccionFrecuente } from "../schema/schema"
 import { aliasedTable, eq, sql, and, asc } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
 import { TransaccionTipo } from "@/lib/tipos"

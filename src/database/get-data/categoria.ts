@@ -1,5 +1,5 @@
 import { CategoriaById, SearchParamsProps, SelectItemType } from "@/types"
-import { cuentaCategoria } from "../schema"
+import { cuentaCategoria } from "../schema/schema"
 import { db } from ".."
 import { eq, sql } from "drizzle-orm"
 import { CuentaTipo } from "@/lib/tipos"

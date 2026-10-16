@@ -8,7 +8,7 @@ import {
 } from "./state-message"
 import { CuentaById, ServerStatus } from "@/types"
 import { db } from ".."
-import { cuenta } from "../schema"
+import { cuenta } from "../schema/schema"
 
 interface CreateCuenta {
   values: CuentaById

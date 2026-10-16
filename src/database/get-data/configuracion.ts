@@ -1,6 +1,6 @@
 import { Configuracion } from "@/types"
 import { db } from ".."
-import { configuracion } from "../schema"
+import { configuracion } from "../schema/schema"
 import { eq } from "drizzle-orm"
 
 export async function getConfiguracion(): Promise<{

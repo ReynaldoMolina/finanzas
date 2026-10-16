@@ -6,7 +6,7 @@ import {
   SelectItemType,
 } from "@/types"
 import { db } from ".."
-import { cuentaCategoria, cuenta } from "../schema"
+import { cuentaCategoria, cuenta } from "../schema/schema"
 import { eq, and, asc, sql } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
 import { CUENTA_TIPO, TransaccionTipo } from "@/lib/tipos"

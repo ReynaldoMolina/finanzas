@@ -10,7 +10,7 @@ import {
 } from "./state-message"
 import { ArqueoById, ArqueoType, ServerStatus } from "@/types"
 import { db } from ".."
-import { arqueo } from "../schema"
+import { arqueo } from "../schema/schema"
 
 interface CreateArqueo {
   values: ArqueoById

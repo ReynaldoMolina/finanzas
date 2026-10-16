@@ -1,6 +1,6 @@
 import { and, eq, isNotNull, or, sql } from "drizzle-orm"
 import { db } from ".."
-import { cuenta, cuentaCategoria, transaccion } from "../schema"
+import { cuenta, cuentaCategoria, transaccion } from "../schema/schema"
 import { SearchParamsProps } from "@/types"
 import { buildDateFilter } from "./build-date-filter"
 

@@ -10,7 +10,7 @@ import {
 } from "./state-message"
 import { ServerStatus, TransaccionFrecuenteById } from "@/types"
 import { db } from ".."
-import { transaccionFrecuente } from "../schema"
+import { transaccionFrecuente } from "../schema/schema"
 
 interface CreateTransaccionFrecuente {
   values: TransaccionFrecuenteById
