@@ -125,17 +125,23 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
       className="flex flex-col gap-2 xs:max-w-70"
     >
       <div className="flex items-center border p-1">
-        <span className="block text-xs">{arqueo.cuenta}</span>
-        <ButtonGroup className="ml-auto">
-          <Link href={`/arqueo/${arqueo.id}`}>
-            <Button variant="outline" size="icon-sm">
-              <PencilIcon />
-            </Button>
-          </Link>
-          <Button variant="outline" size="icon-sm" type="submit" form={formId}>
-            {isPending ? <Spinner /> : <SaveIcon />}
-          </Button>
-        </ButtonGroup>
+        <Link
+          href={`/arqueo/${arqueo.id}`}
+          className="inline-flex items-center gap-2 text-xs"
+        >
+          {arqueo.cuenta}
+          <PencilIcon size={12} />
+        </Link>
+        <Button
+          variant="outline"
+          size="sm"
+          type="submit"
+          form={formId}
+          className="ml-auto"
+        >
+          {isPending ? <Spinner /> : <SaveIcon />}
+          Guardar
+        </Button>
       </div>
 
       <table className="text-xs">
