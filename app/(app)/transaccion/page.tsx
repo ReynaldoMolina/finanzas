@@ -28,7 +28,7 @@ export default async function Page({ searchParams }: PageProps) {
             <Link href="/transaccion/plantilla">
               <Button>
                 <PlusIcon />
-                <span className="hidden xs:block">Nuevo</span>
+                Nuevo
               </Button>
             </Link>
           </div>

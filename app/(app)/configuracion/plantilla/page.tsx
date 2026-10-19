@@ -26,7 +26,7 @@ export default async function Page({ searchParams }: PageProps) {
           <Link href="/configuracion/plantilla/crear">
             <Button>
               <PlusIcon />
-              <span className="hidden xs:block">Nuevo</span>
+              Nuevo
             </Button>
           </Link>
         </div>

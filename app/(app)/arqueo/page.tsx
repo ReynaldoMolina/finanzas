@@ -25,7 +25,7 @@ export default async function Page({ searchParams }: PageProps) {
           <Link href="/arqueo/crear">
             <Button>
               <PlusIcon />
-              <span className="hidden xs:block">Nuevo</span>
+              Nuevo
             </Button>
           </Link>
         </div>
