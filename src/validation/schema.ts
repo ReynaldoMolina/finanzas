@@ -21,7 +21,7 @@ export const transaccionSchema = z.object({
   descripcion: z.string().trim().nullable(),
 })
 
-export const transaccionFrecuenteSchema = z.object({
+export const plantillaSchema = z.object({
   tipo: z.enum(TRANSACCION_TIPO, { message: "Selecciona un tipo." }),
   nombre: z.string().trim().min(1, "Requerido"),
   monto: moneyAmountString(),

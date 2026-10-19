@@ -11,12 +11,15 @@ export function MenuItem({ item }: MenuItemProps) {
   const { setOpenMobile } = useSidebar()
   const pathname = usePathname()
 
+  const isActive =
+    item.url === "/" ? pathname === "/" : pathname.startsWith(item.url)
+
   return (
     <SidebarMenuItem key={item.name}>
       <SidebarMenuButton
         render={<Link href={item.url} />}
         onClick={() => setOpenMobile(false)}
-        isActive={item.url === pathname}
+        isActive={isActive}
         size="lg"
       >
         <item.icon />

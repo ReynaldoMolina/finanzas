@@ -1,10 +1,10 @@
-import { CreateTransaccionFrecuenteForm } from "@/components/forms/transaccion-frecuente/create"
+import { CreatePlantillaForm } from "@/components/forms/plantilla/create"
 import { getCategoriasByTipoTransaccion } from "@/database/get-data/cuenta"
 import { TransaccionTipo } from "@/lib/tipos"
 import { PageProps } from "@/types"
 
 export const metadata = {
-  title: "Crear transacción frecuente",
+  title: "Crear plantilla",
 }
 
 export default async function Page({ searchParams }: PageProps) {
@@ -16,7 +16,7 @@ export default async function Page({ searchParams }: PageProps) {
     })
 
   return (
-    <CreateTransaccionFrecuenteForm
+    <CreatePlantillaForm
       tipo={tipo ?? ("" as unknown as TransaccionTipo)}
       cuentasOrigen={cuentasOrigen}
       cuentasDestino={cuentasDestino}

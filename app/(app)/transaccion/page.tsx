@@ -25,19 +25,12 @@ export default async function Page({ searchParams }: PageProps) {
         <div className="flex flex-wrap gap-2">
           <div className="flex w-full gap-2 sm:w-fit">
             <SearchInput />
-            <ButtonGroup>
-              <Link href="/transaccion/crear">
-                <Button>
-                  <PlusIcon />
-                  <span className="hidden xs:block">Nuevo</span>
-                </Button>
-              </Link>
-              <Link href="/transaccion/frecuentes">
-                <Button size="icon">
-                  <ChevronDown />
-                </Button>
-              </Link>
-            </ButtonGroup>
+            <Link href="/transaccion/plantilla">
+              <Button>
+                <PlusIcon />
+                <span className="hidden xs:block">Nuevo</span>
+              </Button>
+            </Link>
           </div>
           <DateRangeButtons searchParams={await searchParams} />
         </div>

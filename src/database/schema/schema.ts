@@ -45,7 +45,7 @@ export const transaccion = pgTable("transaccion", {
   descripcion: text(),
 })
 
-export const transaccionFrecuente = pgTable("transaccion_frecuente", {
+export const plantilla = pgTable("plantilla", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   tipo: tipoTransaccionEnum("tipo").$type<TransaccionTipo>().notNull(),
   nombre: text().notNull(),

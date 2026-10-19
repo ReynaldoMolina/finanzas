@@ -104,7 +104,7 @@ export interface TransaccionTablaType {
   descripcion: string | null
 }
 
-export interface TransaccionFrecuenteTable {
+export interface PlantillaTable {
   id: number
   tipo: TransaccionTipo
   nombre: string
@@ -116,7 +116,7 @@ export interface TransaccionFrecuenteTable {
   descripcion: string | null
 }
 
-interface TransaccionFrecuentePage {
+interface PlantillaPage {
   tipo: TransaccionTipo
   items: {
     nombre: string
@@ -127,7 +127,7 @@ interface TransaccionFrecuentePage {
   }[]
 }
 
-interface TransaccionFrecuenteById {
+interface PlantillaById {
   id: number
   tipo: TransaccionTipo
   nombre: string

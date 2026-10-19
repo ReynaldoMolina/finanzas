@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDate, formatNumber } from "@/lib/formatters"
+import { formatNumber } from "@/lib/formatters"
 import { PencilIcon } from "lucide-react"
 import {
   Table,
@@ -12,7 +12,7 @@ import {
 } from "../ui/table"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { TransaccionFrecuenteTable } from "@/types"
+import { PlantillaTable } from "@/types"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   Card,
@@ -27,10 +27,10 @@ import { cn } from "cn"
 import EmptyList from "./empty-list"
 
 interface DataTableProps {
-  data: TransaccionFrecuenteTable[]
+  data: PlantillaTable[]
 }
 
-export function TransaccionFrecuenteTabla({ data }: DataTableProps) {
+export function PlantillaTabla({ data }: DataTableProps) {
   const isMobile = useIsMobile()
 
   if (data.length <= 0) {
@@ -42,7 +42,7 @@ export function TransaccionFrecuenteTabla({ data }: DataTableProps) {
       const { textColor, sign } = getTransaccionStyle(item.tipo)
 
       return (
-        <Link key={item.id} href={`/transaccion-frecuente/${item.id}`}>
+        <Link key={item.id} href={`/configuracion/plantilla/${item.id}`}>
           <Card className="py-3 dark:border-0">
             <CardHeader>
               <CardTitle className="truncate text-xs font-normal">
@@ -89,7 +89,7 @@ export function TransaccionFrecuenteTabla({ data }: DataTableProps) {
           return (
             <TableRow key={item.id}>
               <TableCell>
-                <Link href={`/transaccion-frecuente/${item.id}`}>
+                <Link href={`/configuracion/plantilla/${item.id}`}>
                   <Button variant="outline" size="icon-xs">
                     <PencilIcon />
                   </Button>

@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { Loading } from "@/components/loading"
 import { Suspense } from "react"
-import TransaccionFrecuenteWrapper from "@/components/wrappers/transaccion-frecuente"
+import PlantillaWrapper from "@/components/wrappers/transaccion-frecuente"
 
-const title = "Transacciones frecuentes"
+const title = "Plantillas"
 
 export const metadata = {
   title: title,
@@ -23,7 +23,7 @@ export default async function Page({ searchParams }: PageProps) {
         <div className="flex gap-2">
           <SearchInput />
 
-          <Link href="/transaccion-frecuente/crear">
+          <Link href="/configuracion/plantilla/crear">
             <Button>
               <PlusIcon />
               <span className="hidden xs:block">Nuevo</span>
@@ -31,7 +31,7 @@ export default async function Page({ searchParams }: PageProps) {
           </Link>
         </div>
         <Suspense fallback={<Loading />}>
-          <TransaccionFrecuenteWrapper searchParams={await searchParams} />
+          <PlantillaWrapper searchParams={await searchParams} />
         </Suspense>
       </PageWrapper>
     </>

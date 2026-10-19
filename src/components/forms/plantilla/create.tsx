@@ -3,11 +3,11 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
-import { transaccionFrecuenteSchema } from "@/validation/schema"
+import { plantillaSchema } from "@/validation/schema"
 import { FieldGroup, FieldSet } from "../../ui/field"
 import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
-import { SelectItemType, TransaccionFrecuenteById } from "@/types"
+import { SelectItemType, PlantillaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { TransaccionTipo, transaccionTipos } from "@/lib/tipos"
@@ -17,10 +17,10 @@ import { useSearchParams } from "next/navigation"
 import { FormSelect } from "@/components/form-elements/form-select"
 import { useUpdateParams } from "@/hooks/use-update-params"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
-import { createTransaccionFrecuente } from "@/database/actions/transaccion-frecuente"
+import { createPlantilla } from "@/database/actions/plantilla"
 import { getLabels } from "../transaccion/get-labels"
 
-interface CreateTransaccionFrecuenteForm {
+interface CreatePlantillaForm {
   tipo: TransaccionTipo
   monto?: string
   origen?: string
@@ -30,7 +30,7 @@ interface CreateTransaccionFrecuenteForm {
   cuentasDestino: SelectItemType[]
 }
 
-export function CreateTransaccionFrecuenteForm({
+export function CreatePlantillaForm({
   tipo,
   monto,
   origen,
@@ -38,10 +38,10 @@ export function CreateTransaccionFrecuenteForm({
   descripcion,
   cuentasOrigen,
   cuentasDestino,
-}: CreateTransaccionFrecuenteForm) {
-  const formId = "create-transaccion-frecuente"
-  const form = useForm<z.infer<typeof transaccionFrecuenteSchema>>({
-    resolver: zodResolver(transaccionFrecuenteSchema),
+}: CreatePlantillaForm) {
+  const formId = "create-plantilla"
+  const form = useForm<z.infer<typeof plantillaSchema>>({
+    resolver: zodResolver(plantillaSchema),
     defaultValues: {
       tipo: tipo,
       nombre: "",
@@ -53,13 +53,13 @@ export function CreateTransaccionFrecuenteForm({
   })
 
   const [state, formAction, isPending] = useActionState(
-    createTransaccionFrecuente,
+    createPlantilla,
     stateDefault
   )
 
-  function onSubmit(values: z.infer<typeof transaccionFrecuenteSchema>) {
+  function onSubmit(values: z.infer<typeof plantillaSchema>) {
     startTransition(() => {
-      formAction({ values: values as TransaccionFrecuenteById })
+      formAction({ values: values as PlantillaById })
     })
   }
 
@@ -77,13 +77,21 @@ export function CreateTransaccionFrecuenteForm({
     <ResponsiveDrawer
       action="create"
       formId={formId}
-      name="transacción frecuente"
+      name="plantilla"
       isPending={isPending}
       isOpen={true}
     >
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
           <FieldGroup>
+            <FormInputText
+              control={form.control}
+              name="nombre"
+              label="Nombre"
+              required
+            />
+          </FieldGroup>
+          <FieldGroup className="sm:flex-row">
             <FormSelect
               control={form.control}
               name="tipo"
@@ -105,12 +113,6 @@ export function CreateTransaccionFrecuenteForm({
             />
           </FieldGroup>
           <FieldGroup>
-            <FormInputText
-              control={form.control}
-              name="nombre"
-              label="Nombre"
-              required
-            />
             <FormComboBox
               control={form.control}
               name="id_cuenta_origen"

@@ -3,11 +3,11 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
-import { transaccionFrecuenteSchema } from "@/validation/schema"
+import { plantillaSchema } from "@/validation/schema"
 import { FieldGroup, FieldSet } from "../../ui/field"
 import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
-import { SelectItemType, TransaccionFrecuenteById } from "@/types"
+import { SelectItemType, PlantillaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { TransaccionTipo, transaccionTipos } from "@/lib/tipos"
@@ -17,27 +17,24 @@ import { useSearchParams } from "next/navigation"
 import { FormSelect } from "@/components/form-elements/form-select"
 import { useUpdateParams } from "@/hooks/use-update-params"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
-import {
-  deleteTransaccionFrecuente,
-  updateTransaccionFrecuente,
-} from "@/database/actions/transaccion-frecuente"
+import { deletePlantilla, updatePlantilla } from "@/database/actions/plantilla"
 import { getLabels } from "../transaccion/get-labels"
 import { DeleteFormItem } from "@/components/form-elements/form-delete"
 
-interface EditTransaccionFrecuenteForm {
-  transaccion: TransaccionFrecuenteById
+interface EditPlantillaForm {
+  transaccion: PlantillaById
   cuentasOrigen: SelectItemType[]
   cuentasDestino: SelectItemType[]
 }
 
-export function EditTransaccionFrecuenteForm({
+export function EditPlantillaForm({
   transaccion,
   cuentasOrigen,
   cuentasDestino,
-}: EditTransaccionFrecuenteForm) {
-  const formId = "edit-transaccion-frecuente"
-  const form = useForm<z.infer<typeof transaccionFrecuenteSchema>>({
-    resolver: zodResolver(transaccionFrecuenteSchema),
+}: EditPlantillaForm) {
+  const formId = "edit-plantilla"
+  const form = useForm<z.infer<typeof plantillaSchema>>({
+    resolver: zodResolver(plantillaSchema),
     defaultValues: {
       tipo: transaccion.tipo,
       nombre: transaccion.nombre,
@@ -49,15 +46,15 @@ export function EditTransaccionFrecuenteForm({
   })
 
   const [state, formAction, isPending] = useActionState(
-    updateTransaccionFrecuente,
+    updatePlantilla,
     stateDefault
   )
 
-  function onSubmit(values: z.infer<typeof transaccionFrecuenteSchema>) {
+  function onSubmit(values: z.infer<typeof plantillaSchema>) {
     startTransition(() => {
       formAction({
         id: transaccion.id,
-        values: values as TransaccionFrecuenteById,
+        values: values as PlantillaById,
       })
     })
   }
@@ -76,13 +73,21 @@ export function EditTransaccionFrecuenteForm({
     <ResponsiveDrawer
       action="edit"
       formId={formId}
-      name="transacción frecuente"
+      name="plantilla"
       isPending={isPending}
       isOpen={true}
     >
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
           <FieldGroup>
+            <FormInputText
+              control={form.control}
+              name="nombre"
+              label="Nombre"
+              required
+            />
+          </FieldGroup>
+          <FieldGroup className="sm:flex-row">
             <FormSelect
               control={form.control}
               name="tipo"
@@ -104,13 +109,6 @@ export function EditTransaccionFrecuenteForm({
             />
           </FieldGroup>
           <FieldGroup>
-            <FormInputText
-              control={form.control}
-              name="nombre"
-              label="Nombre"
-              required
-            />
-
             <FormComboBox
               control={form.control}
               name="id_cuenta_origen"
@@ -134,7 +132,7 @@ export function EditTransaccionFrecuenteForm({
           <FieldGroup>
             <DeleteFormItem
               id={transaccion.id}
-              handleDelete={deleteTransaccionFrecuente}
+              handleDelete={deletePlantilla}
             />
           </FieldGroup>
         </FieldSet>

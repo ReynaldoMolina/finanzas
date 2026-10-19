@@ -33,11 +33,6 @@ export const menuItems = [
     icon: ArrowLeftRight,
   },
   {
-    name: "Frecuentes",
-    url: "/transaccion-frecuente",
-    icon: ZapIcon,
-  },
-  {
     name: "Arqueo",
     url: "/arqueo",
     icon: Coins,

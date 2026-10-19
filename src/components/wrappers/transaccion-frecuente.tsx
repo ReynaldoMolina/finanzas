@@ -1,11 +1,11 @@
 import { PageWrapperType } from "@/types"
-import { getTransaccionesFrecuentes } from "@/database/get-data/transaccion-frecuente"
-import { TransaccionFrecuenteTabla } from "../table/transaccion-frecuente-table"
+import { getPlantillas } from "@/database/get-data/transaccion-frecuente"
+import { PlantillaTabla } from "../table/plantilla-table"
 
-export default async function TransaccionFrecuenteWrapper({
+export default async function PlantillaWrapper({
   searchParams,
 }: PageWrapperType) {
-  const { data } = await getTransaccionesFrecuentes(searchParams)
+  const { data } = await getPlantillas(searchParams)
 
-  return <TransaccionFrecuenteTabla data={data} />
+  return <PlantillaTabla data={data} />
 }

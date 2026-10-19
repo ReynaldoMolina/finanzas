@@ -11,26 +11,45 @@ import {
 } from "@/components/ui/item"
 import { ZapIcon, ChevronRightIcon } from "lucide-react"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
-const title = "Transacciones frecuentes"
+const title = "Plantillas"
 
 export const metadata = {
   title: title,
 }
 
+const plantillas = ["Ingreso", "Gasto", "Transferencia"]
+
 export default async function Page() {
   return (
     <ResponsiveDrawerMenu>
       <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2">
+          <span className="text-muted-foreground">Plantillas</span>
+          <div className="flex flex-wrap gap-1">
+            {plantillas.map((item, index) => (
+              <Link key={index} href={`/transaccion/crear?tipo=${item}`}>
+                <Button variant="secondary">{item}</Button>
+              </Link>
+            ))}
+            <Link href="/transaccion/crear">
+              <Button variant="secondary">En blanco</Button>
+            </Link>
+          </div>
+        </div>
         <Suspense fallback={<Loading />}>
           <TransaccionFrecuenteMenuWrapper />
         </Suspense>
-        <Item variant="outline" render={<Link href="/transaccion-frecuente" />}>
+        <Item
+          variant="outline"
+          render={<Link href="/configuracion/plantilla" />}
+        >
           <ItemMedia variant="icon">
             <ZapIcon />
           </ItemMedia>
           <ItemContent>
-            <ItemTitle>Transacciones frecuentes</ItemTitle>
+            <ItemTitle>Editar plantillas</ItemTitle>
           </ItemContent>
           <ItemActions>
             <ChevronRightIcon size="16" />
