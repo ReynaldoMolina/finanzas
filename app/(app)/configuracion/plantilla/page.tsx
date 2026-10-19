@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { Loading } from "@/components/loading"
 import { Suspense } from "react"
-import PlantillaWrapper from "@/components/wrappers/transaccion-frecuente"
+import PlantillaWrapper from "@/components/wrappers/plantilla"
 
 const title = "Plantillas"
 

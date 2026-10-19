@@ -1,6 +1,6 @@
 import { EditPlantillaForm } from "@/components/forms/plantilla/edit"
 import { getCategoriasByTipoTransaccion } from "@/database/get-data/cuenta"
-import { getPlantillaById } from "@/database/get-data/transaccion-frecuente"
+import { getPlantillaById } from "@/database/get-data/plantilla"
 import { PageProps } from "@/types"
 import { notFound } from "next/navigation"
 

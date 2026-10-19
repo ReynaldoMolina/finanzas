@@ -1,5 +1,5 @@
 import { PageWrapperType } from "@/types"
-import { getPlantillas } from "@/database/get-data/transaccion-frecuente"
+import { getPlantillas } from "@/database/get-data/plantilla"
 import { PlantillaTabla } from "../table/plantilla-table"
 
 export default async function PlantillaWrapper({

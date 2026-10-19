@@ -40,7 +40,7 @@ export function ResponsiveDrawerMenu({ children }: ResponsiveDrawerMenuProps) {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Crear transacción</DrawerTitle>
-          <DrawerDescription>Elige una opción</DrawerDescription>
+          <DrawerDescription>Elige una plantilla</DrawerDescription>
         </DrawerHeader>
         <div className="flex-1 scroll-fade overflow-y-auto p-4">{children}</div>
         <DrawerFooter>

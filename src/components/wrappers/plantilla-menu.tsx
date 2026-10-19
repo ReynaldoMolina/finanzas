@@ -1,10 +1,9 @@
-import { getTransaccionesFrecuentesPage } from "@/database/get-data/transaccion-frecuente"
+import { getPlantillasPage } from "@/database/get-data/plantilla"
 import { Button } from "../ui/button"
 import Link from "next/link"
 
-export async function TransaccionFrecuenteMenuWrapper() {
-  const { data: transaccionesFrecuentes } =
-    await getTransaccionesFrecuentesPage()
+export async function PlantillaMenuWrapper() {
+  const { data: transaccionesFrecuentes } = await getPlantillasPage()
 
   return (
     <>

@@ -83,7 +83,7 @@ export async function getPlantillaById(
   }
 }
 
-export async function getTransaccionesFrecuentesPage(): Promise<{
+export async function getPlantillasPage(): Promise<{
   data: PlantillaPage[]
 }> {
   try {

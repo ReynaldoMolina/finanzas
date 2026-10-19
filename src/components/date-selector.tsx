@@ -49,7 +49,6 @@ export function DateSelector({ searchParams, active }: DateSelector) {
             className={cn("text-xs", active && "bg-muted dark:bg-muted")}
           >
             <Calendar className="size-3.5" />
-            Rango
           </ToggleGroupItem>
         }
       />

@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Loading } from "@/components/loading"
-import { TransaccionFrecuenteMenuWrapper } from "@/components/wrappers/transaccion-frecuente-menu"
+import { PlantillaMenuWrapper } from "@/components/wrappers/plantilla-menu"
 import { ResponsiveDrawerMenu } from "@/components/responsive-drawer-menu"
 import {
   Item,
@@ -26,20 +26,17 @@ export default async function Page() {
     <ResponsiveDrawerMenu>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-2">
-          <span className="text-muted-foreground">Plantillas</span>
+          <span className="text-muted-foreground">En blanco</span>
           <div className="flex flex-wrap gap-1">
             {plantillas.map((item, index) => (
               <Link key={index} href={`/transaccion/crear?tipo=${item}`}>
                 <Button variant="secondary">{item}</Button>
               </Link>
             ))}
-            <Link href="/transaccion/crear">
-              <Button variant="secondary">En blanco</Button>
-            </Link>
           </div>
         </div>
         <Suspense fallback={<Loading />}>
-          <TransaccionFrecuenteMenuWrapper />
+          <PlantillaMenuWrapper />
         </Suspense>
         <Item
           variant="outline"
