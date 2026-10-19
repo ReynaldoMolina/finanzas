@@ -15,14 +15,12 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
           {/* Nivel 1: Tipo */}
           <div className="sticky top-10 flex items-center gap-2 bg-background py-1.5">
             <Link href={`/categoria/crear?cuenta_tipo=${tipo.nombre}`}>
-              <Button size="icon-xs">
+              <Button size="icon-sm">
                 <PlusIcon />
               </Button>
             </Link>
             <h2>{tipo.nombre}s</h2>
-            <span className="mr-3 ml-auto text-xs">
-              {formatNumber(tipo.subtotal)}
-            </span>
+            <span className="mr-3 ml-auto">{formatNumber(tipo.subtotal)}</span>
           </div>
 
           {/* Nivel 2: Categoría */}
@@ -34,7 +32,7 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
                     <Link
                       href={`/cuenta/crear?cuenta_tipo=${tipo.nombre}&id_categoria=${categoria.id}`}
                     >
-                      <Button variant="outline" size="icon-xs">
+                      <Button variant="outline" size="icon-sm">
                         <PlusIcon />
                       </Button>
                     </Link>
@@ -44,7 +42,7 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
                     >
                       {categoria.nombre}
                     </Link>
-                    <span className="ml-auto text-xs">
+                    <span className="ml-auto">
                       {formatNumber(categoria.subtotal)}
                     </span>
                   </div>
@@ -54,7 +52,7 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
                       {categoria.cuentas.map((cuenta) => (
                         <li
                           key={cuenta.id}
-                          className="flex items-center gap-2 text-xs text-muted-foreground"
+                          className="flex items-center gap-2 text-muted-foreground"
                         >
                           <DotIcon size="17" />
                           <Link

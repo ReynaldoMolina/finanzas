@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { getCurrentMonth } from "@/lib/get-date"
 import { dateIsoToDate, dateToIso } from "@/lib/formatters"
-import { ChevronDown } from "lucide-react"
+import { CalendarIcon, ChevronDown } from "lucide-react"
 import { SearchParamsProps } from "@/types"
 import {
   Dialog,
@@ -46,10 +46,10 @@ export function DateSelector({ searchParams, active }: DateSelector) {
         render={
           <ToggleGroupItem
             value="5"
-            className={cn("text-xs", active && "bg-muted dark:bg-muted")}
+            className={cn(active && "bg-muted dark:bg-muted")}
           >
+            <CalendarIcon />
             Rango
-            <ChevronDown />
           </ToggleGroupItem>
         }
       />

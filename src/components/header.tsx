@@ -1,4 +1,3 @@
-import { ReactNode } from "react"
 import { BackButton } from "./back-button"
 import { SidebarTrigger } from "./ui/sidebar"
 

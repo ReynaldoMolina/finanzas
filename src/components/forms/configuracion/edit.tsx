@@ -50,7 +50,7 @@ export function EditConfiguracionForm({
     <form
       id={formId}
       onSubmit={form.handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 border p-3"
+      className="flex flex-col gap-5 rounded-lg border p-3"
     >
       <FieldSet>
         <FieldGroup>
@@ -58,7 +58,6 @@ export function EditConfiguracionForm({
             control={form.control}
             name="cambio_dolar"
             label="Cambio de dólar"
-            description="Se usa para calcular "
           />
           <FormComboBox
             control={form.control}
