@@ -49,7 +49,7 @@ export default async function Page() {
             <ZapIcon />
           </ItemMedia>
           <ItemContent>
-            <ItemTitle>Editar plantilla</ItemTitle>
+            <ItemTitle>Editar plantillas</ItemTitle>
           </ItemContent>
           <ItemActions>
             <ChevronRightIcon size="16" />
