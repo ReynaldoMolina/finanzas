@@ -47,29 +47,31 @@ export function EditConfiguracionForm({
   useServerActionFeedback(state, { refresh: true })
 
   return (
-    <div className="flex flex-col gap-5 border p-3">
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
-        <FieldSet>
-          <FieldGroup>
-            <FormInputText
-              control={form.control}
-              name="cambio_dolar"
-              label="Cambio de dólar"
-              description="Se usa para calcular "
-            />
-            <FormComboBox
-              control={form.control}
-              name="id_categoria_efectivo"
-              label="Cuenta de efectivo"
-              items={cuentas}
-            />
-          </FieldGroup>
-        </FieldSet>
-      </form>
+    <form
+      id={formId}
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="flex flex-col gap-5 border p-3"
+    >
+      <FieldSet>
+        <FieldGroup>
+          <FormInputText
+            control={form.control}
+            name="cambio_dolar"
+            label="Cambio de dólar"
+            description="Se usa para calcular "
+          />
+          <FormComboBox
+            control={form.control}
+            name="id_categoria_efectivo"
+            label="Cuenta de efectivo"
+            items={cuentas}
+          />
+        </FieldGroup>
+      </FieldSet>
       <Button type="submit" form={formId}>
         {isPending && <Spinner />}
         Guardar configuración
       </Button>
-    </div>
+    </form>
   )
 }

@@ -12,18 +12,10 @@ import {
   CardTitle,
 } from "../../ui/card"
 import { authClient } from "@/lib/auth-client"
-// import Image from "next/image"
 
 export function LoginForm() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get("callbackUrl") || "/"
-
-  async function handleLogin() {
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: callbackUrl ?? "/",
-    })
-  }
 
   const [isPending, startTransition] = useTransition()
 
@@ -46,7 +38,10 @@ export function LoginForm() {
             className="w-full cursor-pointer"
             onClick={() =>
               startTransition(async () => {
-                await handleLogin()
+                await authClient.signIn.social({
+                  provider: "google",
+                  callbackURL: callbackUrl ?? "/",
+                })
               })
             }
             disabled={isPending}

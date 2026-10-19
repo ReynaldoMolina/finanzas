@@ -180,3 +180,14 @@ export interface PageWrapperType {
   id?: string
   searchParams: SearchParamsProps
 }
+
+export interface User {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  email: string
+  emailVerified: boolean
+  name: string
+  image?: string | null | undefined | undefined
+  role: string
+}
