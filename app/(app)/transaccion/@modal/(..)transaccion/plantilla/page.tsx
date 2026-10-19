@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { Suspense } from "react"
 import { Loading } from "@/components/loading"
 import { PlantillaMenuWrapper } from "@/components/wrappers/plantilla-menu"
