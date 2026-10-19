@@ -170,7 +170,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                   <FormInputTable
                     control={form.control}
                     name={name}
-                    className="h-4.5 border-0 px-1 text-center dark:bg-transparent"
+                    className="h-5 border-0 px-1 text-center dark:bg-transparent"
                   />
                 </td>
                 <td className="min-w-25 border px-1 text-right text-muted-foreground">
