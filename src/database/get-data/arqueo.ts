@@ -1,15 +1,18 @@
 import { ArqueoById, ArqueoPage, SearchParamsProps } from "@/types"
 import { db } from ".."
 import { arqueo, cuenta } from "../schema/schema"
-import { asc, eq, getColumns, sql } from "drizzle-orm"
+import { asc, eq, getColumns, sql, and } from "drizzle-orm"
 import { getAccountTotals } from "./ctes"
 import { getSearchParams } from "./get-search-params"
+import { buildSearchFilter } from "./build-search-filter"
 
 export async function getArqueos(searchParams: SearchParamsProps): Promise<{
   data: ArqueoPage[]
 }> {
   const { start, end } = getSearchParams(searchParams)
   const { movimientosCTE, totalesCTE } = getAccountTotals({ start, end })
+
+  const filterBySearch = buildSearchFilter(searchParams, [cuenta.nombre])
 
   try {
     const data = await db
@@ -22,6 +25,7 @@ export async function getArqueos(searchParams: SearchParamsProps): Promise<{
       .from(arqueo)
       .innerJoin(cuenta, eq(arqueo.id_cuenta, cuenta.id))
       .leftJoin(totalesCTE, eq(cuenta.id, totalesCTE.cuentaId))
+      .where(and(filterBySearch))
       .orderBy(asc(arqueo.id))
 
     return { data }
