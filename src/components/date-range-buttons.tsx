@@ -5,6 +5,7 @@ import {
   lastMonth,
   thisMonth,
   thisWeek,
+  thisYear,
   today,
 } from "@/lib/get-date"
 import { cn } from "@/lib/utils"
@@ -31,6 +32,7 @@ export function DateRangeButtons({
     { value: "2", label: "Semana", range: thisWeek() },
     { value: "3", label: "Hoy", range: today() },
     { value: "4", label: "Mes pasado", range: lastMonth() },
+    { value: "5", label: "Año", range: thisYear() },
   ]
 
   function isActive(start?: string, end?: string, a?: string, b?: string) {

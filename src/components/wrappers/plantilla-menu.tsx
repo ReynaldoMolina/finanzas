@@ -14,7 +14,7 @@ export async function PlantillaMenuWrapper() {
             {item.items.map((i) => (
               <Link
                 key={i.nombre}
-                href={`/transaccion/crear?tipo=${item.tipo}&monto=${i.monto}&origen=${i.id_cuenta_origen}&destino=${i.id_cuenta_destino}&descripcion=${i.descripcion}`}
+                href={`/transaccion/crear?tipo=${item.tipo}&monto=${Number(i.monto) === 0 ? "" : i.monto}&origen=${i.id_cuenta_origen}&destino=${i.id_cuenta_destino}&descripcion=${i.descripcion}`}
               >
                 <Button variant="secondary">{i.nombre}</Button>
               </Link>

@@ -28,7 +28,7 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
             {tipo.categorias && tipo.categorias.length > 0 ? (
               tipo.categorias.map((categoria) => (
                 <div key={categoria.id} className="space-y-3">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-xs">
                     <Link
                       href={`/cuenta/crear?cuenta_tipo=${tipo.nombre}&id_categoria=${categoria.id}`}
                     >
@@ -48,7 +48,7 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
                   </div>
                   {/* Nivel 3: Cuentas */}
                   {categoria.cuentas && categoria.cuentas.length > 0 ? (
-                    <ul className="space-y-3 pl-6">
+                    <ul className="space-y-3 pl-6 text-xs">
                       {categoria.cuentas.map((cuenta) => (
                         <li
                           key={cuenta.id}

@@ -7,7 +7,6 @@ import {
   Item,
   ItemActions,
   ItemContent,
-  ItemDescription,
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item"
@@ -43,7 +42,6 @@ export default async function Page() {
           </ItemMedia>
           <ItemContent>
             <ItemTitle>Editar plantillas</ItemTitle>
-            <ItemDescription>Usadas en transacciones.</ItemDescription>
           </ItemContent>
           <ItemActions>
             <ChevronRightIcon size="16" />

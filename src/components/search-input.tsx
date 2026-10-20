@@ -36,7 +36,7 @@ export function SearchInput() {
   }
 
   return (
-    <InputGroup className="sm:max-w-60">
+    <InputGroup className="sm:w-60">
       <InputGroupAddon>
         <SearchIcon />
       </InputGroupAddon>

@@ -31,6 +31,7 @@ interface DenominationConfig {
   label: string
   value: number
   isDollar?: boolean
+  separator?: boolean
 }
 
 const DENOMINATIONS: DenominationConfig[] = [
@@ -40,14 +41,14 @@ const DENOMINATIONS: DenominationConfig[] = [
   { name: "dolar_10", label: "$10", value: 10, isDollar: true },
   { name: "dolar_5", label: "$5", value: 5, isDollar: true },
   { name: "dolar_2", label: "$2", value: 2, isDollar: true },
-  { name: "dolar_1", label: "$1", value: 1, isDollar: true },
+  { name: "dolar_1", label: "$1", value: 1, isDollar: true, separator: true },
   { name: "nio_1000", label: "1000", value: 1000 },
   { name: "nio_500", label: "500", value: 500 },
   { name: "nio_200", label: "200", value: 200 },
   { name: "nio_100", label: "100", value: 100 },
   { name: "nio_50", label: "50", value: 50 },
   { name: "nio_20", label: "20", value: 20 },
-  { name: "nio_10", label: "10", value: 10 },
+  { name: "nio_10", label: "10", value: 10, separator: true },
   { name: "nio_5", label: "5", value: 5 },
   { name: "nio_1", label: "1", value: 1 },
   { name: "nio_050", label: "0.50", value: 0.5 },
@@ -124,29 +125,24 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
       onSubmit={form.handleSubmit(onSubmit)}
       className="flex flex-col gap-2 xs:max-w-70"
     >
-      <div className="flex items-center border p-1">
-        <Link
-          href={`/arqueo/${arqueo.id}`}
-          className="inline-flex items-center gap-2 text-xs"
-        >
-          {arqueo.cuenta}
-          <PencilIcon size={12} />
-        </Link>
-        <Button
-          variant="outline"
-          size="sm"
-          type="submit"
-          form={formId}
-          className="ml-auto"
-        >
-          {isPending ? <Spinner /> : <SaveIcon />}
-          Guardar
-        </Button>
+      <div className="flex items-center">
+        <span className="truncate text-xs">{arqueo.cuenta}</span>
+        <ButtonGroup className="ml-auto">
+          <Link href={`/arqueo/${arqueo.id}`}>
+            <Button variant="outline" size="icon">
+              <PencilIcon />
+            </Button>
+          </Link>
+          <Button variant="outline" type="submit" form={formId}>
+            {isPending ? <Spinner /> : <SaveIcon />}
+            Guardar
+          </Button>
+        </ButtonGroup>
       </div>
 
       <table className="text-xs">
         <tbody className="dark:bg-muted/50">
-          {DENOMINATIONS.map(({ name, label, value, isDollar }) => {
+          {DENOMINATIONS.map(({ name, label, value, isDollar, separator }) => {
             const inputValue = formValues[name]
             const numericValue = evaluarSuma(inputValue)
 
@@ -162,7 +158,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
               : NaN
 
             return (
-              <tr key={name}>
+              <tr key={name} className={separator ? "border-b-2" : ""}>
                 <td className="w-fit border px-1 text-right text-muted-foreground">
                   {label}
                 </td>

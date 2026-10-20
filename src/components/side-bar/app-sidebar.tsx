@@ -12,14 +12,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { MenuItem } from "./menu-item"
-import {
-  Coins,
-  ArrowLeftRight,
-  List,
-  DollarSign,
-  Settings,
-  ZapIcon,
-} from "lucide-react"
+import { Coins, ArrowLeftRight, List, DollarSign, Settings } from "lucide-react"
 
 export const menuItems = [
   {
