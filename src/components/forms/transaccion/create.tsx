@@ -109,7 +109,7 @@ export function CreateTransaccionForm({
               name="monto"
               label="Monto"
               textAddon="C$"
-              required
+              inputMode="numeric"
             />
 
             <FormComboBox

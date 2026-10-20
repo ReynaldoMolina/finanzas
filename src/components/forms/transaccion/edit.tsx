@@ -100,8 +100,8 @@ export function EditTransaccionForm({
               control={form.control}
               name="monto"
               label="Monto"
+              inputMode="numeric"
               textAddon="C$"
-              required
             />
 
             <FormComboBox

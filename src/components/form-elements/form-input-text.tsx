@@ -6,19 +6,20 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "../ui/input-group"
+import { ComponentProps } from "react"
 
-interface FormInputText<T extends FieldValues> {
+interface FormInputText<T extends FieldValues> extends Omit<
+  ComponentProps<"input">,
+  "name" | "control" | "readOnly"
+> {
   control: Control<T>
   name: Path<T>
   label: string
   textAddon?: string
   placeholder?: string
   description?: string
-  disabled?: boolean
-  hidden?: boolean
-  className?: string
+  hideField?: boolean
   readOnly?: boolean
-  required?: boolean
   onChangeExtra?: (value: string | number) => void
 }
 
@@ -29,12 +30,10 @@ export function FormInputText<T extends FieldValues>({
   textAddon,
   placeholder,
   description,
-  disabled,
-  hidden,
-  className,
+  hideField,
   readOnly,
-  required,
   onChangeExtra,
+  ...props
 }: FormInputText<T>) {
   return (
     <Controller
@@ -43,19 +42,17 @@ export function FormInputText<T extends FieldValues>({
       render={({ field, fieldState }) => (
         <Field
           data-invalid={fieldState.invalid}
-          className={hidden ? "hidden" : ""}
+          className={hideField ? "hidden" : ""}
         >
-          <FieldLabel htmlFor={field.name}>
-            {label}
-            {required && <span className="text-destructive">*</span>}
-          </FieldLabel>
-          <InputGroup className={className}>
+          <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+          <InputGroup>
             {textAddon && (
               <InputGroupAddon>
                 <InputGroupText>{textAddon}</InputGroupText>
               </InputGroupAddon>
             )}
             <InputGroupInput
+              {...props}
               {...field}
               onChange={(e) => {
                 const value = e.target.value
@@ -66,9 +63,7 @@ export function FormInputText<T extends FieldValues>({
               aria-invalid={fieldState.invalid}
               placeholder={placeholder ? placeholder : label}
               autoComplete="off"
-              readOnly={readOnly}
               className={readOnly ? "opacity-50" : ""}
-              disabled={disabled}
             />
           </InputGroup>
           {description && <FieldDescription>{description}</FieldDescription>}

@@ -84,7 +84,6 @@ export function EditPlantillaForm({
               control={form.control}
               name="nombre"
               label="Nombre"
-              required
             />
           </FieldGroup>
           <FieldGroup className="sm:flex-row">
@@ -105,7 +104,7 @@ export function EditPlantillaForm({
               name="monto"
               label="Monto"
               textAddon="C$"
-              required
+              inputMode="numeric"
             />
           </FieldGroup>
           <FieldGroup>

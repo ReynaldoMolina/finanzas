@@ -88,7 +88,6 @@ export function CreatePlantillaForm({
               control={form.control}
               name="nombre"
               label="Nombre"
-              required
             />
           </FieldGroup>
           <FieldGroup className="sm:flex-row">
@@ -109,7 +108,7 @@ export function CreatePlantillaForm({
               name="monto"
               label="Monto"
               textAddon="C$"
-              required
+              inputMode="numeric"
             />
           </FieldGroup>
           <FieldGroup>
