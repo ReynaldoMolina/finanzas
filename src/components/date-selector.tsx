@@ -21,7 +21,6 @@ import { cn } from "@/lib/utils"
 
 interface DateSelector {
   searchParams: SearchParamsProps
-  active?: boolean
 }
 
 interface DateFilter {
@@ -29,7 +28,7 @@ interface DateFilter {
   end: string
 }
 
-export function DateSelector({ searchParams, active }: DateSelector) {
+export function DateSelector({ searchParams }: DateSelector) {
   const { firstDay, lastDay } = getCurrentMonth()
   const { updateParams } = useUpdateParams()
 
@@ -44,10 +43,7 @@ export function DateSelector({ searchParams, active }: DateSelector) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <ToggleGroupItem
-            value="5"
-            className={cn(active && "bg-muted dark:bg-muted")}
-          >
+          <ToggleGroupItem value="6">
             <CalendarIcon />
             Rango
           </ToggleGroupItem>

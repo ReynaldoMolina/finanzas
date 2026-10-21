@@ -39,13 +39,13 @@ export function DateRangeButtons({
     return start === a && end === b
   }
 
-  // Check if none of the predefined options match the current dates
-  const isCustomActive = !rangeOptions.some(({ range }) =>
+  const currentOption = rangeOptions.find(({ range }) =>
     isActive(start, end, range.start, range.end)
   )
+  const groupValue = currentOption ? [currentOption.value] : ["6"]
 
   return (
-    <ToggleGroup variant="outline" className="overflow-auto">
+    <ToggleGroup variant="outline" className="overflow-auto" value={groupValue}>
       {rangeOptions.map(({ value, label, range }) => {
         const active = isActive(start, end, range.start, range.end)
 
@@ -53,7 +53,6 @@ export function DateRangeButtons({
           <ToggleGroupItem
             key={value}
             value={value}
-            className={cn(active && "bg-muted dark:bg-muted")}
             onClick={() => updateParams({ start: range.start, end: range.end })}
           >
             {label}
@@ -61,7 +60,7 @@ export function DateRangeButtons({
         )
       })}
 
-      <DateSelector searchParams={searchParams} active={isCustomActive} />
+      <DateSelector searchParams={searchParams} />
     </ToggleGroup>
   )
 }
