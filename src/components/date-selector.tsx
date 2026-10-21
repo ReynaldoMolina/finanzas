@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { getCurrentMonth } from "@/lib/get-date"
 import { dateIsoToDate, dateToIso } from "@/lib/formatters"
-import { CalendarIcon, ChevronDown } from "lucide-react"
+import { CalendarIcon } from "lucide-react"
 import { SearchParamsProps } from "@/types"
 import {
   Dialog,
@@ -17,7 +17,6 @@ import { ToggleGroupItem } from "./ui/toggle-group"
 import { Button } from "./ui/button"
 import { useUpdateParams } from "@/hooks/use-update-params"
 import { DatePicker } from "./date-picker"
-import { cn } from "@/lib/utils"
 
 interface DateSelector {
   searchParams: SearchParamsProps
