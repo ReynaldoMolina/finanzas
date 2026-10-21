@@ -48,7 +48,7 @@ export function SelectUpdateParam({
         disabled={disabled}
       >
         <SelectTrigger className="w-45">
-          <SelectValue placeholder="Selecciona una opción" />
+          <SelectValue placeholder="Seleccionar" />
         </SelectTrigger>
         <SelectContent>
           {items.map((item) => (

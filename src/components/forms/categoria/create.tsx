@@ -12,18 +12,19 @@ import { CategoriaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { CuentaTipo } from "@/lib/tipos"
+import { cuentaTipo, CuentaTipo } from "@/lib/tipos"
+import { FormSelect } from "@/components/form-elements/form-select"
 
-interface CreateCategoriaFormProps {
-  tipo?: CuentaTipo
-}
+// interface CreateCategoriaFormProps {
+//   tipo?: CuentaTipo
+// }
 
-export function CreateCategoriaForm({ tipo }: CreateCategoriaFormProps) {
+export function CreateCategoriaForm() {
   const formId = "create-categoria"
   const form = useForm<z.infer<typeof cuentaCategoriaSchema>>({
     resolver: zodResolver(cuentaCategoriaSchema),
     defaultValues: {
-      tipo: tipo,
+      tipo: undefined,
       nombre: "",
     },
   })
@@ -52,17 +53,16 @@ export function CreateCategoriaForm({ tipo }: CreateCategoriaFormProps) {
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
           <FieldGroup>
-            <FormInputText
+            <FormSelect
               control={form.control}
               name="tipo"
               label="Tipo"
-              disabled
+              items={cuentaTipo}
             />
             <FormInputText
               control={form.control}
               name="nombre"
-              label="Nombre "
-              required
+              label="Nombre"
             />
           </FieldGroup>
         </FieldSet>

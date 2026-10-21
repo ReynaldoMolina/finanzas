@@ -1,12 +1,9 @@
 import { CreateCategoriaForm } from "@/components/forms/categoria/create"
-import { PageProps } from "@/types"
 
 export const metadata = {
   title: "Crear categoría",
 }
 
-export default async function Page({ searchParams }: PageProps) {
-  const { cuenta_tipo } = await searchParams
-
-  return <CreateCategoriaForm tipo={cuenta_tipo} />
+export default async function Page() {
+  return <CreateCategoriaForm />
 }

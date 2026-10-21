@@ -58,12 +58,7 @@ export function EditCategoriaForm({ categoria }: EditCategoriaFormProps) {
             label="Tipo"
             items={cuentaTipo}
           />
-          <FormInputText
-            control={form.control}
-            name="nombre"
-            label="Nombre"
-            required
-          />
+          <FormInputText control={form.control} name="nombre" label="Nombre" />
         </FieldGroup>
       </form>
     </ResponsiveDrawer>

@@ -76,7 +76,6 @@ export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
               control={form.control}
               name="nombre"
               label="Nombre"
-              required
             />
           </FieldGroup>
         </FieldSet>

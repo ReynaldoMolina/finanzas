@@ -4,7 +4,7 @@ import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { cuentaSchema } from "@/validation/schema"
-import { Field, FieldGroup, FieldLabel, FieldSet } from "../../ui/field"
+import { FieldGroup, FieldSet } from "../../ui/field"
 import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
 import { CuentaById, SelectItemType } from "@/types"
@@ -12,25 +12,22 @@ import { createCuenta } from "@/database/actions/cuenta"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { Input } from "@/components/ui/input"
-import { CuentaTipo } from "@/lib/tipos"
+import { SelectUpdateParam } from "@/components/form-elements/select-update-param"
+import { FormComboBox } from "@/components/form-elements/form-combo-box"
+import { cuentaTipo } from "@/lib/tipos"
 
 interface CreateCuentaFormProps {
   categorias: SelectItemType[]
-  tipo?: CuentaTipo
-  id_categoria?: string
+  // tipo?: CuentaTipo
+  // id_categoria?: string
 }
 
-export function CreateCuentaForm({
-  categorias,
-  id_categoria,
-  tipo,
-}: CreateCuentaFormProps) {
-  const formId = "create-account"
+export function CreateCuentaForm({ categorias }: CreateCuentaFormProps) {
+  const formId = "create-cuenta"
   const form = useForm<z.infer<typeof cuentaSchema>>({
     resolver: zodResolver(cuentaSchema),
     defaultValues: {
-      id_categoria: Number(id_categoria),
+      id_categoria: undefined,
       nombre: "",
     },
   })
@@ -48,8 +45,6 @@ export function CreateCuentaForm({
 
   useServerActionFeedback(state, { refresh: true, back: true })
 
-  const categoria = categorias.find((item) => item.value === id_categoria)
-
   return (
     <ResponsiveDrawer
       action="create"
@@ -61,21 +56,26 @@ export function CreateCuentaForm({
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
           <FieldGroup>
-            <Field>
-              <FieldLabel>Tipo</FieldLabel>
-              <Input value={tipo} disabled />
-            </Field>
+            <SelectUpdateParam
+              label="Tipo"
+              items={cuentaTipo}
+              paramKey="cuenta_tipo"
+              onChangeExtra={() =>
+                form.setValue("id_categoria", "" as unknown as number)
+              }
+            />
 
-            <Field>
-              <FieldLabel>Categoría</FieldLabel>
-              <Input value={categoria?.label} disabled />
-            </Field>
+            <FormComboBox
+              control={form.control}
+              name="id_categoria"
+              items={categorias}
+              label="Categoría"
+            />
 
             <FormInputText
               control={form.control}
               name="nombre"
               label="Nombre"
-              required
             />
           </FieldGroup>
         </FieldSet>
