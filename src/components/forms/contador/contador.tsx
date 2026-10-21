@@ -2,8 +2,13 @@
 
 import { FormInputTable } from "@/components/form-elements/form-input-table"
 import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import { Spinner } from "@/components/ui/spinner"
+import { toast } from "@/components/ui/toast"
 import { updateArqueoConteo } from "@/database/actions/arqueo"
 import { stateDefault } from "@/database/actions/state-message"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
@@ -13,9 +18,9 @@ import { cn } from "@/lib/utils"
 import { ArqueoPage, ArqueoType } from "@/types"
 import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { PencilIcon, SaveIcon } from "lucide-react"
+import { ChevronDown, SaveIcon } from "lucide-react"
 import Link from "next/link"
-import { useActionState, startTransition } from "react"
+import { useActionState, startTransition, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 
@@ -96,6 +101,26 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
 
   useServerActionFeedback(state, { refresh: true })
 
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+
+    const subscription = form.watch(() => {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        form.handleSubmit((values) => {
+          startTransition(() => {
+            formAction({ id: arqueo.id, values: values as ArqueoType })
+          })
+        })()
+      }, 3000)
+    })
+
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(timeoutId)
+    }
+  }, [form, formAction, arqueo.id])
+
   const formValues = form.watch()
 
   const { totalDolares, totalCordobas, granTotalNIO } = DENOMINATIONS.reduce(
@@ -120,100 +145,101 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
   )
 
   return (
-    <form
-      id={formId}
-      onSubmit={form.handleSubmit(onSubmit)}
-      className="flex flex-col gap-2 xs:max-w-70"
-    >
-      <div className="flex items-center">
-        <span className="truncate text-xs">{arqueo.cuenta}</span>
-        <ButtonGroup className="ml-auto">
-          <Link href={`/arqueo/${arqueo.id}`}>
-            <Button variant="outline" size="icon">
-              <PencilIcon />
+    <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+      <Collapsible className="flex flex-col gap-2 xs:w-70">
+        <CollapsibleTrigger
+          render={
+            <Button variant="secondary">
+              <Link
+                href={`/arqueo/${arqueo.id}`}
+                className="hover:underline"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {arqueo.cuenta}
+              </Link>
+              <ChevronDown className="ml-auto transition group-data-panel-open/button:rotate-180" />
             </Button>
-          </Link>
-          <Button variant="outline" type="submit" form={formId}>
-            {isPending ? <Spinner /> : <SaveIcon />}
-            Guardar
-          </Button>
-        </ButtonGroup>
-      </div>
+          }
+        />
 
-      <table className="text-xs">
-        <tbody className="dark:bg-muted/50">
-          {DENOMINATIONS.map(({ name, label, value, isDollar, separator }) => {
-            const inputValue = formValues[name]
-            const numericValue = evaluarSuma(inputValue)
+        <CollapsibleContent className="space-y-2">
+          <table className="w-full text-xs">
+            <tbody className="dark:bg-muted/50">
+              {DENOMINATIONS.map(
+                ({ name, label, value, isDollar, separator }) => {
+                  const inputValue = formValues[name]
+                  const numericValue = evaluarSuma(inputValue)
 
-            const isValid =
-              inputValue !== "" &&
-              inputValue !== null &&
-              inputValue !== undefined
+                  const isValid =
+                    inputValue !== "" &&
+                    inputValue !== null &&
+                    inputValue !== undefined
 
-            const subtotal = isValid
-              ? isDollar
-                ? numericValue * value * cambio_dolar
-                : numericValue * value
-              : NaN
+                  const subtotal = isValid
+                    ? isDollar
+                      ? numericValue * value * cambio_dolar
+                      : numericValue * value
+                    : NaN
 
-            return (
-              <tr key={name} className={separator ? "border-b-2" : ""}>
-                <td className="w-fit border px-1 text-right text-muted-foreground">
-                  {label}
+                  return (
+                    <tr key={name} className={separator ? "border-b-2" : ""}>
+                      <td className="w-fit border px-1 text-right text-muted-foreground">
+                        {label}
+                      </td>
+                      <td className="max-w-25 border">
+                        <FormInputTable
+                          control={form.control}
+                          name={name}
+                          className="h-5 border-0 px-1 text-center dark:bg-transparent"
+                        />
+                      </td>
+                      <td className="min-w-25 border px-1 text-right text-muted-foreground">
+                        {isNaN(subtotal) ? "-" : formatNumber(subtotal)}
+                      </td>
+                    </tr>
+                  )
+                }
+              )}
+            </tbody>
+            <tfoot>
+              <tr className="border-t-4 border-double font-bold">
+                <td className="w-12 border px-1 text-right">Total</td>
+                <td className="h-4.5 max-w-20 border px-1 text-right">
+                  ${formatNumber(granTotalNIO / cambio_dolar)}
                 </td>
-                <td className="max-w-25 border">
-                  <FormInputTable
-                    control={form.control}
-                    name={name}
-                    className="h-5 border-0 px-1 text-center dark:bg-transparent"
-                  />
-                </td>
-                <td className="min-w-25 border px-1 text-right text-muted-foreground">
-                  {isNaN(subtotal) ? "-" : formatNumber(subtotal)}
+                <td className="min-w-25 border px-1 text-right">
+                  C${formatNumber(granTotalNIO)}
                 </td>
               </tr>
-            )
-          })}
-        </tbody>
-
-        <tfoot>
-          <tr className="border-t-4 border-double font-bold">
-            <td className="w-12 border px-1 text-right">Total</td>
-            <td className="h-4.5 max-w-20 border px-1 text-right">
-              ${formatNumber(granTotalNIO / cambio_dolar)}
-            </td>
-            <td className="min-w-25 border px-1 text-right">
-              C${formatNumber(granTotalNIO)}
-            </td>
-          </tr>
-          <tr>
-            <td className="w-12 border px-1 text-right">Detalle</td>
-            <td className="h-4.5 max-w-20 border px-1 text-right">
-              ${formatNumber(totalDolares)}
-            </td>
-            <td className="min-w-25 border px-1 text-right">
-              C${formatNumber(totalCordobas)}
-            </td>
-          </tr>
-          <tr>
-            <td className="w-12 border px-1 text-right">Square</td>
-            <td
-              className={cn(
-                "h-4.5 max-w-20 border px-1 text-right",
-                granTotalNIO - arqueo.saldo !== 0
-                  ? "bg-red-200 dark:bg-red-900/80"
-                  : "bg-green-200 dark:bg-green-900/80"
-              )}
-            >
-              {formatNumber(granTotalNIO - arqueo.saldo)}
-            </td>
-            <td className="min-w-25 border bg-yellow-200 px-1 text-right dark:bg-yellow-900">
-              C${formatNumber(arqueo.saldo)}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+              <tr>
+                <td className="w-12 border px-1 text-right">Detalle</td>
+                <td className="h-4.5 max-w-20 border px-1 text-right">
+                  ${formatNumber(totalDolares)}
+                </td>
+                <td className="min-w-25 border px-1 text-right">
+                  C${formatNumber(totalCordobas)}
+                </td>
+              </tr>
+              <tr>
+                <td className="w-12 border px-1 text-right">Square</td>
+                <td
+                  className={cn(
+                    "h-4.5 max-w-20 border px-1 text-right",
+                    granTotalNIO - arqueo.saldo !== 0
+                      ? "bg-red-200 dark:bg-red-900/80"
+                      : "bg-green-200 dark:bg-green-900/80"
+                  )}
+                >
+                  {formatNumber(granTotalNIO - arqueo.saldo)}
+                </td>
+                <td className="min-w-25 border bg-yellow-200 px-1 text-right dark:bg-yellow-900">
+                  C${formatNumber(arqueo.saldo)}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </CollapsibleContent>
+      </Collapsible>
     </form>
   )
 }

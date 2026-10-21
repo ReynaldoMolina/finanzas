@@ -9,7 +9,7 @@ export async function ArqueoWrapper({ searchParams }: PageWrapperType) {
   const { cambio_dolar } = await getConfiguracionCambioDolar()
 
   return (
-    <div className="flex flex-col flex-wrap gap-12 sm:flex-row sm:gap-4">
+    <div className="flex flex-col flex-wrap gap-4 sm:flex-row">
       {data.length <= 0 ? (
         <EmptyList />
       ) : (

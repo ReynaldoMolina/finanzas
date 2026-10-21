@@ -8,6 +8,7 @@ import { PageProps } from "@/types"
 import { ArqueoWrapper } from "@/components/wrappers/arqueo"
 import { Loading } from "@/components/loading"
 import { Suspense } from "react"
+import { LinkButton } from "@/components/link-button"
 
 const title = "Arqueos"
 
@@ -18,17 +19,14 @@ export const metadata = {
 export default async function Page({ searchParams }: PageProps) {
   return (
     <>
-      <AppHeader title={title} />
+      <AppHeader title={title}>
+        <LinkButton href="/arqueo/crear">
+          <PlusIcon />
+          Nuevo
+        </LinkButton>
+      </AppHeader>
       <PageWrapper>
-        <div className="flex gap-2">
-          <SearchInput />
-          <Link href="/arqueo/crear">
-            <Button>
-              <PlusIcon />
-              Nuevo
-            </Button>
-          </Link>
-        </div>
+        <SearchInput />
         <Suspense fallback={<Loading />}>
           <ArqueoWrapper searchParams={await searchParams} />
         </Suspense>
