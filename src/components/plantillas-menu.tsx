@@ -36,12 +36,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        e.key.toLowerCase() === "n" &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        !e.metaKey
-      ) {
+      if (e.key.toLowerCase() === "n" && e.shiftKey) {
         e.preventDefault()
         setIsOpen((prev) => !prev)
       }
@@ -60,7 +55,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
     >
       <DrawerTrigger
         render={
-          <Button variant="secondary">
+          <Button>
             <PlusIcon />
             Nuevo
           </Button>
@@ -78,11 +73,12 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
               {TRANSACCION_TIPO.map((item) => (
                 <LinkButton
                   variant="secondary"
-                  label={item}
                   key={item}
                   href={`/transaccion/crear?tipo=${item}`}
                   onClick={() => setIsOpen(false)}
-                />
+                >
+                  {item}
+                </LinkButton>
               ))}
             </div>
           </div>
@@ -94,10 +90,11 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
                   <LinkButton
                     variant="secondary"
                     key={i.nombre}
-                    label={i.nombre}
                     href={`/transaccion/crear?tipo=${item.tipo}&monto=${Number(i.monto) === 0 ? "" : i.monto}&origen=${i.id_cuenta_origen}&destino=${i.id_cuenta_destino}&descripcion=${i.descripcion}`}
                     onClick={() => setIsOpen(false)}
-                  />
+                  >
+                    {i.nombre}
+                  </LinkButton>
                 ))}
               </div>
             </div>

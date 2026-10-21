@@ -10,7 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table"
-import { Button } from "../ui/button"
 import Link from "next/link"
 import { TransaccionTablaType } from "@/types"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -48,24 +47,27 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
 
           return (
             <Link key={item.id} href={`/transaccion/${item.id}`}>
-              <Card className="py-3 dark:border-0">
-                <CardHeader>
-                  <CardTitle className="truncate text-xs font-normal">
+              <Card className="py-3">
+                <CardHeader className="gap-2">
+                  <CardTitle className="truncate text-xs">
                     {item.categoria_origen} · {item.cuenta_origen}
                   </CardTitle>
-                  <CardDescription className="flex flex-col gap-1">
+                  <CardDescription className="flex flex-col gap-2">
                     {item.descripcion && (
-                      <span className="text-xxs">{item.descripcion}</span>
+                      <span className="text-xs">{item.descripcion}</span>
                     )}
-                    <Badge variant="secondary" className="text-xxs">
+                    <Badge
+                      variant="secondary"
+                      className="text-muted-foreground"
+                    >
                       {item.categoria_destino} · {item.cuenta_destino}
                     </Badge>
                   </CardDescription>
-                  <CardAction className="flex flex-col items-end">
-                    <span className={cn("text-sm", textColor)}>
+                  <CardAction className="flex flex-col items-end gap-1.5">
+                    <span className={cn("text-sm font-semibold", textColor)}>
                       {sign} {formatNumber(Number(item.monto))}
                     </span>
-                    <span className="text-xxs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       {formatDate(item.fecha)}
                     </span>
                   </CardAction>
@@ -109,7 +111,9 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                 <TableCell className="text-muted-foreground">
                   {formatDate(item.fecha)}
                 </TableCell>
-                <TableCell className={cn("text-right", textColor)}>
+                <TableCell
+                  className={cn("text-right font-semibold", textColor)}
+                >
                   {sign} {formatNumber(Number(item.monto))}
                 </TableCell>
                 <TableCell>

@@ -35,7 +35,7 @@ export default async function Page({ searchParams }: PageProps) {
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
-              <Button variant="secondary">
+              <Button>
                 <PlusIcon />
                 Nuevo
               </Button>

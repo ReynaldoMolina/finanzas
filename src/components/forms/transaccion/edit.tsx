@@ -80,7 +80,7 @@ export function EditTransaccionForm({
     >
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
-          <FieldGroup className="sm:flex-row">
+          <FieldGroup className="flex-row">
             <FormDatePicker control={form.control} name="fecha" label="Fecha" />
             <FormSelect
               control={form.control}

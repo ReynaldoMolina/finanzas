@@ -8,6 +8,7 @@ import { PlusIcon } from "lucide-react"
 import { Loading } from "@/components/loading"
 import { Suspense } from "react"
 import PlantillaWrapper from "@/components/wrappers/plantilla"
+import { LinkButton } from "@/components/link-button"
 
 const title = "Plantillas"
 
@@ -18,18 +19,14 @@ export const metadata = {
 export default async function Page({ searchParams }: PageProps) {
   return (
     <>
-      <AppHeader title={title} />
+      <AppHeader title={title}>
+        <LinkButton href="/configuracion/plantilla/crear">
+          <PlusIcon />
+          Nuevo
+        </LinkButton>
+      </AppHeader>
       <PageWrapper>
-        <div className="flex gap-2">
-          <SearchInput />
-
-          <Link href="/configuracion/plantilla/crear">
-            <Button>
-              <PlusIcon />
-              Nuevo
-            </Button>
-          </Link>
-        </div>
+        <SearchInput />
         <Suspense fallback={<Loading />}>
           <PlantillaWrapper searchParams={await searchParams} />
         </Suspense>

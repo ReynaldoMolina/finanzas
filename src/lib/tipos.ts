@@ -9,7 +9,7 @@ export const cuentaTipo: SelectItemType[] = CUENTA_TIPO.map((tipo) => ({
   label: tipo,
 }))
 
-export const TRANSACCION_TIPO = ["Ingreso", "Gasto", "Transferencia"] as const
+export const TRANSACCION_TIPO = ["Gasto", "Ingreso", "Transferencia"] as const
 
 export type TransaccionTipo = (typeof TRANSACCION_TIPO)[number]
 

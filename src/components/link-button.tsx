@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 
 interface LinkButton extends React.ComponentProps<typeof Link> {
   href: string
-  label?: string
   variant?: VariantProps<typeof buttonVariants>["variant"]
   size?: VariantProps<typeof buttonVariants>["size"]
   children?: ReactNode
@@ -15,7 +14,6 @@ interface LinkButton extends React.ComponentProps<typeof Link> {
 
 export function LinkButton({
   href,
-  label,
   variant = "default",
   size = "default",
   children,
@@ -29,7 +27,6 @@ export function LinkButton({
       {...props}
     >
       {children && children}
-      {label && label}
     </Link>
   )
 }

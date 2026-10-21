@@ -86,7 +86,7 @@ export function EditPlantillaForm({
               label="Nombre"
             />
           </FieldGroup>
-          <FieldGroup className="sm:flex-row">
+          <FieldGroup className="flex-row">
             <FormSelect
               control={form.control}
               name="tipo"
