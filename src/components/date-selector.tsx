@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { getCurrentMonth } from "@/lib/get-date"
 import { dateIsoToDate, dateToIso } from "@/lib/formatters"
-import { CalendarIcon } from "lucide-react"
 import { SearchParamsProps } from "@/types"
 import {
   Dialog,
@@ -41,12 +40,7 @@ export function DateSelector({ searchParams }: DateSelector) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
-        render={
-          <ToggleGroupItem value="6">
-            <CalendarIcon />
-            Rango
-          </ToggleGroupItem>
-        }
+        render={<ToggleGroupItem value="6">Rango</ToggleGroupItem>}
       />
       <DialogContent>
         <DialogHeader>

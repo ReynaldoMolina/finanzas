@@ -24,37 +24,39 @@ export const metadata = {
 }
 
 export default async function Page({ searchParams }: PageProps) {
+  const createLinks = [
+    { label: "Cuenta", url: "/cuenta/crear" },
+    { label: "Categoría", url: "/categoria/crear" },
+  ]
+
   return (
     <>
-      <AppHeader title={title} />
+      <AppHeader title={title}>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button variant="secondary">
+                <PlusIcon />
+                Nuevo
+              </Button>
+            }
+          />
+          <DropdownMenuContent>
+            <DropdownMenuGroup>
+              {createLinks.map((item) => (
+                <DropdownMenuItem
+                  key={item.label}
+                  className="py-3"
+                  render={<Link href={item.url}>{item.label}</Link>}
+                />
+              ))}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </AppHeader>
       <PageWrapper>
         <div className="flex flex-wrap gap-2">
-          <div className="flex w-full gap-2 sm:w-fit">
-            <SearchInput />
-
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
-                  <Button>
-                    <PlusIcon />
-                    Nuevo
-                  </Button>
-                }
-              />
-              <DropdownMenuContent>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    className="py-3"
-                    render={<Link href="/cuenta/crear">Cuenta</Link>}
-                  />
-                  <DropdownMenuItem
-                    className="py-3"
-                    render={<Link href="/categoria/crear">Categoría</Link>}
-                  />
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <SearchInput />
           <DateRangeButtons searchParams={await searchParams} />
         </div>
 

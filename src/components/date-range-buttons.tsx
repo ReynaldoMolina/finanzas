@@ -46,8 +46,6 @@ export function DateRangeButtons({
   return (
     <ToggleGroup variant="outline" className="overflow-auto" value={groupValue}>
       {rangeOptions.map(({ value, label, range }) => {
-        const active = isActive(start, end, range.start, range.end)
-
         return (
           <ToggleGroupItem
             key={value}

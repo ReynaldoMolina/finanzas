@@ -26,6 +26,7 @@ import { cn } from "cn"
 import { Badge } from "../ui/badge"
 import EmptyList from "./empty-list"
 import { Pagination } from "./pagination"
+import { LinkButton } from "../link-button"
 
 interface DataTableProps {
   data: TransaccionTablaType[]
@@ -97,11 +98,13 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             return (
               <TableRow key={item.id}>
                 <TableCell>
-                  <Link href={`/transaccion/${item.id}`}>
-                    <Button variant="outline" size="icon-xs">
-                      <PencilIcon />
-                    </Button>
-                  </Link>
+                  <LinkButton
+                    href={`/transaccion/${item.id}`}
+                    variant="outline"
+                    size="icon-xs"
+                  >
+                    <PencilIcon />
+                  </LinkButton>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
                   {formatDate(item.fecha)}

@@ -2,13 +2,11 @@ import { AppHeader } from "@/components/header"
 import { PageWrapper } from "@/components/page-wrapper"
 import { SearchInput } from "@/components/search-input"
 import { PageProps } from "@/types"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { PlusIcon } from "lucide-react"
 import { DateRangeButtons } from "@/components/date-range-buttons"
 import { Suspense } from "react"
 import { Loading } from "@/components/loading"
 import TransaccionWrapper from "@/components/wrappers/transaccion"
+import { PlantillasMenuWrapper } from "@/components/wrappers/transaccion-nueva"
 
 const title = "Transacciones"
 
@@ -19,17 +17,13 @@ export const metadata = {
 export default async function Page({ searchParams }: PageProps) {
   return (
     <>
-      <AppHeader title={title} />
+      <AppHeader title={title}>
+        <PlantillasMenuWrapper />
+      </AppHeader>
       <PageWrapper>
         <div className="flex flex-wrap gap-2">
           <div className="flex w-full gap-2 sm:w-fit">
             <SearchInput />
-            <Link href="/transaccion/plantilla">
-              <Button>
-                <PlusIcon />
-                Nuevo
-              </Button>
-            </Link>
           </div>
           <DateRangeButtons searchParams={await searchParams} />
         </div>
