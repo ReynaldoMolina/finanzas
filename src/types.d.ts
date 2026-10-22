@@ -49,6 +49,7 @@ export type Cuenta = {
   id: number
   nombre: string
   saldo: number
+  is_dollar: boolean
 }
 
 export type CuentaCategoria = {
@@ -73,6 +74,7 @@ export interface CuentaById {
   id: number
   id_categoria: number
   nombre: string
+  is_dollar: boolean
   tipo?: CuentaTipo
 }
 

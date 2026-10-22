@@ -11,6 +11,7 @@ import {
   pgEnum,
   pgTable,
   text,
+  boolean,
 } from "drizzle-orm/pg-core"
 
 export const tipoCuentaEnum = pgEnum("cuenta_tipo", CUENTA_TIPO)
@@ -27,6 +28,7 @@ export const cuenta = pgTable("cuenta", {
     .notNull()
     .references(() => cuentaCategoria.id),
   nombre: text().notNull(),
+  is_dollar: boolean().notNull().default(false),
 })
 
 export const tipoTransaccionEnum = pgEnum("transaccion_tipo", TRANSACCION_TIPO)

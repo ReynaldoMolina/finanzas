@@ -13,7 +13,7 @@ export const metadata = {
 export default async function Page() {
   return (
     <>
-      <AppHeader title={title} />
+      <AppHeader title={title} showBackButton />
       <PageWrapper className="gap-4 sm:max-w-md">
         <Suspense fallback={<Loading />}>
           <ConfiguracionWrapper />

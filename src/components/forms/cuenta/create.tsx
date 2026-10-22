@@ -1,44 +1,49 @@
 "use client"
 
+import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import z from "zod"
 import { cuentaSchema } from "@/validation/schema"
 import { FieldGroup, FieldSet } from "../../ui/field"
 import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
-import { updateCuenta } from "@/database/actions/cuenta"
 import { CuentaById, SelectItemType } from "@/types"
+import { createCuenta } from "@/database/actions/cuenta"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { ResponsiveDrawer } from "../../responsive-drawer"
+import { FormInputText } from "@/components/form-elements/form-input-text"
 import { SelectUpdateParam } from "@/components/form-elements/select-update-param"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
-import { FormInputText } from "@/components/form-elements/form-input-text"
-import { cuentaTipo } from "@/lib/tipos"
+import { CuentaTipo, cuentaTipo } from "@/lib/tipos"
+import { FormSwitch } from "@/components/form-elements/form-switch"
 
-interface EditCuentaForm {
-  cuenta: CuentaById
+interface CreateCuentaFormProps {
   categorias: SelectItemType[]
+  cuenta_tipo?: CuentaTipo
 }
 
-export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
-  const formId = "edit-cuenta"
+export function CreateCuentaForm({
+  categorias,
+  cuenta_tipo,
+}: CreateCuentaFormProps) {
+  const formId = "create-cuenta"
   const form = useForm<z.infer<typeof cuentaSchema>>({
     resolver: zodResolver(cuentaSchema),
     defaultValues: {
-      id_categoria: cuenta.id_categoria,
-      nombre: cuenta.nombre,
+      id_categoria: undefined,
+      nombre: "",
+      is_dollar: false,
     },
   })
 
   const [state, formAction, isPending] = useActionState(
-    updateCuenta,
+    createCuenta,
     stateDefault
   )
 
   function onSubmit(values: z.infer<typeof cuentaSchema>) {
     startTransition(() => {
-      formAction({ id: cuenta.id, values: values as CuentaById })
+      formAction({ values: values as CuentaById })
     })
   }
 
@@ -46,7 +51,7 @@ export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
 
   return (
     <ResponsiveDrawer
-      action="edit"
+      action="create"
       formId={formId}
       name="cuenta"
       isPending={isPending}
@@ -59,10 +64,10 @@ export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
               label="Tipo"
               items={cuentaTipo}
               paramKey="cuenta_tipo"
-              initialTipo={cuenta.tipo}
-              onChangeExtra={() =>
+              onChangeExtra={() => {
                 form.setValue("id_categoria", "" as unknown as number)
-              }
+                form.setValue("is_dollar", false)
+              }}
             />
 
             <FormComboBox
@@ -76,6 +81,13 @@ export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
               control={form.control}
               name="nombre"
               label="Nombre"
+            />
+            <FormSwitch
+              control={form.control}
+              name="is_dollar"
+              label="Cuenta en dólares"
+              description="Se mostrará el total en dólares."
+              hideField={cuenta_tipo !== "Activo"}
             />
           </FieldGroup>
         </FieldSet>

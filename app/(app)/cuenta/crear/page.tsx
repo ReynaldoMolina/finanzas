@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic"
 
-import { CreateCuentaForm } from "@/components/forms/cuentas/create"
+import { CreateCuentaForm } from "@/components/forms/cuenta/create"
 import { getCategoriasByTipo } from "@/database/get-data/categoria"
 import { PageProps } from "@/types"
 

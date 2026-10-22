@@ -10,6 +10,7 @@ export const cuentaCategoriaSchema = z.object({
 export const cuentaSchema = z.object({
   id_categoria: zTextToNumber("Selecciona una opción."),
   nombre: z.string().trim().min(1, "Escribe un nombre."),
+  is_dollar: z.boolean(),
 })
 
 export const transaccionSchema = z.object({

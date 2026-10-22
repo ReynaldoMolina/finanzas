@@ -24,6 +24,7 @@ export async function getCuentas(
     cuentaId: cuenta.id,
     cuentaNombre: cuenta.nombre,
     total: sql<number>`COALESCE(${totalesCTE.totalCuenta}, 0)`,
+    is_dollar: cuenta.is_dollar,
   }
 
   const filterBySearch = buildSearchFilter(searchParams, [
@@ -52,7 +53,12 @@ export async function getCuentas(
             id: number
             nombre: string
             subtotal: number
-            cuentas: { id: number; nombre: string; saldo: number }[]
+            cuentas: {
+              id: number
+              nombre: string
+              saldo: number
+              is_dollar: boolean
+            }[]
           }
         >
       }
@@ -96,6 +102,7 @@ export async function getCuentas(
             id: row.cuentaId,
             nombre: row.cuentaNombre!,
             saldo: cuentaTotal,
+            is_dollar: row.is_dollar,
           })
 
           // Acumulamos en la categoría y en el tipo
@@ -128,6 +135,7 @@ export async function getCuentaById(id: string): Promise<{ data: CuentaById }> {
         id_categoria: cuenta.id_categoria,
         nombre: cuenta.nombre,
         tipo: cuentaCategoria.tipo,
+        is_dollar: cuenta.is_dollar,
       })
       .from(cuenta)
       .innerJoin(cuentaCategoria, eq(cuenta.id_categoria, cuentaCategoria.id))

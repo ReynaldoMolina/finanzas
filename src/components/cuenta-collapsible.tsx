@@ -2,7 +2,7 @@
 
 import { formatNumber } from "@/lib/formatters"
 import { CuentaTipos } from "@/types"
-import { ChevronRight, DotIcon } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,9 +13,10 @@ import Link from "next/link"
 
 interface CuentaCollapsible {
   tipo: CuentaTipos
+  cambio_dolar: number
 }
 
-export function CuentaCollapsible({ tipo }: CuentaCollapsible) {
+export function CuentaCollapsible({ tipo, cambio_dolar }: CuentaCollapsible) {
   return (
     <div>
       {tipo.categorias && tipo.categorias.length > 0 ? (
@@ -23,10 +24,7 @@ export function CuentaCollapsible({ tipo }: CuentaCollapsible) {
           <Collapsible key={categoria.id}>
             <CollapsibleTrigger
               render={
-                <Button
-                  variant="ghost"
-                  className="w-full border-b-border font-normal"
-                >
+                <Button variant="ghost" className="w-full font-normal">
                   <ChevronRight className="transition group-data-panel-open/button:rotate-90" />
 
                   <Link
@@ -43,7 +41,7 @@ export function CuentaCollapsible({ tipo }: CuentaCollapsible) {
               }
             />
             {/* Nivel 3: Cuentas */}
-            <CollapsibleContent>
+            <CollapsibleContent className="mb-4">
               {categoria.cuentas && categoria.cuentas.length > 0 ? (
                 <ul className="ml-6 text-xs">
                   {categoria.cuentas.map((cuenta) => (
@@ -59,6 +57,8 @@ export function CuentaCollapsible({ tipo }: CuentaCollapsible) {
                         {cuenta.nombre}
                       </Link>
                       <span className="ml-auto">
+                        {cuenta.is_dollar &&
+                          `$${formatNumber(cuenta.saldo / cambio_dolar)} | `}
                         {formatNumber(cuenta.saldo)}
                       </span>
                     </li>
