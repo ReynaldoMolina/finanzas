@@ -7,6 +7,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import { Spinner } from "@/components/ui/spinner"
 import { updateArqueoConteo } from "@/database/actions/arqueo"
 import { stateDefault } from "@/database/actions/state-message"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
@@ -16,9 +17,9 @@ import { cn } from "@/lib/utils"
 import { ArqueoPage, ArqueoType } from "@/types"
 import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CheckIcon, ChevronDown, XIcon } from "lucide-react"
+import { CheckIcon, ChevronDown, SaveIcon, XIcon } from "lucide-react"
 import Link from "next/link"
-import { useActionState, startTransition, useEffect } from "react"
+import { useActionState, startTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
 
@@ -98,26 +99,6 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
   }
 
   useServerActionFeedback(state, { refresh: true })
-
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout
-
-    const subscription = form.watch(() => {
-      clearTimeout(timeoutId)
-      timeoutId = setTimeout(() => {
-        form.handleSubmit((values) => {
-          startTransition(() => {
-            formAction({ id: arqueo.id, values: values as ArqueoType })
-          })
-        })()
-      }, 3000)
-    })
-
-    return () => {
-      subscription.unsubscribe()
-      clearTimeout(timeoutId)
-    }
-  }, [form, formAction, arqueo.id])
 
   const formValues = form.watch()
 
@@ -245,6 +226,15 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
               </tr>
             </tfoot>
           </table>
+          <Button
+            variant="outline"
+            className="mt-2 w-full"
+            type="submit"
+            id={formId}
+          >
+            {isPending ? <Spinner /> : <SaveIcon />}
+            Guardar
+          </Button>
         </CollapsibleContent>
       </Collapsible>
     </form>
