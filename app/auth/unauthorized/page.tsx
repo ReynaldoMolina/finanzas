@@ -2,6 +2,10 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, Frown } from "lucide-react"
 import Link from "next/link"
 
+export const metadata = {
+  title: "No autorizado",
+}
+
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-2">

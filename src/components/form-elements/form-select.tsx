@@ -16,7 +16,6 @@ type FormSelectType<T extends FieldValues> = {
   items: SelectItemType[]
   description?: string
   disabled?: boolean
-  hidden?: boolean
   onChangeExtra?: (value: string | number | null) => void
 }
 
@@ -27,7 +26,6 @@ export function FormSelect<T extends FieldValues>({
   items,
   description,
   disabled = false,
-  hidden = false,
   onChangeExtra,
 }: FormSelectType<T>) {
   return (
@@ -35,16 +33,20 @@ export function FormSelect<T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid} hidden={hidden}>
+        <Field data-invalid={fieldState.invalid}>
           <FieldLabel htmlFor={name}>{label}</FieldLabel>
           <Select
+            {...field}
             onValueChange={(value) => {
               field.onChange(value)
               onChangeExtra?.(value)
             }}
             value={field.value != null ? String(field.value) : ""}
           >
-            <SelectTrigger disabled={disabled}>
+            <SelectTrigger
+              disabled={disabled}
+              aria-invalid={fieldState.invalid}
+            >
               <SelectValue placeholder="Seleccionar" />
             </SelectTrigger>
             <SelectContent>

@@ -19,14 +19,14 @@ export const metadata = {
 export default async function Page({ searchParams }: PageProps) {
   return (
     <>
-      <AppHeader title={title}>
-        <LinkButton href="/configuracion/plantilla/crear">
-          <PlusIcon />
-          Nuevo
-        </LinkButton>
-      </AppHeader>
+      <AppHeader title={title} showBackButton />
       <PageWrapper>
-        <SearchInput />
+        <SearchInput>
+          <LinkButton href="/ajustes/plantilla/crear">
+            <PlusIcon />
+            Nuevo
+          </LinkButton>
+        </SearchInput>
         <Suspense fallback={<Loading />}>
           <PlantillaWrapper searchParams={await searchParams} />
         </Suspense>

@@ -19,14 +19,14 @@ export const metadata = {
 export default async function Page({ searchParams }: PageProps) {
   return (
     <>
-      <AppHeader title={title}>
-        <LinkButton href="/arqueo/crear">
-          <PlusIcon />
-          Nuevo
-        </LinkButton>
-      </AppHeader>
+      <AppHeader title={title} />
       <PageWrapper>
-        <SearchInput />
+        <SearchInput>
+          <LinkButton href="/arqueo/crear">
+            <PlusIcon />
+            Nuevo
+          </LinkButton>
+        </SearchInput>
         <Suspense fallback={<Loading />}>
           <ArqueoWrapper searchParams={await searchParams} />
         </Suspense>

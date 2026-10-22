@@ -17,14 +17,12 @@ export const metadata = {
 export default async function Page({ searchParams }: PageProps) {
   return (
     <>
-      <AppHeader title={title}>
-        <PlantillasMenuWrapper />
-      </AppHeader>
+      <AppHeader title={title} />
       <PageWrapper>
         <div className="flex flex-wrap gap-2">
-          <div className="flex w-full gap-2 sm:w-fit">
-            <SearchInput />
-          </div>
+          <SearchInput>
+            <PlantillasMenuWrapper />
+          </SearchInput>
           <DateRangeButtons searchParams={await searchParams} />
         </div>
 

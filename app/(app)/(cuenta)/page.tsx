@@ -31,32 +31,32 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <>
-      <AppHeader title={title}>
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
-              <Button>
-                <PlusIcon />
-                Nuevo
-              </Button>
-            }
-          />
-          <DropdownMenuContent>
-            <DropdownMenuGroup>
-              {createLinks.map((item) => (
-                <DropdownMenuItem
-                  key={item.label}
-                  className="py-3"
-                  render={<Link href={item.url}>{item.label}</Link>}
-                />
-              ))}
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </AppHeader>
+      <AppHeader title={title} />
       <PageWrapper>
         <div className="flex flex-wrap gap-2">
-          <SearchInput />
+          <SearchInput>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <Button>
+                    <PlusIcon />
+                    Nuevo
+                  </Button>
+                }
+              />
+              <DropdownMenuContent>
+                <DropdownMenuGroup>
+                  {createLinks.map((item) => (
+                    <DropdownMenuItem
+                      key={item.label}
+                      className="py-3"
+                      render={<Link href={item.url}>{item.label}</Link>}
+                    />
+                  ))}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SearchInput>
           <DateRangeButtons searchParams={await searchParams} />
         </div>
 

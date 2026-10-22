@@ -47,6 +47,7 @@ export function FormComboBox<T extends FieldValues>({
               autoHighlight
             >
               <ComboboxInput
+                aria-invalid={fieldState.invalid}
                 placeholder={placeholder ? placeholder : label}
                 disabled={disabled}
                 showClear

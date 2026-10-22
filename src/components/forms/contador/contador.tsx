@@ -7,8 +7,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { Spinner } from "@/components/ui/spinner"
-import { toast } from "@/components/ui/toast"
 import { updateArqueoConteo } from "@/database/actions/arqueo"
 import { stateDefault } from "@/database/actions/state-message"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
@@ -18,7 +16,7 @@ import { cn } from "@/lib/utils"
 import { ArqueoPage, ArqueoType } from "@/types"
 import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ChevronDown, SaveIcon } from "lucide-react"
+import { CheckIcon, ChevronDown, XIcon } from "lucide-react"
 import Link from "next/link"
 import { useActionState, startTransition, useEffect } from "react"
 import { useForm } from "react-hook-form"
@@ -144,6 +142,9 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
     { totalDolares: 0, totalCordobas: 0, granTotalNIO: 0 }
   )
 
+  const diferencia = granTotalNIO - arqueo.saldo
+  const cuadrado = diferencia === 0
+
   return (
     <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
       <Collapsible className="flex flex-col gap-2 xs:w-70">
@@ -157,12 +158,18 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
               >
                 {arqueo.cuenta}
               </Link>
-              <ChevronDown className="ml-auto transition group-data-panel-open/button:rotate-180" />
+              <span className="ml-auto">
+                {cuadrado ? (
+                  <CheckIcon className="text-green-600" />
+                ) : (
+                  <XIcon className="text-red-600" />
+                )}
+              </span>
+              <ChevronDown className="transition group-data-panel-open/button:rotate-180" />
             </Button>
           }
         />
-
-        <CollapsibleContent className="space-y-2">
+        <CollapsibleContent className="mb-4">
           <table className="w-full text-xs">
             <tbody className="dark:bg-muted/50">
               {DENOMINATIONS.map(
@@ -225,12 +232,12 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                 <td
                   className={cn(
                     "h-4.5 max-w-20 border px-1 text-right",
-                    granTotalNIO - arqueo.saldo !== 0
-                      ? "bg-red-200 dark:bg-red-900/80"
-                      : "bg-green-200 dark:bg-green-900/80"
+                    cuadrado
+                      ? "bg-green-200 dark:bg-green-900/80"
+                      : "bg-red-200 dark:bg-red-900/80"
                   )}
                 >
-                  {formatNumber(granTotalNIO - arqueo.saldo)}
+                  {formatNumber(diferencia)}
                 </td>
                 <td className="min-w-25 border bg-yellow-200 px-1 text-right dark:bg-yellow-900">
                   C${formatNumber(arqueo.saldo)}

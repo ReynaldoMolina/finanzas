@@ -42,7 +42,7 @@ export function PlantillaTabla({ data }: DataTableProps) {
       const { textColor, sign } = getTransaccionStyle(item.tipo)
 
       return (
-        <Link key={item.id} href={`/configuracion/plantilla/${item.id}`}>
+        <Link key={item.id} href={`/ajustes/plantilla/${item.id}`}>
           <Card className="py-3">
             <CardHeader className="gap-2">
               <CardTitle className="truncate text-xs">
@@ -89,7 +89,7 @@ export function PlantillaTabla({ data }: DataTableProps) {
           return (
             <TableRow key={item.id}>
               <TableCell>
-                <Link href={`/configuracion/plantilla/${item.id}`}>
+                <Link href={`/ajustes/plantilla/${item.id}`}>
                   <Button variant="outline" size="icon-xs">
                     <PencilIcon />
                   </Button>

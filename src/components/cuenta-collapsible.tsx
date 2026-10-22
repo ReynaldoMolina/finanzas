@@ -24,8 +24,8 @@ export function CuentaCollapsible({ tipo }: CuentaCollapsible) {
             <CollapsibleTrigger
               render={
                 <Button
-                  variant="secondary"
-                  className="w-full dark:bg-secondary/50"
+                  variant="ghost"
+                  className="w-full border-b-border font-normal"
                 >
                   <ChevronRight className="transition group-data-panel-open/button:rotate-90" />
 
@@ -45,13 +45,12 @@ export function CuentaCollapsible({ tipo }: CuentaCollapsible) {
             {/* Nivel 3: Cuentas */}
             <CollapsibleContent>
               {categoria.cuentas && categoria.cuentas.length > 0 ? (
-                <ul className="text-xs">
+                <ul className="ml-6 text-xs">
                   {categoria.cuentas.map((cuenta) => (
                     <li
                       key={cuenta.id}
                       className="flex items-center gap-2 px-2.5 py-2 text-muted-foreground not-last:border-b"
                     >
-                      <DotIcon size="16" />
                       <Link
                         href={`/cuenta/${cuenta.id}`}
                         className="hover:underline"

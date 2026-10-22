@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "../../ui/card"
 import { authClient } from "@/lib/auth-client"
+import { DollarSignIcon } from "lucide-react"
 
 export function LoginForm() {
   const searchParams = useSearchParams()
@@ -22,9 +23,8 @@ export function LoginForm() {
   return (
     <main className="flex h-dvh">
       <Card className="m-auto w-full max-w-xs">
-        <div className="mx-auto w-fit rounded-full bg-muted p-5">
-          {/* <Image src="/logo.svg" alt="icon" height={100} width={100} /> */}
-          Logo
+        <div className="mx-auto flex size-8 items-center justify-center bg-sidebar-primary p-1 text-white">
+          <DollarSignIcon />
         </div>
         <CardHeader className="text-center">
           <CardTitle className="text-lg">Bienvenido</CardTitle>

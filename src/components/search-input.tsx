@@ -2,7 +2,7 @@
 
 import { useSearchParams, usePathname } from "next/navigation"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 import {
   InputGroup,
@@ -12,7 +12,11 @@ import {
 } from "./ui/input-group"
 import { SearchIcon, XIcon } from "lucide-react"
 
-export function SearchInput() {
+interface SearchInput {
+  children: ReactNode
+}
+
+export function SearchInput({ children }: SearchInput) {
   const searchParams = useSearchParams()
   const [searchText, setSearchText] = useState(
     searchParams.get("search")?.toString() || ""
@@ -36,26 +40,29 @@ export function SearchInput() {
   }
 
   return (
-    <InputGroup className="sm:w-60">
-      <InputGroupAddon>
-        <SearchIcon />
-      </InputGroupAddon>
-      <InputGroupInput
-        type="search"
-        placeholder="Buscar"
-        value={searchText}
-        onChange={(event) => handleChange(event.target.value)}
-      />
-      {searchText && (
-        <InputGroupAddon align="inline-end">
-          <InputGroupButton
-            onClick={() => handleChange("")}
-            disabled={searchText.length === 0}
-          >
-            <XIcon />
-          </InputGroupButton>
+    <div className="flex w-full gap-2 sm:w-fit">
+      <InputGroup className="sm:w-60">
+        <InputGroupAddon>
+          <SearchIcon />
         </InputGroupAddon>
-      )}
-    </InputGroup>
+        <InputGroupInput
+          type="search"
+          placeholder="Buscar"
+          value={searchText}
+          onChange={(event) => handleChange(event.target.value)}
+        />
+        {searchText && (
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton
+              onClick={() => handleChange("")}
+              disabled={searchText.length === 0}
+            >
+              <XIcon />
+            </InputGroupButton>
+          </InputGroupAddon>
+        )}
+      </InputGroup>
+      {children}
+    </div>
   )
 }

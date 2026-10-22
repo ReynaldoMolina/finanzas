@@ -8,7 +8,7 @@ export function BackButton() {
   const router = useRouter()
 
   return (
-    <Button variant="ghost" onClick={() => router.back()}>
+    <Button variant="ghost" size="icon" onClick={() => router.back()}>
       <ArrowLeft />
     </Button>
   )

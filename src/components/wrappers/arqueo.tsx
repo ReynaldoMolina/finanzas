@@ -8,15 +8,13 @@ export async function ArqueoWrapper({ searchParams }: PageWrapperType) {
   const { data } = await getArqueos(searchParams)
   const { cambio_dolar } = await getConfiguracionCambioDolar()
 
+  if (data.length <= 0) return <EmptyList />
+
   return (
-    <div className="flex flex-col flex-wrap gap-4 sm:flex-row">
-      {data.length <= 0 ? (
-        <EmptyList />
-      ) : (
-        data.map((item) => (
-          <Contador key={item.id} arqueo={item} cambio_dolar={cambio_dolar} />
-        ))
-      )}
+    <div className="flex flex-col flex-wrap gap-2 xs:flex-row">
+      {data.map((item) => (
+        <Contador key={item.id} arqueo={item} cambio_dolar={cambio_dolar} />
+      ))}
     </div>
   )
 }

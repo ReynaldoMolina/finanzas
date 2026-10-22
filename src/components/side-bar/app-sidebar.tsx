@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sidebar"
 import { MenuItem } from "./menu-item"
 import { Coins, ArrowLeftRight, List, DollarSign, Settings } from "lucide-react"
+import { AppSidebarFooter } from "./footer"
 
 export const menuItems = [
   {
@@ -26,14 +27,9 @@ export const menuItems = [
     icon: ArrowLeftRight,
   },
   {
-    name: "Arqueo",
+    name: "Arqueos",
     url: "/arqueo",
     icon: Coins,
-  },
-  {
-    name: "Configuración",
-    url: "/configuracion",
-    icon: Settings,
   },
 ]
 
@@ -46,7 +42,7 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div className="flex aspect-square size-6 items-center justify-center rounded bg-sidebar-primary text-white">
+              <div className="flex size-6 items-center justify-center bg-sidebar-primary text-white">
                 <DollarSign />
               </div>
               <span className="text-sm">Finanzas</span>
@@ -65,7 +61,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <AppSidebarFooter />
+      </SidebarFooter>
     </Sidebar>
   )
 }

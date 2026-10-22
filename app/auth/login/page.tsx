@@ -2,7 +2,7 @@ import { LoginForm } from "@/components/forms/login/login-form"
 import { Suspense } from "react"
 
 export const metadata = {
-  title: "Iniciar sesión - Finanzas",
+  title: "Iniciar sesión",
 }
 
 export default function Page() {
