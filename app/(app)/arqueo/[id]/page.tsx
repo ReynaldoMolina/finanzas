@@ -1,8 +1,10 @@
 export const dynamic = "force-dynamic"
 
 import { EditArqueoForm } from "@/components/forms/arqueo/edit"
-import { getArqueoById } from "@/database/get-data/arqueo"
-import { getCuentasActivos } from "@/database/get-data/cuenta"
+import {
+  getArqueoById,
+  getCuentasActivosArqueo,
+} from "@/database/get-data/arqueo"
 import { PageProps } from "@/types"
 import { notFound } from "next/navigation"
 
@@ -16,7 +18,7 @@ export default async function Page({ params }: PageProps) {
 
   if (!data) return notFound()
 
-  const { data: cuentas } = await getCuentasActivos()
+  const { data: cuentas } = await getCuentasActivosArqueo(data.id_cuenta)
 
   return <EditArqueoForm arqueo={data} cuentas={cuentas} />
 }

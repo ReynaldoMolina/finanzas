@@ -102,7 +102,7 @@ export async function getCuentas(
             id: row.cuentaId,
             nombre: row.cuentaNombre!,
             saldo: cuentaTotal,
-            is_dollar: row.is_dollar,
+            is_dollar: row.is_dollar ?? false,
           })
 
           // Acumulamos en la categoría y en el tipo

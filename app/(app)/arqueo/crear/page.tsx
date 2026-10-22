@@ -1,14 +1,14 @@
 export const dynamic = "force-dynamic"
 
 import { CreateArqueoForm } from "@/components/forms/arqueo/create"
-import { getCuentasActivos } from "@/database/get-data/cuenta"
+import { getCuentasActivosArqueo } from "@/database/get-data/arqueo"
 
 export const metadata = {
   title: "Crear arqueo",
 }
 
 export default async function Page() {
-  const { data } = await getCuentasActivos()
+  const { data } = await getCuentasActivosArqueo()
 
   return <CreateArqueoForm cuentas={data} />
 }

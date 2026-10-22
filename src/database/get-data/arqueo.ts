@@ -1,7 +1,12 @@
-import { ArqueoById, ArqueoPage, SearchParamsProps } from "@/types"
+import {
+  ArqueoById,
+  ArqueoPage,
+  SearchParamsProps,
+  SelectItemType,
+} from "@/types"
 import { db } from ".."
-import { arqueo, cuenta } from "../schema/schema"
-import { asc, eq, getColumns, sql, and } from "drizzle-orm"
+import { arqueo, cuenta, cuentaCategoria } from "../schema/schema"
+import { asc, eq, getColumns, sql, and, notExists, or } from "drizzle-orm"
 import { getAccountTotals } from "./ctes"
 import { getSearchParams } from "./get-search-params"
 import { buildSearchFilter } from "./build-search-filter"
@@ -48,5 +53,40 @@ export async function getArqueoById(id: string): Promise<{ data: ArqueoById }> {
     return { data }
   } catch (error) {
     throw new Error("No se pudo obtener el arqueo.")
+  }
+}
+
+export async function getCuentasActivosArqueo(
+  includeCuentaId?: number | string
+): Promise<{
+  data: SelectItemType[]
+}> {
+  try {
+    const parsedId = includeCuentaId ? Number(includeCuentaId) : -1
+
+    const data = await db
+      .select({
+        value: sql<string>`CAST(${cuenta.id} AS TEXT)`,
+        label: sql<string>`${cuentaCategoria.nombre} || ' · ' || ${cuenta.nombre}`,
+      })
+      .from(cuenta)
+      .innerJoin(cuentaCategoria, eq(cuenta.id_categoria, cuentaCategoria.id))
+      .where(
+        and(
+          eq(cuentaCategoria.tipo, "Activo"),
+          or(
+            notExists(
+              db.select().from(arqueo).where(eq(arqueo.id_cuenta, cuenta.id))
+            ),
+            eq(cuenta.id, parsedId)
+          )
+        )
+      )
+      .orderBy(asc(cuentaCategoria.nombre), asc(cuenta.nombre))
+
+    return { data }
+  } catch (error) {
+    console.error(error)
+    throw new Error("No se pudieron obtener las cuentas de activos.")
   }
 }
