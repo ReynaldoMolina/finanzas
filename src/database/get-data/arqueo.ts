@@ -26,7 +26,7 @@ export async function getArqueos(searchParams: SearchParamsProps): Promise<{
       .innerJoin(cuenta, eq(arqueo.id_cuenta, cuenta.id))
       .leftJoin(totalesCTE, eq(cuenta.id, totalesCTE.cuentaId))
       .where(and(filterBySearch))
-      .orderBy(asc(arqueo.id))
+      .orderBy(asc(cuenta.nombre))
 
     return { data }
   } catch (error) {
