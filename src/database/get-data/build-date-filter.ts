@@ -7,12 +7,12 @@ export function buildDateFilter(
   searchParams: SearchParamsProps,
   dateField: SQLWrapper
 ): SQL | undefined {
-  const { start, end } = getSearchParams(searchParams)
+  const { from, to } = getSearchParams(searchParams)
 
-  if (!start || !end) {
+  if (!from || !to) {
     const { firstDay, lastDay } = getCurrentMonth()
     return between(dateField, firstDay, lastDay)
   }
 
-  return between(dateField, start, end)
+  return between(dateField, from, to)
 }

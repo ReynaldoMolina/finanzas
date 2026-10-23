@@ -16,26 +16,23 @@ import { Matcher } from "react-day-picker"
 
 interface DatePicker {
   label: string
-  initialDate: Date | undefined
+  date: Date | undefined
   disabled?: Matcher | Matcher[]
   handleChange?: (date: Date | undefined) => void
 }
 
 export function DatePicker({
   label,
-  initialDate,
+  date,
   disabled,
   handleChange,
 }: DatePicker) {
-  const [open, setOpen] = React.useState(false)
-  const [date, setDate] = React.useState<Date | undefined>(initialDate)
-
   return (
     <div className="flex w-full flex-col gap-3">
       <Label htmlFor="date" className="px-1">
         {label}
       </Label>
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover>
         <PopoverTrigger
           render={
             <Button
@@ -52,10 +49,9 @@ export function DatePicker({
           <Calendar
             mode="single"
             selected={date}
+            defaultMonth={date}
             captionLayout="dropdown"
             onSelect={(date) => {
-              setDate(date)
-              setOpen(false)
               if (handleChange) handleChange(date)
             }}
             locale={es}

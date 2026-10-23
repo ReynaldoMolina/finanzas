@@ -15,8 +15,8 @@ export interface SearchParamsProps {
   direction?: SortOrder
   page?: string
   limit?: string
-  start?: string
-  end?: string
+  from?: string
+  to?: string
   id_categoria?: string
   tipo?: TransaccionTipo
   cuenta_tipo?: CuentaTipo

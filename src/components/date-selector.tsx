@@ -21,24 +21,33 @@ interface DateSelector {
   searchParams: SearchParamsProps
 }
 
-interface DateFilter {
-  start: string
-  end: string
+interface DateRange {
+  from: string
+  to: string
 }
 
 export function DateSelector({ searchParams }: DateSelector) {
   const { firstDay, lastDay } = getCurrentMonth()
   const { updateParams } = useUpdateParams()
 
-  const [filter, setFilter] = useState<DateFilter>({
-    start: searchParams?.start || firstDay,
-    end: searchParams?.end || lastDay,
+  const [open, setOpen] = useState(false)
+  const [range, setRange] = useState<DateRange>({
+    from: searchParams?.from ?? firstDay,
+    to: searchParams?.to ?? lastDay,
   })
 
-  const [open, setOpen] = useState(false)
+  function handleOpenChange(isOpen: boolean) {
+    if (isOpen) {
+      setRange({
+        from: searchParams?.from ?? firstDay,
+        to: searchParams?.to ?? lastDay,
+      })
+    }
+    setOpen(isOpen)
+  }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger
         render={<ToggleGroupItem value="6">Rango</ToggleGroupItem>}
       />
@@ -51,16 +60,16 @@ export function DateSelector({ searchParams }: DateSelector) {
         </DialogHeader>
         <div className="flex flex-col gap-3 xs:flex-row">
           <DatePickerForm
-            name="start"
+            name="from"
             label="Desde"
-            filter={filter}
-            setFilter={setFilter}
+            range={range}
+            setRange={setRange}
           />
           <DatePickerForm
-            name="end"
+            name="to"
             label="Hasta"
-            filter={filter}
-            setFilter={setFilter}
+            range={range}
+            setRange={setRange}
           />
         </div>
         <DialogFooter>
@@ -69,8 +78,8 @@ export function DateSelector({ searchParams }: DateSelector) {
             type="button"
             onClick={() => {
               updateParams({
-                start: filter.start,
-                end: filter.end,
+                from: range.from,
+                to: range.to,
               })
               setOpen(false)
             }}
@@ -84,24 +93,24 @@ export function DateSelector({ searchParams }: DateSelector) {
 }
 
 interface DatePickerForm {
-  name: "start" | "end"
+  name: "from" | "to"
   label: string
-  filter: DateFilter
-  setFilter: Dispatch<SetStateAction<DateFilter>>
+  range: DateRange
+  setRange: Dispatch<SetStateAction<DateRange>>
 }
 
-function DatePickerForm({ name, label, filter, setFilter }: DatePickerForm) {
+function DatePickerForm({ name, label, range, setRange }: DatePickerForm) {
   function handleChange(date: Date | undefined) {
     if (date) {
       const formattedDate = dateToIso(date)
-      setFilter({ ...filter, [name]: formattedDate })
+      setRange({ ...range, [name]: formattedDate })
     }
   }
 
   return (
     <DatePicker
       label={label}
-      initialDate={dateIsoToDate(filter[name])}
+      date={dateIsoToDate(range[name])}
       handleChange={handleChange}
       disabled={{ before: new Date(2026, 0, 1) }}
     />

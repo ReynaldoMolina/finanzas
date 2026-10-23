@@ -52,6 +52,7 @@ export function FormDatePicker<T extends FieldValues>({
                   field.onChange(date ? dateToIso(date) : undefined)
                   setOpen(false)
                 }}
+                defaultMonth={dateIsoToDate(field.value)}
                 captionLayout="dropdown"
                 locale={es}
               />

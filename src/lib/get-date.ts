@@ -13,38 +13,38 @@ const fmt = (date: Date) => format(date, "yyyy-MM-dd")
 
 export const today = () => {
   const now = new Date()
-  return { start: fmt(now), end: fmt(now) }
+  return { from: fmt(now), to: fmt(now) }
 }
 
 export const thisWeek = () => {
   const now = new Date()
   return {
-    start: fmt(startOfWeek(now, { weekStartsOn: 1 })),
-    end: fmt(endOfWeek(now, { weekStartsOn: 1 })),
+    from: fmt(startOfWeek(now, { weekStartsOn: 1 })),
+    to: fmt(endOfWeek(now, { weekStartsOn: 1 })),
   }
 }
 
 export const thisMonth = () => {
   const now = new Date()
   return {
-    start: fmt(startOfMonth(now)),
-    end: fmt(endOfMonth(now)),
+    from: fmt(startOfMonth(now)),
+    to: fmt(endOfMonth(now)),
   }
 }
 
 export const lastMonth = () => {
   const now = subMonths(new Date(), 1)
   return {
-    start: fmt(startOfMonth(now)),
-    end: fmt(endOfMonth(now)),
+    from: fmt(startOfMonth(now)),
+    to: fmt(endOfMonth(now)),
   }
 }
 
 export const thisYear = () => {
   const now = new Date()
   return {
-    start: fmt(startOfYear(now)),
-    end: fmt(endOfYear(now)),
+    from: fmt(startOfYear(now)),
+    to: fmt(endOfYear(now)),
   }
 }
 

@@ -20,11 +20,11 @@ export function DateRangeButtons({
   searchParams: SearchParamsProps
 }) {
   const { updateParams } = useUpdateParams()
-  const { start: startParam, end: endParam } = getSearchParams(searchParams)
+  const { from: fromParam, to: toParam } = getSearchParams(searchParams)
   const { firstDay, lastDay } = getCurrentMonth()
 
-  let start = startParam ?? firstDay
-  let end = endParam ?? lastDay
+  let from = fromParam ?? firstDay
+  let to = toParam ?? lastDay
 
   const rangeOptions = [
     { value: "1", label: "Mes", range: thisMonth() },
@@ -34,12 +34,12 @@ export function DateRangeButtons({
     { value: "5", label: "Año", range: thisYear() },
   ]
 
-  function isActive(start?: string, end?: string, a?: string, b?: string) {
-    return start === a && end === b
+  function isActive(from?: string, to?: string, a?: string, b?: string) {
+    return from === a && to === b
   }
 
   const currentOption = rangeOptions.find(({ range }) =>
-    isActive(start, end, range.start, range.end)
+    isActive(from, to, range.from, range.to)
   )
   const groupValue = currentOption ? [currentOption.value] : ["6"]
 
@@ -51,7 +51,7 @@ export function DateRangeButtons({
             key={value}
             value={value}
             onClick={() =>
-              updateParams({ start: range.start, end: range.end, page: null })
+              updateParams({ from: range.from, to: range.to, page: null })
             }
           >
             {label}
