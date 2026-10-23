@@ -64,14 +64,6 @@ export async function getCuentas(
       }
     >()
 
-    for (const tipoNombre of CUENTA_TIPO) {
-      dataMap.set(tipoNombre, {
-        nombre: tipoNombre,
-        subtotal: 0,
-        categorias: new Map(),
-      })
-    }
-
     for (const row of rows) {
       if (!dataMap.has(row.tipo)) {
         dataMap.set(row.tipo, {
@@ -105,7 +97,6 @@ export async function getCuentas(
             is_dollar: row.is_dollar ?? false,
           })
 
-          // Acumulamos en la categoría y en el tipo
           categoriaEntry.subtotal += cuentaTotal
           tipoEntry.subtotal += cuentaTotal
         }

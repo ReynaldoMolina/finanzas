@@ -6,6 +6,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -38,6 +39,11 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
   if (data.length <= 0) {
     return <EmptyList />
   }
+
+  const totalMonto = data.reduce((acc, trx) => {
+    const suma = parseFloat(trx.monto) || 0
+    return acc + suma
+  }, 0)
 
   if (isMobile)
     return (
@@ -76,6 +82,14 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             </Link>
           )
         })}
+        <Card>
+          <CardHeader>
+            <CardTitle className="truncate text-xs">Total</CardTitle>
+            <CardAction className="font-semibold">
+              {formatNumber(totalMonto)}
+            </CardAction>
+          </CardHeader>
+        </Card>
         <Pagination totalPages={totalPages} />
       </>
     )
@@ -131,6 +145,16 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             )
           })}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell>Total</TableCell>
+            <TableCell className="text-right">
+              {formatNumber(totalMonto)}
+            </TableCell>
+            <TableCell colSpan={3}></TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
       <Pagination totalPages={totalPages} />
     </>

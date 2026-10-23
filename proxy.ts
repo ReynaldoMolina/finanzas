@@ -7,13 +7,13 @@ export async function proxy(request: NextRequest) {
     headers: await headers(),
   })
 
-  if (!session) {
-    return NextResponse.redirect(new URL("/auth/login", request.url))
-  }
+  // if (!session) {
+  //   return NextResponse.redirect(new URL("/auth/login", request.url))
+  // }
 
-  if (session.user.role !== "admin") {
-    return NextResponse.redirect(new URL("/auth/unauthorized", request.url))
-  }
+  // if (session.user.role !== "admin") {
+  //   return NextResponse.redirect(new URL("/auth/unauthorized", request.url))
+  // }
 
   return NextResponse.next()
 }

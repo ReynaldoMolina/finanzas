@@ -62,7 +62,7 @@ export type CuentaCategoria = {
 }
 
 export type CuentaTipos = {
-  nombre: string
+  nombre: CuentaTipo
   subtotal: number
   categorias: CuentaCategoria[]
 }

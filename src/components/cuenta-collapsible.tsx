@@ -10,6 +10,7 @@ import {
 } from "./ui/collapsible"
 import { Button } from "./ui/button"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 interface CuentaCollapsible {
   tipo: CuentaTipos
@@ -17,6 +18,12 @@ interface CuentaCollapsible {
 }
 
 export function CuentaCollapsible({ tipo, cambio_dolar }: CuentaCollapsible) {
+  const searchParams = useSearchParams()
+  const from = searchParams.get("from")
+  const to = searchParams.get("to")
+  const rangeString = Boolean(from && to) ? `&from=${from}&to=${to}` : ""
+  const isActivo = tipo.nombre === "Activo"
+
   return (
     <div>
       {tipo.categorias && tipo.categorias.length > 0 ? (
@@ -37,9 +44,19 @@ export function CuentaCollapsible({ tipo, cambio_dolar }: CuentaCollapsible) {
                   >
                     {categoria.nombre}
                   </Link>
-                  <span className="ml-auto">
-                    {formatNumber(categoria.subtotal)}
-                  </span>
+                  {isActivo ? (
+                    <span className="ml-auto">
+                      {formatNumber(categoria.subtotal)}
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/transaccion?search=${categoria.nombre}&tipo=${tipo.nombre}&search_field=Categoría${rangeString}`}
+                      className="ml-auto hover:underline"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {formatNumber(categoria.subtotal)}
+                    </Link>
+                  )}
                 </Button>
               }
             />
@@ -59,11 +76,23 @@ export function CuentaCollapsible({ tipo, cambio_dolar }: CuentaCollapsible) {
                       >
                         {cuenta.nombre}
                       </Link>
-                      <span className="ml-auto">
-                        {cuenta.is_dollar &&
-                          `$${formatNumber(cuenta.saldo / cambio_dolar)} | `}
-                        {formatNumber(cuenta.saldo)}
-                      </span>
+                      {isActivo ? (
+                        <span className="ml-auto">
+                          {cuenta.is_dollar &&
+                            `$${formatNumber(cuenta.saldo / cambio_dolar)} | `}
+                          {formatNumber(cuenta.saldo)}
+                        </span>
+                      ) : (
+                        <Link
+                          href={`/transaccion?tipo=${tipo.nombre}&search_field=Categoría&search=${cuenta.nombre}${rangeString}`}
+                          className="ml-auto hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {cuenta.is_dollar &&
+                            `$${formatNumber(cuenta.saldo / cambio_dolar)} | `}
+                          {formatNumber(cuenta.saldo)}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
