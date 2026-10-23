@@ -47,7 +47,7 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
 
           return (
             <Link key={item.id} href={`/transaccion/${item.id}`}>
-              <Card className="py-3">
+              <Card>
                 <CardHeader className="gap-2">
                   <CardTitle className="truncate text-xs">
                     {item.categoria_origen} · {item.cuenta_origen}
@@ -64,7 +64,7 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                     </Badge>
                   </CardDescription>
                   <CardAction className="flex flex-col items-end gap-1.5">
-                    <span className={cn("text-sm font-semibold", textColor)}>
+                    <span className={cn("font-semibold", textColor)}>
                       {sign} {formatNumber(Number(item.monto))}
                     </span>
                     <span className="text-xs text-muted-foreground">

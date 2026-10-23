@@ -1,6 +1,7 @@
 "use client"
 
 import { FormInputTable } from "@/components/form-elements/form-input-table"
+import { LinkButton } from "@/components/link-button"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -17,7 +18,12 @@ import { cn } from "@/lib/utils"
 import { ArqueoPage, ArqueoType } from "@/types"
 import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CheckIcon, ChevronDown, SaveIcon, XIcon } from "lucide-react"
+import {
+  ChevronDown,
+  CircleAlertIcon,
+  PencilIcon,
+  SaveIcon,
+} from "lucide-react"
 import Link from "next/link"
 import { useActionState, startTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -131,26 +137,35 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
       <Collapsible className="flex flex-col gap-2 xs:w-70">
         <CollapsibleTrigger
           render={
-            <Button variant="secondary">
-              <Link
-                href={`/arqueo/${arqueo.id}`}
-                className="hover:underline"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {arqueo.cuenta}
-              </Link>
+            <Button variant="secondary" className="font-normal">
+              {arqueo.cuenta}
               <span className="ml-auto">
-                {cuadrado ? (
-                  <CheckIcon className="text-green-600" />
-                ) : (
-                  <XIcon className="text-red-600" />
-                )}
+                {!cuadrado && <CircleAlertIcon className="text-yellow-600" />}
               </span>
               <ChevronDown className="transition group-data-panel-open/button:rotate-180" />
             </Button>
           }
         />
-        <CollapsibleContent className="mb-4">
+        <CollapsibleContent className="mb-12 space-y-2">
+          <div className="flex gap-2">
+            <LinkButton
+              className="flex-1"
+              href={`/arqueo/${arqueo.id}`}
+              variant="outline"
+            >
+              <PencilIcon />
+              Editar
+            </LinkButton>
+            <Button
+              variant="outline"
+              type="submit"
+              id={formId}
+              className="flex-1"
+            >
+              {isPending ? <Spinner /> : <SaveIcon />}
+              Guardar
+            </Button>
+          </div>
           <table className="w-full text-xs">
             <tbody className="dark:bg-muted/50">
               {DENOMINATIONS.map(
@@ -226,15 +241,6 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
               </tr>
             </tfoot>
           </table>
-          <Button
-            variant="outline"
-            className="mt-2 w-full"
-            type="submit"
-            id={formId}
-          >
-            {isPending ? <Spinner /> : <SaveIcon />}
-            Guardar
-          </Button>
         </CollapsibleContent>
       </Collapsible>
     </form>

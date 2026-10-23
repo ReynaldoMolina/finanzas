@@ -24,7 +24,10 @@ export function CuentaCollapsible({ tipo, cambio_dolar }: CuentaCollapsible) {
           <Collapsible key={categoria.id}>
             <CollapsibleTrigger
               render={
-                <Button variant="ghost" className="w-full font-normal">
+                <Button
+                  variant="secondary"
+                  className="w-full font-normal dark:bg-secondary/50"
+                >
                   <ChevronRight className="transition group-data-panel-open/button:rotate-90" />
 
                   <Link

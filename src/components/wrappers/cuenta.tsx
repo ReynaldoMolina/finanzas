@@ -10,7 +10,7 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const { cambio_dolar } = await getConfiguracionCambioDolar()
 
   return (
-    <div className="mt-4 max-w-2xl space-y-10">
+    <div className="mt-4 max-w-2xl space-y-12">
       {data.map((tipo) => (
         <section key={tipo.nombre} className="space-y-0">
           {/* Nivel 1: Tipo */}
