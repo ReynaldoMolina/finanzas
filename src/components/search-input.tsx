@@ -46,7 +46,6 @@ export function SearchInput({ children }: SearchInput) {
           <SearchIcon />
         </InputGroupAddon>
         <InputGroupInput
-          type="search"
           placeholder="Buscar"
           value={searchText}
           onChange={(event) => handleChange(event.target.value)}
