@@ -10,7 +10,7 @@
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
-    "dbstart": "docker compose up -d",
+    "dbup": "docker compose up -d",
     "dbpush": "npx drizzle-kit push"
   },
   "dependencies": {

@@ -2,11 +2,6 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
-interface UpdateParamsProps {
-  newValue: string | null
-  paramKey: string
-}
-
 export function useUpdateParams() {
   const router = useRouter()
   const pathname = usePathname()

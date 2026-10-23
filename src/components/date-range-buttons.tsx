@@ -50,7 +50,9 @@ export function DateRangeButtons({
           <ToggleGroupItem
             key={value}
             value={value}
-            onClick={() => updateParams({ start: range.start, end: range.end })}
+            onClick={() =>
+              updateParams({ start: range.start, end: range.end, page: null })
+            }
           >
             {label}
           </ToggleGroupItem>
