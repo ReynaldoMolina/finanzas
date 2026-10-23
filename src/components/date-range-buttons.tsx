@@ -20,14 +20,10 @@ export function DateRangeButtons({
   searchParams: SearchParamsProps
 }) {
   const { updateParams } = useUpdateParams()
-  const { from: fromParam, to: toParam } = getSearchParams(searchParams)
-  const { firstDay, lastDay } = getCurrentMonth()
-
-  let from = fromParam ?? firstDay
-  let to = toParam ?? lastDay
+  const { from, to } = getSearchParams(searchParams)
 
   const rangeOptions = [
-    { value: "1", label: "Mes", range: thisMonth() },
+    { value: "1", label: "Mes", range: { from: undefined, to: undefined } },
     { value: "2", label: "Semana", range: thisWeek() },
     { value: "3", label: "Hoy", range: today() },
     { value: "4", label: "Mes pasado", range: lastMonth() },
