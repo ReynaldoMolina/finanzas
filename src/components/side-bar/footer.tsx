@@ -62,6 +62,7 @@ export function AppSidebarFooter() {
           >
             <DropdownMenuGroup>
               <DropdownMenuItem
+                className="p-3"
                 render={<Link href="/ajustes" />}
                 onClick={() => setOpenMobile(false)}
               >

@@ -49,7 +49,7 @@ export default async function Page({ searchParams }: PageProps) {
                   {createLinks.map((item) => (
                     <DropdownMenuItem
                       key={item.label}
-                      className="py-3"
+                      className="p-3"
                       render={<Link href={item.url}>{item.label}</Link>}
                     />
                   ))}

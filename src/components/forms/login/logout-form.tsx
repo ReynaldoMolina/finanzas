@@ -27,7 +27,11 @@ export default function LogoutForm() {
 
   return (
     <DropdownMenuGroup>
-      <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+      <DropdownMenuItem
+        className="p-3"
+        variant="destructive"
+        onClick={handleLogout}
+      >
         <LogOutIcon />
         Cerrar sesión
       </DropdownMenuItem>
