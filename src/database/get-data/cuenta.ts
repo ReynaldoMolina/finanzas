@@ -9,7 +9,7 @@ import { db } from ".."
 import { cuentaCategoria, cuenta } from "../schema/schema"
 import { eq, and, asc, sql } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
-import { CUENTA_TIPO, TransaccionTipo } from "@/lib/tipos"
+import { CuentaTipo, TransaccionTipo } from "@/lib/tipos"
 import { getAccountTotals } from "./ctes"
 
 export async function getCuentas(
@@ -45,7 +45,7 @@ export async function getCuentas(
     const dataMap = new Map<
       string,
       {
-        nombre: string
+        nombre: CuentaTipo
         subtotal: number
         categorias: Map<
           number,
