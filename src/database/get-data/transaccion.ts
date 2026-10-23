@@ -6,9 +6,12 @@ import {
 import { db } from ".."
 import { cuentaCategoria, cuenta, transaccion } from "../schema/schema"
 import { aliasedTable, desc, eq, and, sql } from "drizzle-orm"
-import { buildSearchFilter } from "./build-search-filter"
 import { buildDateFilter } from "./build-date-filter"
 import { getSearchParams } from "./get-search-params"
+import {
+  buildTipoFilter,
+  buildTransaccionFilter,
+} from "./build-transaccion-filter"
 
 export async function getTransacciones(
   searchParams: SearchParamsProps
@@ -17,36 +20,46 @@ export async function getTransacciones(
   totalPages: number
 }> {
   const filterByDate = buildDateFilter(searchParams, transaccion.fecha)
-
+  const filterByType = buildTipoFilter(searchParams)
   const { limit, offset } = getSearchParams(searchParams)
 
-  try {
-    const cuentaOrigen = aliasedTable(cuenta, "cuenta_origen")
-    const cuentaDestino = aliasedTable(cuenta, "cuenta_destino")
-    const categoriaOrigen = aliasedTable(cuentaCategoria, "categoria_origen")
-    const categoriaDestino = aliasedTable(cuentaCategoria, "categoria_destino")
+  const cuentaOrigen = aliasedTable(cuenta, "cuenta_origen")
+  const cuentaDestino = aliasedTable(cuenta, "cuenta_destino")
+  const categoriaOrigen = aliasedTable(cuentaCategoria, "categoria_origen")
+  const categoriaDestino = aliasedTable(cuentaCategoria, "categoria_destino")
 
-    const selectedFields = {
-      id: transaccion.id,
-      tipo: transaccion.tipo,
-      fecha: transaccion.fecha,
-      monto: transaccion.monto,
-      categoria_origen: categoriaOrigen.nombre,
-      cuenta_origen: cuentaOrigen.nombre,
-      categoria_destino: categoriaDestino.nombre,
-      cuenta_destino: cuentaDestino.nombre,
-      descripcion: transaccion.descripcion,
-    }
+  const selectedFields = {
+    id: transaccion.id,
+    tipo: transaccion.tipo,
+    fecha: transaccion.fecha,
+    monto: transaccion.monto,
+    categoria_origen: categoriaOrigen.nombre,
+    cuenta_origen: cuentaOrigen.nombre,
+    categoria_destino: categoriaDestino.nombre,
+    cuenta_destino: cuentaDestino.nombre,
+    descripcion: transaccion.descripcion,
+  }
 
-    const filterBySearch = buildSearchFilter(searchParams, [
-      sql<string>`CAST(${transaccion.tipo} AS TEXT)`,
+  const searchFieldsMap = {
+    categoria: [
+      sql`${categoriaOrigen.nombre} || ' ' || ${cuentaOrigen.nombre}`,
+    ],
+    cuenta: [sql`${categoriaDestino.nombre} || ' ' || ${cuentaDestino.nombre}`],
+    descripcion: [transaccion.descripcion],
+    todo: [
       categoriaOrigen.nombre,
       cuentaOrigen.nombre,
       categoriaDestino.nombre,
       cuentaDestino.nombre,
       transaccion.descripcion,
-    ])
+    ],
+  }
 
+  const filterBySearch = buildTransaccionFilter(searchParams, searchFieldsMap)
+
+  const conditions = and(filterBySearch, filterByDate, filterByType)
+
+  try {
     const data = await db
       .select(selectedFields)
       .from(transaccion)
@@ -66,7 +79,7 @@ export async function getTransacciones(
         categoriaDestino,
         eq(cuentaDestino.id_categoria, categoriaDestino.id)
       )
-      .where(and(filterBySearch, filterByDate))
+      .where(conditions)
       .orderBy(desc(transaccion.fecha), desc(transaccion.id))
       .limit(limit)
       .offset(offset)
@@ -90,7 +103,7 @@ export async function getTransacciones(
         categoriaDestino,
         eq(cuentaDestino.id_categoria, categoriaDestino.id)
       )
-      .where(and(filterBySearch, filterByDate))
+      .where(conditions)
 
     const totalPages = Math.ceil(count / limit) || 1
 

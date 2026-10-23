@@ -13,6 +13,10 @@ export const TRANSACCION_TIPO = ["Ingreso", "Gasto", "Transferencia"] as const
 
 export type TransaccionTipo = (typeof TRANSACCION_TIPO)[number]
 
+export const SEARCH_FIELDS = ["Categoría", "Cuenta", "Descripción"] as const
+
+export type SearchFields = (typeof SEARCH_FIELDS)[number]
+
 export const transaccionTipos: SelectItemType[] = TRANSACCION_TIPO.map(
   (tipo) => ({
     value: tipo,

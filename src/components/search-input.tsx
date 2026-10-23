@@ -39,6 +39,11 @@ export function SearchInput({ children }: SearchInput) {
     handleSearch(term)
   }
 
+  const search_field = searchParams.get("search_field")
+  const placeholder = search_field
+    ? `Buscar ${search_field.toLowerCase()}`
+    : "Buscar"
+
   return (
     <div className="flex w-full gap-2 sm:w-fit">
       <InputGroup className="sm:w-60">
@@ -46,7 +51,7 @@ export function SearchInput({ children }: SearchInput) {
           <SearchIcon />
         </InputGroupAddon>
         <InputGroupInput
-          placeholder="Buscar"
+          placeholder={placeholder}
           value={searchText}
           onChange={(event) => handleChange(event.target.value)}
         />

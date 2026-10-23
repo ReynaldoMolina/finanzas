@@ -36,7 +36,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === "n" && e.shiftKey) {
+      if (e.key.toLowerCase() === "n" && e.altKey) {
         e.preventDefault()
         setIsOpen((prev) => !prev)
       }

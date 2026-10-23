@@ -1,4 +1,4 @@
-import { CuentaTipo, TransaccionTipo } from "./lib/tipos"
+import { CuentaTipo, SearchFields, TransaccionTipo } from "./lib/tipos"
 
 export interface ServerStatus {
   success: boolean | undefined
@@ -11,10 +11,12 @@ export type SortOrder = "asc" | "desc"
 export interface SearchParamsProps {
   id?: string
   search?: string
-  orderBy?: string
-  direction?: SortOrder
+  search_field?: SearchFields
+  // orderBy?: string
+  // direction?: SortOrder
   page?: string
   limit?: string
+  // date range
   from?: string
   to?: string
   id_categoria?: string

@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import { Loading } from "@/components/loading"
 import TransaccionWrapper from "@/components/wrappers/transaccion"
 import { PlantillasMenuWrapper } from "@/components/wrappers/transaccion-nueva"
+import { TransaccionFilter } from "@/components/transaccion-filter"
 
 const title = "Transacciones"
 
@@ -21,6 +22,7 @@ export default async function Page({ searchParams }: PageProps) {
       <PageWrapper>
         <div className="flex flex-wrap gap-2">
           <SearchInput>
+            <TransaccionFilter />
             <PlantillasMenuWrapper />
           </SearchInput>
           <DateRangeButtons searchParams={await searchParams} />

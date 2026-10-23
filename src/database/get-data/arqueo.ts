@@ -14,8 +14,8 @@ import { buildSearchFilter } from "./build-search-filter"
 export async function getArqueos(searchParams: SearchParamsProps): Promise<{
   data: ArqueoPage[]
 }> {
-  const { start, end } = getSearchParams(searchParams)
-  const { movimientosCTE, totalesCTE } = getAccountTotals({ start, end })
+  const { from, to } = getSearchParams(searchParams)
+  const { movimientosCTE, totalesCTE } = getAccountTotals({ from, to })
 
   const filterBySearch = buildSearchFilter(searchParams, [cuenta.nombre])
 
