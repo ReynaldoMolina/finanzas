@@ -50,7 +50,7 @@ export function EditConfiguracionForm({
     <form
       id={formId}
       onSubmit={form.handleSubmit(onSubmit)}
-      className="flex flex-col gap-5"
+      className="flex flex-col gap-5 p-2"
     >
       <FieldSet>
         <FieldGroup>
