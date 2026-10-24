@@ -47,7 +47,7 @@ export function SelectUpdateParam({
         onValueChange={handleSelectChange}
         disabled={disabled}
       >
-        <SelectTrigger className="w-45">
+        <SelectTrigger>
           <SelectValue placeholder="Seleccionar" />
         </SelectTrigger>
         <SelectContent>

@@ -53,15 +53,13 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
 
           return (
             <Link key={item.id} href={`/transaccion/${item.id}`}>
-              <Card>
+              <Card size="sm">
                 <CardHeader className="gap-2">
-                  <CardTitle className="truncate text-xs">
+                  <CardTitle className="truncate text-sm">
                     {item.categoria_origen} · {item.cuenta_origen}
                   </CardTitle>
                   <CardDescription className="flex flex-col gap-2">
-                    {item.descripcion && (
-                      <span className="text-xs">{item.descripcion}</span>
-                    )}
+                    {item.descripcion && <span>{item.descripcion}</span>}
                     <Badge
                       variant="secondary"
                       className="text-muted-foreground"
@@ -82,9 +80,9 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             </Link>
           )
         })}
-        <Card>
+        <Card size="sm">
           <CardHeader>
-            <CardTitle className="truncate text-xs">Total</CardTitle>
+            <CardTitle className="truncate text-sm">Total</CardTitle>
             <CardAction className="font-semibold">
               {formatNumber(totalMonto)}
             </CardAction>

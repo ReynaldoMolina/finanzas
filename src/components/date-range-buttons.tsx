@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  getCurrentMonth,
-  lastMonth,
-  thisMonth,
-  thisWeek,
-  thisYear,
-  today,
-} from "@/lib/get-date"
+import { lastMonth, thisWeek, thisYear, today } from "@/lib/get-date"
 import { SearchParamsProps } from "@/types"
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group"
 import { getSearchParams } from "@/database/get-data/get-search-params"

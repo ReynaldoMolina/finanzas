@@ -36,14 +36,14 @@ export function FilterLimit({ searchParams, totalPages }: FilterLimitProps) {
       onValueChange={handleChange}
       disabled={totalPages <= 1}
     >
-      <SelectTrigger size="sm" className="text-xs">
+      <SelectTrigger>
         <SelectValue placeholder="Seleccionar" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Por página</SelectLabel>
           {options.map((value) => (
-            <SelectItem key={value} value={String(value)} className="text-xs">
+            <SelectItem key={value} value={String(value)}>
               {value}
             </SelectItem>
           ))}

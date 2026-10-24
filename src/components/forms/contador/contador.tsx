@@ -134,7 +134,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
 
   return (
     <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
-      <Collapsible className="flex flex-col gap-2 xs:w-70">
+      <Collapsible className="flex flex-col gap-2 xs:w-80">
         <CollapsibleTrigger
           render={
             <Button variant="secondary" className="font-normal">
@@ -166,7 +166,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
               Guardar
             </Button>
           </div>
-          <table className="w-full text-xs">
+          <table className="w-full">
             <tbody className="dark:bg-muted/50">
               {DENOMINATIONS.map(
                 ({ name, label, value, isDollar, separator }) => {
@@ -193,7 +193,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                         <FormInputTable
                           control={form.control}
                           name={name}
-                          className="h-5 border-0 px-1 text-center dark:bg-transparent"
+                          className="h-6 border-0 px-1 text-center dark:bg-transparent"
                         />
                       </td>
                       <td className="min-w-25 border px-1 text-right text-muted-foreground">
@@ -206,8 +206,8 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
             </tbody>
             <tfoot>
               <tr className="border-t-4 border-double font-bold">
-                <td className="w-12 border px-1 text-right">Total</td>
-                <td className="h-4.5 max-w-20 border px-1 text-right">
+                <td className="border px-1 text-right">Total</td>
+                <td className="h-6 max-w-20 border px-1 text-right">
                   ${formatNumber(granTotalNIO / cambio_dolar)}
                 </td>
                 <td className="min-w-25 border px-1 text-right">
@@ -215,8 +215,8 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                 </td>
               </tr>
               <tr>
-                <td className="w-12 border px-1 text-right">Detalle</td>
-                <td className="h-4.5 max-w-20 border px-1 text-right">
+                <td className="border px-1 text-right">Detalle</td>
+                <td className="h-6 max-w-20 border px-1 text-right">
                   ${formatNumber(totalDolares)}
                 </td>
                 <td className="min-w-25 border px-1 text-right">
@@ -224,10 +224,10 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                 </td>
               </tr>
               <tr>
-                <td className="w-12 border px-1 text-right">Square</td>
+                <td className="border px-1 text-right">Square</td>
                 <td
                   className={cn(
-                    "h-4.5 max-w-20 border px-1 text-right",
+                    "h-6 max-w-20 border px-1 text-right",
                     cuadrado
                       ? "bg-green-200 dark:bg-green-900/80"
                       : "bg-red-200 dark:bg-red-900/80"

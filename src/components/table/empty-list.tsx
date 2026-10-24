@@ -10,7 +10,7 @@ export default function EmptyList() {
   return (
     <Card className="w-full">
       <CardContent>
-        <span className="block w-full text-center text-xs text-muted-foreground">
+        <span className="block w-full text-center text-muted-foreground">
           {search ? `No hay resultados para "${search}"` : "No hay resultados"}
         </span>
       </CardContent>

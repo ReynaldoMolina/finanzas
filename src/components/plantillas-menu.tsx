@@ -99,7 +99,11 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
               </div>
             </div>
           ))}
-          <Item variant="outline" render={<Link href="/ajustes/plantilla" />}>
+          <Item
+            variant="outline"
+            size="sm"
+            render={<Link href="/ajustes/plantilla" />}
+          >
             <ItemMedia variant="icon">
               <ZapIcon />
             </ItemMedia>

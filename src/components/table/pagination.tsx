@@ -10,6 +10,8 @@ import {
 } from "lucide-react"
 import { Button } from "../ui/button"
 import { FilterLimit } from "./filter-limit"
+import { LinkButton } from "../link-button"
+import { ButtonGroup } from "../ui/button-group"
 
 export function Pagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname()
@@ -26,9 +28,9 @@ export function Pagination({ totalPages }: { totalPages: number }) {
   }
 
   return (
-    <div className="flex min-h-8 flex-wrap items-center justify-center gap-2 overflow-auto">
-      <span className="text-xs text-muted-foreground">{`${currentPage} de ${totalPages}`}</span>
-      <div className="inline-flex items-center gap-1">
+    <div className="flex min-h-8 flex-wrap items-center justify-center gap-1 overflow-auto">
+      <span className="text-sm text-muted-foreground">{`${currentPage} de ${totalPages}`}</span>
+      <div className="inline-flex gap-1">
         <PaginationArrow
           direction="left last"
           href={createPageURL(1)}
@@ -72,16 +74,14 @@ function PaginationArrow({ href, direction, disabled }: PaginationArrow) {
 
   if (disabled)
     return (
-      <Button type="button" variant="outline" size="icon-sm" disabled>
+      <Button type="button" variant="outline" size="icon" disabled>
         {directionMap[direction]}
       </Button>
     )
 
   return (
-    <Link href={href}>
-      <Button type="button" variant="outline" size="icon-sm">
-        {directionMap[direction]}
-      </Button>
-    </Link>
+    <LinkButton href={href} variant="outline" size="icon">
+      {directionMap[direction]}
+    </LinkButton>
   )
 }

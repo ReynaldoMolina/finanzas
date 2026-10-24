@@ -49,7 +49,6 @@ export default async function Page({ searchParams }: PageProps) {
                   {createLinks.map((item) => (
                     <DropdownMenuItem
                       key={item.label}
-                      className="p-3"
                       render={<Link href={item.url}>{item.label}</Link>}
                     />
                   ))}

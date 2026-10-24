@@ -63,7 +63,7 @@ export function CuentaCollapsible({ tipo, cambio_dolar }: CuentaCollapsible) {
             {/* Nivel 3: Cuentas */}
             <CollapsibleContent className="mb-4">
               {categoria.cuentas && categoria.cuentas.length > 0 ? (
-                <ul className="ml-6 text-xs">
+                <ul className="ml-6">
                   {categoria.cuentas.map((cuenta) => (
                     <li
                       key={cuenta.id}

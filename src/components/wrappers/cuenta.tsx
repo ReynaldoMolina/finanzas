@@ -14,12 +14,10 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
       {data.map((tipo) => (
         <section key={tipo.nombre} className="space-y-0">
           {/* Nivel 1: Tipo */}
-          <div className="m;-2 mr-2.5 flex items-center gap-2 pb-2 font-semibold">
+          <div className="mx-2.5 flex items-center gap-2 pb-2 font-semibold">
             <TagIcon size={16} />
             <h2>{tipo.nombre}s</h2>
-            <span className="ml-auto text-xs">
-              {formatNumber(tipo.subtotal)}
-            </span>
+            <span className="ml-auto">{formatNumber(tipo.subtotal)}</span>
           </div>
 
           {/* Nivel 2: Categoría */}

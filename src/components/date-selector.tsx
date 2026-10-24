@@ -58,7 +58,7 @@ export function DateSelector({ searchParams }: DateSelector) {
             Elige el periodo que deseas consultar.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-3 xs:flex-row">
+        <div className="flex flex-col gap-2 xs:flex-row">
           <DatePickerForm
             name="from"
             label="Desde"

@@ -29,7 +29,6 @@ export function FormInputTable<T extends FieldValues>({
             autoComplete="off"
             className={className}
           />
-          {/* {fieldState.invalid && <FieldError errors={[fieldState.error]} />} */}
         </Field>
       )}
     />

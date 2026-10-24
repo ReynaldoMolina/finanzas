@@ -43,15 +43,13 @@ export function PlantillaTabla({ data }: DataTableProps) {
 
       return (
         <Link key={item.id} href={`/ajustes/plantilla/${item.id}`}>
-          <Card className="py-3">
+          <Card size="sm">
             <CardHeader className="gap-2">
-              <CardTitle className="truncate text-xs">
+              <CardTitle className="truncate">
                 {item.categoria_origen} · {item.cuenta_origen}
               </CardTitle>
-              <CardDescription className="flex flex-col gap-2">
-                {item.descripcion && (
-                  <span className="text-xs">{item.descripcion}</span>
-                )}
+              <CardDescription className="flex flex-col gap-2.5">
+                {item.descripcion && <span>{item.descripcion}</span>}
                 <Badge variant="secondary" className="text-muted-foreground">
                   {item.categoria_destino} · {item.cuenta_destino}
                 </Badge>

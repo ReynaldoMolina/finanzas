@@ -7,6 +7,7 @@ import {
   InputGroupText,
 } from "../ui/input-group"
 import { ComponentProps } from "react"
+import { cn } from "@/lib/utils"
 
 interface FormInputText<T extends FieldValues> extends Omit<
   ComponentProps<"input">,
@@ -63,7 +64,7 @@ export function FormInputText<T extends FieldValues>({
               aria-invalid={fieldState.invalid}
               placeholder={placeholder ? placeholder : label}
               autoComplete="off"
-              className={readOnly ? "opacity-50" : ""}
+              className={cn(readOnly ? "opacity-50" : "", "text-sm")}
             />
           </InputGroup>
           {description && <FieldDescription>{description}</FieldDescription>}

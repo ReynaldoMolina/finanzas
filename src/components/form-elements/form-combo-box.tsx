@@ -53,7 +53,7 @@ export function FormComboBox<T extends FieldValues>({
                 showClear
               />
               <ComboboxContent>
-                <ComboboxEmpty>No hay resultados.</ComboboxEmpty>
+                <ComboboxEmpty>No hay resultados</ComboboxEmpty>
                 <ComboboxList>
                   {(item: SelectItemType) => (
                     <ComboboxItem
