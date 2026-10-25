@@ -54,7 +54,6 @@ export function ThemePicker() {
                 <DropdownMenuRadioItem
                   key={item.value}
                   value={item.value}
-                  className="p-3 pr-9"
                   onClick={() => setTheme(item.value)}
                 >
                   {item.icon}

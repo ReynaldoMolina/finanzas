@@ -23,7 +23,10 @@ export function LinkButton({
   return (
     <Link
       href={href}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        buttonVariants({ variant, size, className }),
+        "cursor-default"
+      )}
       {...props}
     >
       {children && children}
