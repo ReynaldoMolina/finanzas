@@ -13,11 +13,11 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const salario = ingresos.categorias.find((e) => e.id === 6)
   const aporte_rey = salario?.cuentas.find((e) => e.id === 12)?.saldo ?? 0
 
-  const impuestos = gastos.categorias.find((e) => e.id === 9)?.subtotal ?? 0
+  const deducciones = gastos.categorias.find((e) => e.id === 9)?.subtotal ?? 0
   const moto = gastos.categorias.find((e) => e.id === 8)?.subtotal ?? 0
 
   const utilidad = ingresos.subtotal - gastos.subtotal
-  const pedidosYa = aporte_rey - impuestos - moto
+  const pedidosYa = aporte_rey - deducciones - moto
 
   return (
     <div className="mt-4 max-w-2xl space-y-12">
