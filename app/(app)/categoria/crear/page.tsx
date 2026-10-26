@@ -1,9 +1,16 @@
 import { CreateCategoriaForm } from "@/components/forms/categoria/create"
+import { ResponsiveDrawer } from "@/components/responsive-drawer"
+
+const title = "Crear categoría"
 
 export const metadata = {
-  title: "Crear categoría",
+  title,
 }
 
 export default async function Page() {
-  return <CreateCategoriaForm />
+  return (
+    <ResponsiveDrawer title={title}>
+      <CreateCategoriaForm />
+    </ResponsiveDrawer>
+  )
 }

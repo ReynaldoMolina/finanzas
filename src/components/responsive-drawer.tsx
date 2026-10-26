@@ -15,32 +15,14 @@ import {
 import { Button } from "./ui/button"
 import { useRouter } from "next/navigation"
 
-interface ResponsiveDrawerProps {
+interface ResponsiveDrawer {
   children: ReactNode
-  action: "edit" | "create"
-  formId: string
-  name?: string
-  isPending: boolean
-  isOpen?: boolean
+  title: string
 }
 
-export function ResponsiveDrawer({
-  children,
-  action,
-  formId,
-  name,
-  isPending = false,
-  isOpen = false,
-}: ResponsiveDrawerProps) {
+export function ResponsiveDrawer({ children, title }: ResponsiveDrawer) {
   const isMobile = useIsMobile()
-  const [open, setOpen] = useState(isOpen)
-  const title =
-    action === "create"
-      ? `Crear ${name ? ` ${name}` : ""}`
-      : `Editar ${name ? ` ${name}` : ""}`
-  const description = `${action === "create" ? "Agrega" : "Edita"} la información.`
-  const buttonText = action === "create" ? "Crear" : "Guardar"
-
+  const [open, setOpen] = useState(true)
   const router = useRouter()
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -60,19 +42,30 @@ export function ResponsiveDrawer({
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
+          <DrawerDescription>Edita la información.</DrawerDescription>
         </DrawerHeader>
-        <div className="flex-1 scroll-fade overflow-y-auto p-4">{children}</div>
-        <DrawerFooter>
-          <Button type="submit" form={formId}>
-            {isPending && <Spinner />}
-            {buttonText} {name}
-          </Button>
-          <DrawerClose render={<Button variant="outline" />}>
-            Cancelar
-          </DrawerClose>
-        </DrawerFooter>
+        {children}
       </DrawerContent>
     </Drawer>
+  )
+}
+
+interface ResponsiveDrawerFooter {
+  formId: string
+  isPending: boolean
+}
+
+export function ResponsiveDrawerFooter({
+  formId,
+  isPending,
+}: ResponsiveDrawerFooter) {
+  return (
+    <DrawerFooter>
+      <Button type="submit" form={formId}>
+        {isPending && <Spinner />}
+        Guardar
+      </Button>
+      <DrawerClose render={<Button variant="outline" />}>Cancelar</DrawerClose>
+    </DrawerFooter>
   )
 }

@@ -2,8 +2,6 @@ import { AppHeader } from "@/components/header"
 import { PageWrapper } from "@/components/page-wrapper"
 import { SearchInput } from "@/components/search-input"
 import { PageProps } from "@/types"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { Loading } from "@/components/loading"
 import { Suspense } from "react"
@@ -12,9 +10,7 @@ import { LinkButton } from "@/components/link-button"
 
 const title = "Plantillas"
 
-export const metadata = {
-  title: title,
-}
+export const metadata = { title }
 
 export default async function Page({ searchParams }: PageProps) {
   return (

@@ -10,14 +10,11 @@ import { createCuentaCategoria } from "@/database/actions/categoria"
 import { stateDefault } from "@/database/actions/state-message"
 import { CategoriaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import { ResponsiveDrawer } from "../../responsive-drawer"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { cuentaTipo, CuentaTipo } from "@/lib/tipos"
+import { cuentaTipo } from "@/lib/tipos"
 import { FormSelect } from "@/components/form-elements/form-select"
-
-// interface CreateCategoriaFormProps {
-//   tipo?: CuentaTipo
-// }
+import { formDivStyle } from "@/lib/styles"
+import { ResponsiveDrawerFooter } from "@/components/responsive-drawer"
 
 export function CreateCategoriaForm() {
   const formId = "create-categoria"
@@ -43,14 +40,12 @@ export function CreateCategoriaForm() {
   useServerActionFeedback(state, { refresh: true, back: true })
 
   return (
-    <ResponsiveDrawer
-      action="create"
-      formId={formId}
-      name="categoría"
-      isPending={isPending}
-      isOpen={true}
-    >
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+    <>
+      <form
+        id={formId}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={formDivStyle}
+      >
         <FieldSet>
           <FieldGroup>
             <FormSelect
@@ -67,6 +62,7 @@ export function CreateCategoriaForm() {
           </FieldGroup>
         </FieldSet>
       </form>
-    </ResponsiveDrawer>
+      <ResponsiveDrawerFooter formId={formId} isPending={isPending} />
+    </>
   )
 }

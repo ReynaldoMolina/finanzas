@@ -10,12 +10,13 @@ import { stateDefault } from "@/database/actions/state-message"
 import { updateCuenta } from "@/database/actions/cuenta"
 import { CuentaById, SelectItemType } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import { ResponsiveDrawer } from "../../responsive-drawer"
+import { ResponsiveDrawerFooter } from "../../responsive-drawer"
 import { SelectUpdateParam } from "@/components/form-elements/select-update-param"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import { FormInputText } from "@/components/form-elements/form-input-text"
 import { cuentaTipo } from "@/lib/tipos"
 import { FormSwitch } from "@/components/form-elements/form-switch"
+import { formDivStyle } from "@/lib/styles"
 
 interface EditCuentaForm {
   cuenta: CuentaById
@@ -47,14 +48,12 @@ export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
   useServerActionFeedback(state, { refresh: true, back: true })
 
   return (
-    <ResponsiveDrawer
-      action="edit"
-      formId={formId}
-      name="cuenta"
-      isPending={isPending}
-      isOpen={true}
-    >
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+    <>
+      <form
+        id={formId}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={formDivStyle}
+      >
         <FieldSet>
           <FieldGroup>
             <SelectUpdateParam
@@ -91,6 +90,7 @@ export function EditCuentaForm({ cuenta, categorias }: EditCuentaForm) {
           </FieldGroup>
         </FieldSet>
       </form>
-    </ResponsiveDrawer>
+      <ResponsiveDrawerFooter formId={formId} isPending={isPending} />
+    </>
   )
 }

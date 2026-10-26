@@ -9,7 +9,7 @@ import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
 import { SelectItemType, TransaccionById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import { ResponsiveDrawer } from "../../responsive-drawer"
+import { ResponsiveDrawerFooter } from "../../responsive-drawer"
 import { TransaccionTipo, transaccionTipos } from "@/lib/tipos"
 import {
   deleteTransaccion,
@@ -24,6 +24,7 @@ import { FormSelect } from "@/components/form-elements/form-select"
 import { useUpdateParams } from "@/hooks/use-update-params"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import { DeleteFormItem } from "@/components/form-elements/form-delete"
+import { formDivStyle } from "@/lib/styles"
 
 interface EditTransaccionForm {
   transaccion: TransaccionById
@@ -71,14 +72,12 @@ export function EditTransaccionForm({
   const { updateParams } = useUpdateParams()
 
   return (
-    <ResponsiveDrawer
-      action="edit"
-      formId={formId}
-      name="transacción"
-      isPending={isPending}
-      isOpen={true}
-    >
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+    <>
+      <form
+        id={formId}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={formDivStyle}
+      >
         <FieldSet>
           <FieldGroup className="flex-row">
             <FormDatePicker control={form.control} name="fecha" label="Fecha" />
@@ -132,6 +131,7 @@ export function EditTransaccionForm({
           </FieldGroup>
         </FieldSet>
       </form>
-    </ResponsiveDrawer>
+      <ResponsiveDrawerFooter formId={formId} isPending={isPending} />
+    </>
   )
 }

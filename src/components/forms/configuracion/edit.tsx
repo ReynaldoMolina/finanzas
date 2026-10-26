@@ -69,7 +69,7 @@ export function EditConfiguracionForm({
       </FieldSet>
       <Button type="submit" form={formId}>
         {isPending && <Spinner />}
-        Guardar configuración
+        Guardar
       </Button>
     </form>
   )

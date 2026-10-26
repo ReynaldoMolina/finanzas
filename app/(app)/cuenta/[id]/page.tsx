@@ -1,25 +1,23 @@
 export const dynamic = "force-dynamic"
 
-import { EditCuentaForm } from "@/components/forms/cuenta/edit"
-import { getCategoriasByTipo } from "@/database/get-data/categoria"
-import { getCuentaById } from "@/database/get-data/cuenta"
+import { SkeletonForm } from "@/components/forms/skeleton"
+import { ResponsiveDrawer } from "@/components/responsive-drawer"
+import { CuentaEditWrapper } from "@/components/wrappers/cuenta-edit"
 import { PageProps } from "@/types"
-import { notFound } from "next/navigation"
+import { Suspense } from "react"
 
-export const metadata = {
-  title: "Editar cuenta",
-}
+const title = "Editar cuenta"
+
+export const metadata = { title }
 
 export default async function Page({ params, searchParams }: PageProps) {
   const { id } = await params
-  const { data } = await getCuentaById(id)
 
-  if (!data) return notFound()
-
-  const { data: categorias } = await getCategoriasByTipo({
-    searchParams: await searchParams,
-    initialTipo: data.tipo,
-  })
-
-  return <EditCuentaForm cuenta={data} categorias={categorias} />
+  return (
+    <ResponsiveDrawer title={title}>
+      <Suspense fallback={<SkeletonForm />}>
+        <CuentaEditWrapper id={id} searchParams={await searchParams} />
+      </Suspense>
+    </ResponsiveDrawer>
+  )
 }

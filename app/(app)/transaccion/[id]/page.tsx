@@ -1,32 +1,23 @@
 export const dynamic = "force-dynamic"
 
-import { EditTransaccionForm } from "@/components/forms/transaccion/edit"
-import { getCategoriasByTipoTransaccion } from "@/database/get-data/cuenta"
-import { getTransaccionById } from "@/database/get-data/transaccion"
+import { SkeletonForm } from "@/components/forms/skeleton"
+import { ResponsiveDrawer } from "@/components/responsive-drawer"
+import { TransaccionEditWrapper } from "@/components/wrappers/transaccion-edit"
 import { PageProps } from "@/types"
-import { notFound } from "next/navigation"
+import { Suspense } from "react"
 
-export const metadata = {
-  title: "Editar transacción",
-}
+const title = "Editar transacción"
+
+export const metadata = { title }
 
 export default async function Page({ params, searchParams }: PageProps) {
   const { id } = await params
-  const { data: transaccion } = await getTransaccionById(id)
-
-  if (!transaccion) return notFound()
-
-  const { cuentasOrigen, cuentasDestino } =
-    await getCategoriasByTipoTransaccion({
-      searchParams: await searchParams,
-      initialTipo: transaccion.tipo,
-    })
 
   return (
-    <EditTransaccionForm
-      transaccion={transaccion}
-      cuentasOrigen={cuentasOrigen}
-      cuentasDestino={cuentasDestino}
-    />
+    <ResponsiveDrawer title={title}>
+      <Suspense fallback={<SkeletonForm />}>
+        <TransaccionEditWrapper id={id} searchParams={await searchParams} />
+      </Suspense>
+    </ResponsiveDrawer>
   )
 }

@@ -10,10 +10,11 @@ import { updateCuentaCategoria } from "@/database/actions/categoria"
 import { stateDefault } from "@/database/actions/state-message"
 import { CategoriaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import { ResponsiveDrawer } from "../../responsive-drawer"
+import { ResponsiveDrawerFooter } from "../../responsive-drawer"
 import { FormSelect } from "@/components/form-elements/form-select"
 import { FormInputText } from "@/components/form-elements/form-input-text"
 import { cuentaTipo } from "@/lib/tipos"
+import { formDivStyle } from "@/lib/styles"
 
 interface EditCategoriaFormProps {
   categoria: CategoriaById
@@ -43,14 +44,12 @@ export function EditCategoriaForm({ categoria }: EditCategoriaFormProps) {
   useServerActionFeedback(state, { refresh: true, back: true })
 
   return (
-    <ResponsiveDrawer
-      action="edit"
-      formId={formId}
-      name="categoría"
-      isPending={isPending}
-      isOpen={true}
-    >
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+    <>
+      <form
+        id={formId}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={formDivStyle}
+      >
         <FieldGroup>
           <FormSelect
             control={form.control}
@@ -61,6 +60,7 @@ export function EditCategoriaForm({ categoria }: EditCategoriaFormProps) {
           <FormInputText control={form.control} name="nombre" label="Nombre" />
         </FieldGroup>
       </form>
-    </ResponsiveDrawer>
+      <ResponsiveDrawerFooter formId={formId} isPending={isPending} />
+    </>
   )
 }

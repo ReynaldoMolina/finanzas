@@ -1,17 +1,21 @@
-import { EditCategoriaForm } from "@/components/forms/categoria/edit"
-import { getCategoriaById } from "@/database/get-data/categoria"
+import { SkeletonForm } from "@/components/forms/skeleton"
+import { ResponsiveDrawer } from "@/components/responsive-drawer"
+import { CategoriaEditWrapper } from "@/components/wrappers/categoria-edit"
 import { PageProps } from "@/types"
-import { notFound } from "next/navigation"
+import { Suspense } from "react"
 
-export const metadata = {
-  title: "Editar categoría",
-}
+const title = "Editar categoría"
+
+export const metadata = { title }
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params
-  const { data } = await getCategoriaById(id)
 
-  if (!data) return notFound()
-
-  return <EditCategoriaForm categoria={data} />
+  return (
+    <ResponsiveDrawer title={title}>
+      <Suspense fallback={<SkeletonForm />}>
+        <CategoriaEditWrapper id={id} />
+      </Suspense>
+    </ResponsiveDrawer>
+  )
 }

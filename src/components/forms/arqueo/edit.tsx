@@ -9,10 +9,11 @@ import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
 import { ArqueoById, SelectItemType } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import { ResponsiveDrawer } from "../../responsive-drawer"
+import { ResponsiveDrawerFooter } from "../../responsive-drawer"
 import { deleteArqueo, updateArqueo } from "@/database/actions/arqueo"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import { DeleteFormItem } from "@/components/form-elements/form-delete"
+import { formDivStyle } from "@/lib/styles"
 
 interface EditArqueoFormProps {
   arqueo: ArqueoById
@@ -42,14 +43,12 @@ export function EditArqueoForm({ arqueo, cuentas }: EditArqueoFormProps) {
   useServerActionFeedback(state, { refresh: true, back: true })
 
   return (
-    <ResponsiveDrawer
-      action="edit"
-      formId={formId}
-      name="arqueo"
-      isPending={isPending}
-      isOpen={true}
-    >
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+    <>
+      <form
+        id={formId}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={formDivStyle}
+      >
         <FieldSet>
           <FieldGroup>
             <FormComboBox
@@ -68,6 +67,7 @@ export function EditArqueoForm({ arqueo, cuentas }: EditArqueoFormProps) {
           </FieldGroup>
         </FieldSet>
       </form>
-    </ResponsiveDrawer>
+      <ResponsiveDrawerFooter formId={formId} isPending={isPending} />
+    </>
   )
 }

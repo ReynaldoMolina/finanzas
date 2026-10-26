@@ -9,7 +9,10 @@ import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
 import { SelectItemType, PlantillaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import { ResponsiveDrawer } from "../../responsive-drawer"
+import {
+  ResponsiveDrawer,
+  ResponsiveDrawerFooter,
+} from "../../responsive-drawer"
 import { TransaccionTipo, transaccionTipos } from "@/lib/tipos"
 import { FormInputText } from "@/components/form-elements/form-input-text"
 import { FormTextArea } from "@/components/form-elements/form-text-area"
@@ -19,6 +22,7 @@ import { useUpdateParams } from "@/hooks/use-update-params"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import { createPlantilla } from "@/database/actions/plantilla"
 import { getLabels } from "../transaccion/get-labels"
+import { formDivStyle } from "@/lib/styles"
 
 interface CreatePlantillaForm {
   tipo: TransaccionTipo
@@ -74,14 +78,12 @@ export function CreatePlantillaForm({
   const { updateParams } = useUpdateParams()
 
   return (
-    <ResponsiveDrawer
-      action="create"
-      formId={formId}
-      name="plantilla"
-      isPending={isPending}
-      isOpen={true}
-    >
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+    <>
+      <form
+        id={formId}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={formDivStyle}
+      >
         <FieldSet>
           <FieldGroup>
             <FormInputText
@@ -134,6 +136,7 @@ export function CreatePlantillaForm({
           </FieldGroup>
         </FieldSet>
       </form>
-    </ResponsiveDrawer>
+      <ResponsiveDrawerFooter formId={formId} isPending={isPending} />
+    </>
   )
 }

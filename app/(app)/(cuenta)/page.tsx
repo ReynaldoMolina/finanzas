@@ -19,9 +19,7 @@ import {
 
 const title = "Cuentas"
 
-export const metadata = {
-  title: title,
-}
+export const metadata = { title }
 
 export default async function Page({ searchParams }: PageProps) {
   const createLinks = [

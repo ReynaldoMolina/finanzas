@@ -1,30 +1,21 @@
-import { EditPlantillaForm } from "@/components/forms/plantilla/edit"
-import { getCategoriasByTipoTransaccion } from "@/database/get-data/cuenta"
-import { getPlantillaById } from "@/database/get-data/plantilla"
+import { SkeletonForm } from "@/components/forms/skeleton"
+import { ResponsiveDrawer } from "@/components/responsive-drawer"
+import { PlantillaEditWrapper } from "@/components/wrappers/plantilla-edit"
 import { PageProps } from "@/types"
-import { notFound } from "next/navigation"
+import { Suspense } from "react"
 
-export const metadata = {
-  title: "Editar plantilla",
-}
+const title = "Editar plantilla"
+
+export const metadata = { title }
 
 export default async function Page({ params, searchParams }: PageProps) {
   const { id } = await params
-  const { data: transaccion } = await getPlantillaById(id)
-
-  if (!transaccion) return notFound()
-
-  const { cuentasOrigen, cuentasDestino } =
-    await getCategoriasByTipoTransaccion({
-      searchParams: await searchParams,
-      initialTipo: transaccion.tipo,
-    })
 
   return (
-    <EditPlantillaForm
-      transaccion={transaccion}
-      cuentasOrigen={cuentasOrigen}
-      cuentasDestino={cuentasDestino}
-    />
+    <ResponsiveDrawer title={title}>
+      <Suspense fallback={<SkeletonForm />}>
+        <PlantillaEditWrapper id={id} searchParams={await searchParams} />
+      </Suspense>
+    </ResponsiveDrawer>
   )
 }

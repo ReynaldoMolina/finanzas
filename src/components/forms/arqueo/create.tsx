@@ -9,9 +9,10 @@ import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
 import { ArqueoById, SelectItemType } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import { ResponsiveDrawer } from "../../responsive-drawer"
+import { ResponsiveDrawerFooter } from "../../responsive-drawer"
 import { createArqueo } from "@/database/actions/arqueo"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
+import { formDivStyle } from "@/lib/styles"
 
 interface CreateArqueoForm {
   cuentas: SelectItemType[]
@@ -40,14 +41,12 @@ export function CreateArqueoForm({ cuentas }: CreateArqueoForm) {
   useServerActionFeedback(state, { refresh: true, back: true })
 
   return (
-    <ResponsiveDrawer
-      action="create"
-      formId={formId}
-      name="arqueo"
-      isPending={isPending}
-      isOpen={true}
-    >
-      <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
+    <>
+      <form
+        id={formId}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={formDivStyle}
+      >
         <FieldSet>
           <FieldGroup>
             <FormComboBox
@@ -59,6 +58,7 @@ export function CreateArqueoForm({ cuentas }: CreateArqueoForm) {
           </FieldGroup>
         </FieldSet>
       </form>
-    </ResponsiveDrawer>
+      <ResponsiveDrawerFooter formId={formId} isPending={isPending} />
+    </>
   )
 }
