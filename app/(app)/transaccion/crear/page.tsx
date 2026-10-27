@@ -11,7 +11,7 @@ const title = "Crear transacción"
 export const metadata = { title }
 
 export default async function Page({ searchParams }: PageProps) {
-  const { tipo } = await searchParams
+  const { tipo, monto, origen, destino, descripcion } = await searchParams
   const { cuentasOrigen, cuentasDestino } =
     await getCategoriasByTipoTransaccion({
       searchParams: await searchParams,
@@ -24,6 +24,10 @@ export default async function Page({ searchParams }: PageProps) {
         tipo={tipo ?? ("" as unknown as TransaccionTipo)}
         cuentasOrigen={cuentasOrigen}
         cuentasDestino={cuentasDestino}
+        monto={monto}
+        origen={origen}
+        destino={destino}
+        descripcion={descripcion}
       />
     </ResponsiveDrawer>
   )
