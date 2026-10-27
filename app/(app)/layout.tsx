@@ -8,12 +8,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="relative">
-      <SidebarProvider>
-        <AppSidebar />
-        <main className="w-dvw text-sm">{children}</main>
-      </SidebarProvider>
-      <AppDocker />
-    </div>
+    // <div className="relative">
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="w-dvw text-sm">{children}</main>
+    </SidebarProvider>
+    //   <AppDocker />
+    // </div>
   )
 }
