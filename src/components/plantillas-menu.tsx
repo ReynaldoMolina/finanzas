@@ -66,7 +66,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
           <DrawerTitle>Crear transacción</DrawerTitle>
           <DrawerDescription>Elige una plantilla</DrawerDescription>
         </DrawerHeader>
-        <div className="scroll-fade space-y-4 overflow-y-auto p-4">
+        <div className="scroll-fade space-y-10 overflow-y-auto p-4">
           <div className="flex flex-col gap-2">
             <span className="text-muted-foreground">En blanco</span>
             <div className="flex flex-wrap gap-1">
@@ -99,9 +99,11 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
               </div>
             </div>
           ))}
+        </div>
+        <DrawerFooter>
           <Item
             variant="outline"
-            size="sm"
+            size="xs"
             render={<Link href="/ajustes/plantilla" />}
           >
             <ItemMedia variant="icon">
@@ -114,8 +116,6 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
               <ChevronRightIcon size="16" />
             </ItemActions>
           </Item>
-        </div>
-        <DrawerFooter>
           <DrawerClose
             onClick={() => setIsOpen(false)}
             render={<Button variant="outline" />}

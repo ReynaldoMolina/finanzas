@@ -11,13 +11,13 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const [, gastos, ingresos] = data
 
   const salario = ingresos.categorias.find((e) => e.id === 6)
-  const aporte_rey = salario?.cuentas.find((e) => e.id === 12)?.saldo ?? 0
+  const pedidosYa = salario?.cuentas.find((e) => e.id === 46)?.saldo ?? 0
 
   const deducciones = gastos.categorias.find((e) => e.id === 9)?.subtotal ?? 0
   const moto = gastos.categorias.find((e) => e.id === 8)?.subtotal ?? 0
 
   const utilidad = ingresos.subtotal - gastos.subtotal
-  const pedidosYa = aporte_rey - deducciones - moto
+  const gananciaPeya = pedidosYa - deducciones - moto
 
   return (
     <div className="mt-4 max-w-2xl space-y-12">
@@ -40,7 +40,9 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
         <div className="mx-2.5 flex items-center gap-2 pb-2 font-semibold">
           <TagIcon size={16} />
           <h2>Utilidad</h2>
-          <span className="ml-auto">{formatNumber(utilidad + pedidosYa)}</span>
+          <span className="ml-auto">
+            {formatNumber(utilidad + gananciaPeya)}
+          </span>
         </div>
 
         <ul className="ml-6">
@@ -50,7 +52,7 @@ export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
           </li>
           <li className="flex items-center gap-2 px-2.5 py-2 text-muted-foreground not-last:border-b">
             <span>PedidosYa</span>
-            <span className="ml-auto">{formatNumber(pedidosYa)}</span>
+            <span className="ml-auto">{formatNumber(gananciaPeya)}</span>
           </li>
         </ul>
       </section>
