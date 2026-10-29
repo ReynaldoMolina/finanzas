@@ -84,7 +84,7 @@ export function CuentaCollapsible({ tipo, cambio_dolar }: CuentaCollapsible) {
                         </span>
                       ) : (
                         <Link
-                          href={`/transaccion?tipo=${tipo.nombre}&search_field=Categoría&search=${cuenta.nombre}${rangeString}`}
+                          href={`/transaccion?tipo=${tipo.nombre}&search_field=Categoría&search=${categoria.nombre + " " + cuenta.nombre}${rangeString}`}
                           className="ml-auto hover:underline"
                           onClick={(e) => e.stopPropagation()}
                         >
