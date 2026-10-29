@@ -7,6 +7,9 @@ import {
   endOfYear,
   subMonths,
   format,
+  subDays,
+  subWeeks,
+  subYears,
 } from "date-fns"
 
 const fmt = (date: Date) => format(date, "yyyy-MM-dd")
@@ -21,6 +24,14 @@ export const thisWeek = () => {
   return {
     from: fmt(startOfWeek(now, { weekStartsOn: 1 })),
     to: fmt(endOfWeek(now, { weekStartsOn: 1 })),
+  }
+}
+
+export const lastWeek = () => {
+  const date = subWeeks(new Date(), 1)
+  return {
+    from: fmt(startOfWeek(date, { weekStartsOn: 1 })),
+    to: fmt(endOfWeek(date, { weekStartsOn: 1 })),
   }
 }
 

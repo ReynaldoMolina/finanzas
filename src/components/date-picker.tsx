@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { ChevronDownIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -40,7 +39,7 @@ export function DatePicker({
               id="date"
               className="w-full justify-between font-normal"
             >
-              {date ? formatDate(dateToIso(date)) : "Seleccionar"}
+              {date ? formatDate({ date: dateToIso(date) }) : "Seleccionar"}
               <ChevronDownIcon />
             </Button>
           }

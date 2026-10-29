@@ -39,7 +39,9 @@ export function FormDatePicker<T extends FieldValues>({
                   id={field.name}
                   className="w-full justify-between font-normal"
                 >
-                  {field.value ? formatDate(field.value) : "Seleccionar fecha"}
+                  {field.value
+                    ? formatDate({ date: field.value })
+                    : "Seleccionar fecha"}
                   <ChevronDown className="text-muted-foreground" />
                 </Button>
               }

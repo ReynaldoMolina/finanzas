@@ -1,3 +1,6 @@
+import { format, isSameYear, parseISO } from "date-fns"
+import { es } from "date-fns/locale"
+
 export function formatNumber(value: number, digits = 2) {
   const formatter = new Intl.NumberFormat("es-NI", {
     minimumFractionDigits: digits,
@@ -7,34 +10,20 @@ export function formatNumber(value: number, digits = 2) {
   return formatter.format(Number(value))
 }
 
-export function formatDate(isoDateStr: string) {
-  const [year, month, day] = isoDateStr.split("-").map(Number)
-  const input = new Date(year, month - 1, day)
-
-  const dayStr = input.getDate()
-  let monthStr = input.toLocaleString("es-NI", { month: "long" })
-  const yearStr = input.getFullYear()
-
-  const currentYear = new Date().getFullYear()
-
-  if (currentYear === yearStr) {
-    return `${dayStr} ${monthStr}`
-  } else {
-    monthStr = monthStr.substring(0, 3)
-    return `${dayStr}/${monthStr}/${yearStr}`
-  }
+interface FormatDate {
+  date: string | number | Date
+  short?: boolean
 }
 
-export function formatDateShort(isoDateStr: string) {
-  const [year, month, day] = isoDateStr.split("-").map(Number)
-  const input = new Date(year, month - 1, day)
+export function formatDate({ date, short = false }: FormatDate) {
+  const parsedDate = typeof date === "string" ? parseISO(date) : new Date(date)
 
-  const dayStr = input.getDate()
-  let monthStr = input.toLocaleString("es-NI", { month: "short" })
-  const yearStr = input.getFullYear()
+  if (isSameYear(new Date(), parsedDate)) {
+    const pattern = short ? "d MMM" : "d MMMM"
+    return format(parsedDate, pattern, { locale: es })
+  }
 
-  monthStr = monthStr.substring(0, 3)
-  return `${dayStr}/${monthStr}/${yearStr}`
+  return format(parsedDate, "d/MMM/yy", { locale: es })
 }
 
 export function dateIsoToDate(date: string) {

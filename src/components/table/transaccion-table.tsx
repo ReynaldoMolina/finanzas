@@ -67,12 +67,12 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                       {item.categoria_destino} · {item.cuenta_destino}
                     </Badge>
                   </CardDescription>
-                  <CardAction className="flex flex-col items-end gap-1.5">
+                  <CardAction className="flex flex-col items-end gap-2.5">
                     <span className={cn("font-semibold", textColor)}>
                       {sign} {formatNumber(Number(item.monto))}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      {formatDate(item.fecha)}
+                      {formatDate({ date: item.fecha })}
                     </span>
                   </CardAction>
                 </CardHeader>
@@ -80,7 +80,7 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             </Link>
           )
         })}
-        <Card size="sm">
+        <Card size="sm" className="bg-muted/50">
           <CardHeader>
             <CardTitle className="truncate text-sm">Total</CardTitle>
             <CardAction className="font-semibold">
@@ -121,7 +121,7 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                   </LinkButton>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
-                  {formatDate(item.fecha)}
+                  {formatDate({ date: item.fecha })}
                 </TableCell>
                 <TableCell
                   className={cn("text-right font-semibold", textColor)}

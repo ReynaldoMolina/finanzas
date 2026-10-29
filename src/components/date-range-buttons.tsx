@@ -1,6 +1,6 @@
 "use client"
 
-import { lastMonth, thisWeek, thisYear, today } from "@/lib/get-date"
+import { lastMonth, lastWeek, thisWeek, thisYear, today } from "@/lib/get-date"
 import { SearchParamsProps } from "@/types"
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group"
 import { getSearchParams } from "@/database/get-data/get-search-params"
@@ -16,11 +16,12 @@ export function DateRangeButtons({
   const { from, to } = getSearchParams(searchParams)
 
   const rangeOptions = [
-    { value: "1", label: "Mes", range: { from: undefined, to: undefined } },
-    { value: "2", label: "Semana", range: thisWeek() },
-    { value: "3", label: "Hoy", range: today() },
-    { value: "4", label: "Mes pasado", range: lastMonth() },
-    { value: "5", label: "Año", range: thisYear() },
+    { label: "Mes", range: { from: undefined, to: undefined } },
+    { label: "Mes pasado", range: lastMonth() },
+    { label: "Semana", range: thisWeek() },
+    { label: "Semana pasada", range: lastWeek() },
+    { label: "Hoy", range: today() },
+    { label: "Año", range: thisYear() },
   ]
 
   function isActive(from?: string, to?: string, a?: string, b?: string) {
@@ -30,15 +31,19 @@ export function DateRangeButtons({
   const currentOption = rangeOptions.find(({ range }) =>
     isActive(from, to, range.from, range.to)
   )
-  const groupValue = currentOption ? [currentOption.value] : ["6"]
+  const groupValue = currentOption ? [currentOption.label] : ["Rango"]
 
   return (
     <ToggleGroup variant="outline" className="overflow-auto" value={groupValue}>
-      {rangeOptions.map(({ value, label, range }) => {
+      <DateSelector
+        searchParams={searchParams}
+        isActive={groupValue[0] === "Rango"}
+      />
+      {rangeOptions.map(({ label, range }) => {
         return (
           <ToggleGroupItem
-            key={value}
-            value={value}
+            key={label}
+            value={label}
             onClick={() =>
               updateParams({ from: range.from, to: range.to, page: null })
             }
@@ -47,8 +52,6 @@ export function DateRangeButtons({
           </ToggleGroupItem>
         )
       })}
-
-      <DateSelector searchParams={searchParams} />
     </ToggleGroup>
   )
 }
