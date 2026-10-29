@@ -35,7 +35,7 @@ export const arqueoSchema = z.object({
   id_cuenta: zTextToNumber("Selecciona una opción."),
 })
 
-export const configuracionSchema = z.object({
+export const ajustesSchema = z.object({
   cambio_dolar: moneyAmountString(),
   id_categoria_efectivo: zTextToNumber("Selecciona una opción."),
 })

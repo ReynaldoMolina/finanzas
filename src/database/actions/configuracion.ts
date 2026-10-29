@@ -2,23 +2,20 @@
 
 import { eq } from "drizzle-orm"
 import { stateUpdateSuccess, stateUpdateError } from "./state-message"
-import { Configuracion, ServerStatus } from "@/types"
+import { Ajustes, ServerStatus } from "@/types"
 import { db } from ".."
-import { configuracion } from "../schema/schema"
+import { ajustes } from "../schema/schema"
 
-interface UpdateConfiguracion {
-  values: Configuracion
+interface UpdateAjustes {
+  values: Ajustes
 }
 
-export async function updateConfiguracion(
+export async function updateAjustes(
   prevState: ServerStatus,
-  data: UpdateConfiguracion
+  data: UpdateAjustes
 ) {
   try {
-    await db
-      .update(configuracion)
-      .set(data.values)
-      .where(eq(configuracion.id, 1))
+    await db.update(ajustes).set(data.values).where(eq(ajustes.id, 1))
     return stateUpdateSuccess
   } catch (error) {
     console.error(error)

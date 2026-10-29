@@ -3,11 +3,11 @@ import { PageWrapperType } from "@/types"
 import { formatNumber } from "@/lib/formatters"
 import { TagIcon } from "lucide-react"
 import { CuentaCollapsible } from "../cuenta-collapsible"
-import { getConfiguracionCambioDolar } from "@/database/get-data/configuracion"
+import { getAjustesCambioDolar } from "@/database/get-data/ajustes"
 
-export default async function CuentaWrapper({ searchParams }: PageWrapperType) {
+export async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const { data } = await getCuentas(searchParams)
-  const { cambio_dolar } = await getConfiguracionCambioDolar()
+  const { cambio_dolar } = await getAjustesCambioDolar()
   const [, gastos, ingresos] = data
 
   const salario = ingresos.categorias.find((e) => e.id === 6)

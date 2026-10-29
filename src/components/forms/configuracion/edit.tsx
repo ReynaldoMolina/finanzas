@@ -3,30 +3,30 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
-import { configuracionSchema } from "@/validation/schema"
+import { ajustesSchema } from "@/validation/schema"
 import { FieldGroup, FieldSet } from "../../ui/field"
 import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
-import { Configuracion, SelectItemType } from "@/types"
+import { Ajustes, SelectItemType } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { updateConfiguracion } from "@/database/actions/configuracion"
+import { updateAjustes } from "@/database/actions/configuracion"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 
-interface EditConfiguracionFormProps {
-  configuracion: Configuracion
+interface EditAjustesFormProps {
+  configuracion: Ajustes
   cuentas: SelectItemType[]
 }
 
-export function EditConfiguracionForm({
+export function EditAjustesForm({
   configuracion,
   cuentas,
-}: EditConfiguracionFormProps) {
-  const formId = "edit-configuracion"
-  const form = useForm<z.infer<typeof configuracionSchema>>({
-    resolver: zodResolver(configuracionSchema),
+}: EditAjustesFormProps) {
+  const formId = "edit-ajustes"
+  const form = useForm<z.infer<typeof ajustesSchema>>({
+    resolver: zodResolver(ajustesSchema),
     defaultValues: {
       cambio_dolar: configuracion.cambio_dolar,
       id_categoria_efectivo: configuracion.id_categoria_efectivo,
@@ -34,13 +34,13 @@ export function EditConfiguracionForm({
   })
 
   const [state, formAction, isPending] = useActionState(
-    updateConfiguracion,
+    updateAjustes,
     stateDefault
   )
 
-  function onSubmit(values: z.infer<typeof configuracionSchema>) {
+  function onSubmit(values: z.infer<typeof ajustesSchema>) {
     startTransition(() => {
-      formAction({ values: values as Configuracion })
+      formAction({ values: values as Ajustes })
     })
   }
 

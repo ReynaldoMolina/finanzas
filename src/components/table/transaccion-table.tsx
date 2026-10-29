@@ -24,7 +24,7 @@ import {
 import { getTransaccionStyle } from "./get-transaccion-style"
 import { cn } from "cn"
 import { Badge } from "../ui/badge"
-import EmptyList from "./empty-list"
+import { EmptyList } from "./empty-list"
 import { Pagination } from "./pagination"
 import { LinkButton } from "../link-button"
 

@@ -174,7 +174,7 @@ export interface ArqueoPage extends ArqueoType {
   saldo: number
 }
 
-export interface Configuracion {
+export interface Ajustes {
   id: number
   cambio_dolar: string
   id_categoria_efectivo: number

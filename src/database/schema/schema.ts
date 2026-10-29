@@ -87,7 +87,7 @@ export const arqueo = pgTable("arqueo", {
   nio_010: text(),
 })
 
-export const configuracion = pgTable("configuracion", {
+export const ajustes = pgTable("ajustes", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   cambio_dolar: numeric({ precision: 8, scale: 2 }).notNull(),
   id_categoria_efectivo: integer()

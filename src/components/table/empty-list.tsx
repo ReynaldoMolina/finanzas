@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import { Card, CardContent } from "../ui/card"
 
-export default function EmptyList() {
+export function EmptyList() {
   const searchParams = useSearchParams()
   const search = searchParams.get("search") ?? ""
 

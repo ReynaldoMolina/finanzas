@@ -24,7 +24,7 @@ import {
 import { Badge } from "../ui/badge"
 import { getTransaccionStyle } from "./get-transaccion-style"
 import { cn } from "cn"
-import EmptyList from "./empty-list"
+import { EmptyList } from "./empty-list"
 
 interface DataTableProps {
   data: PlantillaTable[]

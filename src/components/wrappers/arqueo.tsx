@@ -1,12 +1,12 @@
 import { getArqueos } from "@/database/get-data/arqueo"
-import { getConfiguracionCambioDolar } from "@/database/get-data/configuracion"
+import { getAjustesCambioDolar } from "@/database/get-data/ajustes"
 import { PageWrapperType } from "@/types"
-import EmptyList from "../table/empty-list"
+import { EmptyList } from "../table/empty-list"
 import { Contador } from "../forms/contador/contador"
 
 export async function ArqueoWrapper({ searchParams }: PageWrapperType) {
   const { data } = await getArqueos(searchParams)
-  const { cambio_dolar } = await getConfiguracionCambioDolar()
+  const { cambio_dolar } = await getAjustesCambioDolar()
 
   if (data.length <= 0) return <EmptyList />
 
