@@ -22,9 +22,10 @@ import {
 import { PlantillaPage } from "@/types"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { TRANSACCION_TIPO } from "@/lib/tipos"
 import { LinkButton } from "./link-button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 interface PlantillasMenu {
   plantillas: PlantillaPage[]
@@ -33,18 +34,6 @@ interface PlantillasMenu {
 export function PlantillasMenu({ plantillas }: PlantillasMenu) {
   const isMobile = useIsMobile()
   const [isOpen, setIsOpen] = useState(false)
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === "n" && e.altKey) {
-        e.preventDefault()
-        setIsOpen((prev) => !prev)
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [])
 
   return (
     <Drawer
@@ -66,26 +55,22 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
           <DrawerTitle>Crear transacción</DrawerTitle>
           <DrawerDescription>Elige una plantilla</DrawerDescription>
         </DrawerHeader>
-        <div className="scroll-fade space-y-10 overflow-y-auto p-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-muted-foreground">En blanco</span>
-            <div className="flex flex-wrap gap-1">
-              {TRANSACCION_TIPO.map((item) => (
+        <div className="scroll-fade overflow-y-auto p-4">
+          <Tabs defaultValue="Gasto">
+            <TabsList className="w-full">
+              <TabsTrigger value="Gasto">Gasto</TabsTrigger>
+              <TabsTrigger value="Ingreso">Ingreso</TabsTrigger>
+              <TabsTrigger value="Transferencia">Transferencia</TabsTrigger>
+            </TabsList>
+            {plantillas.map((item) => (
+              <TabsContent value={item.tipo} className="flex flex-wrap gap-1">
                 <LinkButton
                   variant="secondary"
-                  key={item}
-                  href={`/transaccion/crear?tipo=${item}`}
+                  href={`/transaccion/crear?tipo=${item.tipo}`}
                   onClick={() => setIsOpen(false)}
                 >
-                  {item}
+                  En blanco
                 </LinkButton>
-              ))}
-            </div>
-          </div>
-          {plantillas.map((item) => (
-            <div key={item.tipo} className="flex flex-col gap-2">
-              <span className="text-muted-foreground">{item.tipo}s</span>
-              <div className="flex flex-wrap gap-1">
                 {item.items.map((i) => (
                   <LinkButton
                     variant="secondary"
@@ -96,9 +81,9 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
                     {i.nombre}
                   </LinkButton>
                 ))}
-              </div>
-            </div>
-          ))}
+              </TabsContent>
+            ))}
+          </Tabs>
         </div>
         <DrawerFooter>
           <Item
