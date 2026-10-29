@@ -61,8 +61,8 @@ export function DateSelector({ searchParams, isActive = false }: DateSelector) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger
         render={
-          <ToggleGroupItem value="Rango">
-            <CalendarIcon />
+          <ToggleGroupItem value="Rango" className="text-xs">
+            <CalendarIcon className="size-4" />
             {buttonText}
             {!isActive && "Fecha"}
           </ToggleGroupItem>

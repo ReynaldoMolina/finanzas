@@ -32,7 +32,7 @@ export function FormTextArea<T extends FieldValues>({
             aria-invalid={fieldState.invalid}
             placeholder={placeholder ? placeholder : label}
             autoComplete="off"
-            className="field-sizing-content"
+            className="field-sizing-content text-sm"
             disabled={disabled}
           />
           {description && <FieldDescription>{description}</FieldDescription>}

@@ -60,7 +60,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
           defaultValue="Gasto"
           className="h-[96vh] scroll-fade overflow-y-auto p-4"
         >
-          <TabsList className="sticky top-0 w-full">
+          <TabsList className="w-full">
             <TabsTrigger value="Gasto">Gasto</TabsTrigger>
             <TabsTrigger value="Ingreso">Ingreso</TabsTrigger>
             <TabsTrigger value="Transferencia">Transferencia</TabsTrigger>
@@ -73,7 +73,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
             >
               <LinkButton
                 variant="secondary"
-                className="w-full"
+                className="w-full font-normal"
                 size="sm"
                 href={`/transaccion/crear?tipo=${item.tipo}`}
                 onClick={() => setIsOpen(false)}
@@ -85,7 +85,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
                 <LinkButton
                   key={i.nombre}
                   variant="secondary"
-                  className="w-full"
+                  className="w-full font-normal"
                   size="sm"
                   href={`/transaccion/crear?tipo=${item.tipo}&monto=${Number(i.monto) === 0 ? "" : i.monto}&origen=${i.id_cuenta_origen}&destino=${i.id_cuenta_destino}&descripcion=${i.descripcion}`}
                   onClick={() => setIsOpen(false)}

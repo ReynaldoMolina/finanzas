@@ -54,6 +54,7 @@ export function SearchInput({ children }: SearchInput) {
           placeholder={placeholder}
           value={searchText}
           onChange={(event) => handleChange(event.target.value)}
+          className="text-sm"
         />
         {searchText && (
           <InputGroupAddon align="inline-end">

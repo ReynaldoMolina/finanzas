@@ -47,6 +47,7 @@ export function DateRangeButtons({
             onClick={() =>
               updateParams({ from: range.from, to: range.to, page: null })
             }
+            className="text-xs"
           >
             {label}
           </ToggleGroupItem>
