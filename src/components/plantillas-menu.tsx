@@ -56,7 +56,10 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
           <DrawerDescription>Elige una plantilla</DrawerDescription>
         </DrawerHeader>
 
-        <Tabs defaultValue="Gasto" className="scroll-fade overflow-y-auto p-4">
+        <Tabs
+          defaultValue="Gasto"
+          className="h-[96vh] scroll-fade overflow-y-auto p-4"
+        >
           <TabsList className="sticky top-0 w-full">
             <TabsTrigger value="Gasto">Gasto</TabsTrigger>
             <TabsTrigger value="Ingreso">Ingreso</TabsTrigger>
