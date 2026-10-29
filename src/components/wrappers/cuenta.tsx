@@ -5,6 +5,7 @@ import { TagIcon } from "lucide-react"
 import { CuentaCollapsible } from "../cuenta-collapsible"
 import { getAjustesCambioDolar } from "@/database/get-data/ajustes"
 import { EmptyList } from "../table/empty-list"
+import Link from "next/link"
 
 export async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const { data } = await getCuentas(searchParams)
@@ -22,24 +23,41 @@ export async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const utilidad = (ingresos?.subtotal ?? 0) - (gastos?.subtotal ?? 0)
   const gananciaPeya = pedidosYa - deducciones - moto
 
+  const from = searchParams.from ?? ""
+  const to = searchParams.to ?? ""
+  const rangeString = Boolean(from && to) ? `&from=${from}&to=${to}` : ""
+
   if (data.length <= 0) return <EmptyList />
 
   return (
     <div className="mt-4 max-w-2xl space-y-12">
       {/* data */}
-      {data.map((tipo) => (
-        <section key={tipo.nombre} className="space-y-0">
-          {/* Nivel 1: Tipo */}
-          <div className="mx-2.5 flex items-center gap-2 pb-2 font-semibold">
-            <TagIcon size={16} />
-            <h2>{tipo.nombre}s</h2>
-            <span className="ml-auto">{formatNumber(tipo.subtotal)}</span>
-          </div>
+      {data.map((tipo) => {
+        const isActivo = tipo.nombre === "Activo"
 
-          {/* Nivel 2: Categoría */}
-          <CuentaCollapsible tipo={tipo} cambio_dolar={cambio_dolar} />
-        </section>
-      ))}
+        return (
+          <section key={tipo.nombre} className="space-y-0">
+            {/* Nivel 1: Tipo */}
+            <div className="mx-2.5 flex items-center gap-2 pb-2 font-semibold">
+              <TagIcon size={16} />
+              <h2>{tipo.nombre}s</h2>
+              {isActivo ? (
+                <span className="ml-auto">{formatNumber(tipo.subtotal)}</span>
+              ) : (
+                <Link
+                  href={`/transaccion?tipo=${tipo.nombre}${rangeString}`}
+                  className="ml-auto hover:underline"
+                >
+                  {formatNumber(tipo.subtotal)}
+                </Link>
+              )}
+            </div>
+
+            {/* Nivel 2: Categoría */}
+            <CuentaCollapsible tipo={tipo} cambio_dolar={cambio_dolar} />
+          </section>
+        )
+      })}
 
       {data.length > 0 ? (
         <section className="space-y-0">

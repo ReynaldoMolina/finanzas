@@ -1,6 +1,7 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form"
 import { Field, FieldError } from "../ui/field"
 import { Input } from "../ui/input"
+import { cn } from "@/lib/utils"
 
 interface FormInputText<T extends FieldValues> {
   control: Control<T>
@@ -27,7 +28,7 @@ export function FormInputTable<T extends FieldValues>({
             id={field.name}
             aria-invalid={fieldState.invalid}
             autoComplete="off"
-            className={className}
+            className={cn("text-sm", className)}
           />
         </Field>
       )}

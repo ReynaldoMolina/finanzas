@@ -2,6 +2,7 @@
 
 import { FormInputTable } from "@/components/form-elements/form-input-table"
 import { LinkButton } from "@/components/link-button"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -21,6 +22,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import {
   ChevronDown,
   CircleAlertIcon,
+  CircleCheckIcon,
+  CircleMinusIcon,
   PencilIcon,
   SaveIcon,
 } from "lucide-react"
@@ -130,6 +133,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
 
   const diferencia = granTotalNIO - arqueo.saldo
   const cuadrado = diferencia === 0
+  const saldoCero = Number(arqueo.saldo) === 0
 
   return (
     <form id={formId} onSubmit={form.handleSubmit(onSubmit)}>
@@ -138,9 +142,17 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
           render={
             <Button variant="secondary" className="font-normal">
               {arqueo.cuenta}
-              <span className="ml-auto">
-                {!cuadrado && <CircleAlertIcon className="text-yellow-600" />}
-              </span>
+              <div className="ml-auto inline-flex items-center gap-2">
+                {saldoCero ? (
+                  <Badge variant="outline" className="text-muted-foreground">
+                    Vacío
+                  </Badge>
+                ) : cuadrado ? (
+                  <CircleCheckIcon className="text-green-600" />
+                ) : (
+                  <CircleAlertIcon className="text-yellow-600" />
+                )}
+              </div>
               <ChevronDown className="transition group-data-panel-open/button:rotate-180" />
             </Button>
           }
