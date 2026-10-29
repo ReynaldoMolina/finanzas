@@ -5,6 +5,7 @@ import {
   stateUpdateSuccess,
   stateUpdateError,
   stateCreateError,
+  stateCreateSuccess,
 } from "./state-message"
 import { CuentaById, ServerStatus } from "@/types"
 import { db } from ".."
@@ -21,10 +22,7 @@ export async function createCuenta(
   try {
     await db.insert(cuenta).values(data.values)
 
-    return {
-      success: true,
-      title: "Se creó la cuenta correctamente.",
-    }
+    return stateCreateSuccess
   } catch (error) {
     console.error(error)
     return stateCreateError

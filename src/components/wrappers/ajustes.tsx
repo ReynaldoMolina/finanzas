@@ -6,5 +6,5 @@ export async function AjustesWrapper() {
   const { data } = await getAjustes()
   const { data: cuentas } = await getCategoriasActivo()
 
-  return <EditAjustesForm configuracion={data} cuentas={cuentas} />
+  return <EditAjustesForm ajustes={data} cuentas={cuentas} />
 }

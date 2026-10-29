@@ -24,7 +24,6 @@ import {
   PencilIcon,
   SaveIcon,
 } from "lucide-react"
-import Link from "next/link"
 import { useActionState, startTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -152,12 +151,14 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
               className="flex-1"
               href={`/arqueo/${arqueo.id}`}
               variant="outline"
+              size="sm"
             >
               <PencilIcon />
               Editar
             </LinkButton>
             <Button
               variant="outline"
+              size="sm"
               type="submit"
               id={formId}
               className="flex-1"
@@ -167,7 +168,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
             </Button>
           </div>
           <table className="w-full">
-            <tbody className="dark:bg-muted/50">
+            <tbody className="">
               {DENOMINATIONS.map(
                 ({ name, label, value, isDollar, separator }) => {
                   const inputValue = formValues[name]
@@ -186,14 +187,14 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
 
                   return (
                     <tr key={name} className={separator ? "border-b-2" : ""}>
-                      <td className="w-fit border px-1 text-right text-muted-foreground">
+                      <td className="w-18 border px-1 text-right text-muted-foreground">
                         {label}
                       </td>
                       <td className="max-w-25 border">
                         <FormInputTable
                           control={form.control}
                           name={name}
-                          className="h-6 border-0 px-1 text-center dark:bg-transparent"
+                          className="h-5.5 border-0 px-1 text-center dark:bg-transparent"
                         />
                       </td>
                       <td className="min-w-25 border px-1 text-right text-muted-foreground">
@@ -207,36 +208,36 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
             <tfoot>
               <tr className="border-t-4 border-double font-bold">
                 <td className="border px-1 text-right">Total</td>
-                <td className="h-6 max-w-20 border px-1 text-right">
+                <td className="h-5.5 max-w-20 border px-1 text-right">
                   ${formatNumber(granTotalNIO / cambio_dolar)}
                 </td>
                 <td className="min-w-25 border px-1 text-right">
-                  C${formatNumber(granTotalNIO)}
+                  {formatNumber(granTotalNIO)}
                 </td>
               </tr>
               <tr>
                 <td className="border px-1 text-right">Detalle</td>
-                <td className="h-6 max-w-20 border px-1 text-right">
+                <td className="h-5.5 max-w-20 border px-1 text-right">
                   ${formatNumber(totalDolares)}
                 </td>
                 <td className="min-w-25 border px-1 text-right">
-                  C${formatNumber(totalCordobas)}
+                  {formatNumber(totalCordobas)}
                 </td>
               </tr>
               <tr>
-                <td className="border px-1 text-right">Square</td>
+                <td className="border px-1 text-right">
+                  {diferencia === 0 ? "" : diferencia < 0 ? "Faltan" : "Sobran"}
+                </td>
                 <td
                   className={cn(
-                    "h-6 max-w-20 border px-1 text-right",
-                    cuadrado
-                      ? "bg-green-200 dark:bg-green-900/80"
-                      : "bg-red-200 dark:bg-red-900/80"
+                    "h-5.5 max-w-20 border px-1 text-right",
+                    cuadrado ? "" : "bg-red-100 dark:bg-red-900/70"
                   )}
                 >
                   {formatNumber(diferencia)}
                 </td>
-                <td className="min-w-25 border bg-yellow-200 px-1 text-right dark:bg-yellow-900">
-                  C${formatNumber(arqueo.saldo)}
+                <td className="min-w-25 border bg-yellow-100 px-1 text-right dark:bg-yellow-700/70">
+                  {formatNumber(arqueo.saldo)}
                 </td>
               </tr>
             </tfoot>

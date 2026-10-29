@@ -10,26 +10,23 @@ import { stateDefault } from "@/database/actions/state-message"
 import { Ajustes, SelectItemType } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
 import { FormInputText } from "@/components/form-elements/form-input-text"
-import { updateAjustes } from "@/database/actions/configuracion"
+import { updateAjustes } from "@/database/actions/ajustes"
 import { FormComboBox } from "@/components/form-elements/form-combo-box"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 
 interface EditAjustesFormProps {
-  configuracion: Ajustes
+  ajustes: Ajustes
   cuentas: SelectItemType[]
 }
 
-export function EditAjustesForm({
-  configuracion,
-  cuentas,
-}: EditAjustesFormProps) {
+export function EditAjustesForm({ ajustes, cuentas }: EditAjustesFormProps) {
   const formId = "edit-ajustes"
   const form = useForm<z.infer<typeof ajustesSchema>>({
     resolver: zodResolver(ajustesSchema),
     defaultValues: {
-      cambio_dolar: configuracion.cambio_dolar,
-      id_categoria_efectivo: configuracion.id_categoria_efectivo,
+      cambio_dolar: ajustes.cambio_dolar,
+      id_categoria_efectivo: ajustes.id_categoria_efectivo,
     },
   })
 

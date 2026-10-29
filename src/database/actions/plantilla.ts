@@ -7,6 +7,7 @@ import {
   stateCreateError,
   stateDeleteSuccess,
   stateDeleteError,
+  stateCreateSuccess,
 } from "./state-message"
 import { ServerStatus, PlantillaById } from "@/types"
 import { db } from ".."
@@ -23,10 +24,7 @@ export async function createPlantilla(
   try {
     await db.insert(plantilla).values(data.values)
 
-    return {
-      success: true,
-      title: "Se creó la plantilla correctamente.",
-    }
+    return stateCreateSuccess
   } catch (error) {
     console.error(error)
     return stateCreateError
@@ -64,10 +62,7 @@ export async function deletePlantilla(
 ) {
   try {
     await db.delete(plantilla).where(eq(plantilla.id, Number(data.id)))
-    return {
-      ...stateDeleteSuccess,
-      title: "Se eliminó la plantilla.",
-    }
+    return stateDeleteSuccess
   } catch (error) {
     console.error(error)
     return stateDeleteError

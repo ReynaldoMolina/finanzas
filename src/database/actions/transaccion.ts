@@ -7,6 +7,7 @@ import {
   stateCreateError,
   stateDeleteSuccess,
   stateDeleteError,
+  stateCreateSuccess,
 } from "./state-message"
 import { ServerStatus, TransaccionById } from "@/types"
 import { db } from ".."
@@ -23,10 +24,7 @@ export async function createTransaccion(
   try {
     await db.insert(transaccion).values(data.values)
 
-    return {
-      success: true,
-      title: "Se creó el registro correctamente.",
-    }
+    return stateCreateSuccess
   } catch (error) {
     console.error(error)
     return stateCreateError
@@ -64,10 +62,7 @@ export async function deleteTransaccion(
 ) {
   try {
     await db.delete(transaccion).where(eq(transaccion.id, Number(data.id)))
-    return {
-      ...stateDeleteSuccess,
-      title: "Se eliminó la transacción.",
-    }
+    return stateDeleteSuccess
   } catch (error) {
     console.error(error)
     return stateDeleteError

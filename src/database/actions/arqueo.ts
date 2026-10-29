@@ -7,6 +7,7 @@ import {
   stateCreateError,
   stateDeleteSuccess,
   stateDeleteError,
+  stateCreateSuccess,
 } from "./state-message"
 import { ArqueoById, ArqueoType, ServerStatus } from "@/types"
 import { db } from ".."
@@ -23,10 +24,7 @@ export async function createArqueo(
   try {
     await db.insert(arqueo).values(data.values)
 
-    return {
-      success: true,
-      title: "Se creó el arqueo correctamente.",
-    }
+    return stateCreateSuccess
   } catch (error) {
     console.error(error)
     return stateCreateError
@@ -85,10 +83,7 @@ export async function deleteArqueo(
 ) {
   try {
     await db.delete(arqueo).where(eq(arqueo.id, Number(data.id)))
-    return {
-      ...stateDeleteSuccess,
-      title: "Se eliminó el arqueo.",
-    }
+    return stateDeleteSuccess
   } catch (error) {
     console.error(error)
     return stateDeleteError

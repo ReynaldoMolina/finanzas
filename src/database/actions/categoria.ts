@@ -5,6 +5,7 @@ import {
   stateUpdateSuccess,
   stateUpdateError,
   stateCreateError,
+  stateCreateSuccess,
 } from "./state-message"
 import { CategoriaById, ServerStatus } from "@/types"
 import { db } from ".."
@@ -21,10 +22,7 @@ export async function createCuentaCategoria(
   try {
     await db.insert(cuentaCategoria).values(data.values)
 
-    return {
-      success: true,
-      title: "Se creó la categoría correctamente.",
-    }
+    return stateCreateSuccess
   } catch (error) {
     console.error(error)
     return stateCreateError
