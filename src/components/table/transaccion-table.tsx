@@ -72,7 +72,7 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                       {sign} {formatNumber(Number(item.monto))}
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      {formatDate({ date: item.fecha })}
+                      {formatDate({ date: item.fecha, natural: true })}
                     </span>
                   </CardAction>
                 </CardHeader>
@@ -121,7 +121,7 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                   </LinkButton>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
-                  {formatDate({ date: item.fecha })}
+                  {formatDate({ date: item.fecha, natural: true })}
                 </TableCell>
                 <TableCell
                   className={cn("text-right font-semibold", textColor)}

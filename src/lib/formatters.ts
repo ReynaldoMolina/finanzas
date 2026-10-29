@@ -1,4 +1,13 @@
-import { format, isSameYear, parseISO } from "date-fns"
+import {
+  format,
+  isAfter,
+  isSameYear,
+  isThisWeek,
+  isToday,
+  isYesterday,
+  parseISO,
+  startOfWeek,
+} from "date-fns"
 import { es } from "date-fns/locale"
 
 export function formatNumber(value: number, digits = 2) {
@@ -13,12 +22,33 @@ export function formatNumber(value: number, digits = 2) {
 interface FormatDate {
   date: string | number | Date
   short?: boolean
+  natural?: boolean
 }
 
-export function formatDate({ date, short = false }: FormatDate) {
-  const parsedDate = typeof date === "string" ? parseISO(date) : new Date(date)
+export function formatDate({
+  date,
+  short = false,
+  natural = false,
+}: FormatDate) {
+  const parsedDate = typeof date === "string" ? parseISO(date) : new Date() // o parseISO(date)
+  const now = new Date()
 
-  if (isSameYear(new Date(), parsedDate)) {
+  if (natural) {
+    if (isToday(parsedDate)) {
+      return "Hoy"
+    }
+
+    if (isYesterday(parsedDate)) {
+      return "Ayer"
+    }
+
+    if (isThisWeek(parsedDate, { weekStartsOn: 0 })) {
+      const dayName = format(parsedDate, "EEEE", { locale: es })
+      return dayName.charAt(0).toUpperCase() + dayName.slice(1)
+    }
+  }
+
+  if (isSameYear(now, parsedDate)) {
     const pattern = short ? "d MMM" : "d MMMM"
     return format(parsedDate, pattern, { locale: es })
   }
