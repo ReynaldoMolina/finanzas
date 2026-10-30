@@ -20,12 +20,14 @@ import { ArqueoPage, ArqueoType } from "@/types"
 import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
+  CheckIcon,
   ChevronDown,
   CircleAlertIcon,
   CircleCheckIcon,
   CircleMinusIcon,
   PencilIcon,
   SaveIcon,
+  XIcon,
 } from "lucide-react"
 import { useActionState, startTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -141,16 +143,17 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
         <CollapsibleTrigger
           render={
             <Button variant="secondary" className="font-normal">
-              {arqueo.cuenta}
+              <span className="truncate">{arqueo.cuenta}</span>
               <div className="ml-auto inline-flex items-center gap-2">
-                {saldoCero ? (
+                {saldoCero && (
                   <Badge variant="outline" className="text-muted-foreground">
-                    Vacío
+                    Sin saldo
                   </Badge>
-                ) : cuadrado ? (
-                  <CircleCheckIcon className="text-green-600" />
+                )}
+                {cuadrado ? (
+                  !saldoCero && <CheckIcon className="text-green-600" />
                 ) : (
-                  <CircleAlertIcon className="text-yellow-600" />
+                  <XIcon className="text-red-400" />
                 )}
               </div>
               <ChevronDown className="transition group-data-panel-open/button:rotate-180" />

@@ -55,7 +55,7 @@ export function DeleteFormItem({
   }
 
   return (
-    <Item variant="outline">
+    <Item variant="outline" size="sm">
       <ItemMedia variant="icon">
         <TrashIcon />
       </ItemMedia>
@@ -74,7 +74,7 @@ export function DeleteFormItem({
 
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+              <AlertDialogTitle>¿Eliminar {title}?</AlertDialogTitle>
               <AlertDialogDescription>
                 Esta acción no se puede deshacer.
               </AlertDialogDescription>

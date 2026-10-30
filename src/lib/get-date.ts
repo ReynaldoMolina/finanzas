@@ -8,28 +8,34 @@ import {
   subMonths,
   format,
   subWeeks,
+  subDays,
 } from "date-fns"
 
 const fmt = (date: Date) => format(date, "yyyy-MM-dd")
 
 export const today = () => {
-  const now = new Date()
-  return { from: fmt(now), to: fmt(now) }
+  const now = fmt(new Date())
+  return { from: now, to: now }
+}
+
+export const yesterday = () => {
+  const date = fmt(subDays(new Date(), 1))
+  return { from: date, to: date }
 }
 
 export const thisWeek = () => {
   const now = new Date()
   return {
-    from: fmt(startOfWeek(now, { weekStartsOn: 1 })),
-    to: fmt(endOfWeek(now, { weekStartsOn: 1 })),
+    from: fmt(startOfWeek(now, { weekStartsOn: 0 })),
+    to: fmt(endOfWeek(now, { weekStartsOn: 0 })),
   }
 }
 
 export const lastWeek = () => {
   const date = subWeeks(new Date(), 1)
   return {
-    from: fmt(startOfWeek(date, { weekStartsOn: 1 })),
-    to: fmt(endOfWeek(date, { weekStartsOn: 1 })),
+    from: fmt(startOfWeek(date, { weekStartsOn: 0 })),
+    to: fmt(endOfWeek(date, { weekStartsOn: 0 })),
   }
 }
 
@@ -57,27 +63,10 @@ export const thisYear = () => {
   }
 }
 
-export function getCurrentDate() {
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, "0")
-  const day = String(now.getDate()).padStart(2, "0")
-  return `${year}-${month}-${day}`
-}
-
-function formatDateInput(date: Date) {
-  const year = date.getFullYear()
-  const month = (date.getMonth() + 1).toString().padStart(2, "0")
-  const day = date.getDate().toString().padStart(2, "0")
-  return `${year}-${month}-${day}`
-}
-
 export function getCurrentMonth() {
-  const today = new Date()
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-  const firstDay = formatDateInput(firstDayOfMonth)
-  const lastDay = formatDateInput(lastDayOfMonth)
-
-  return { firstDay, lastDay }
+  const now = new Date()
+  return {
+    firstDay: fmt(startOfMonth(now)),
+    lastDay: fmt(endOfMonth(now)),
+  }
 }

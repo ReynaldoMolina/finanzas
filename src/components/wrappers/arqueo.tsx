@@ -11,7 +11,7 @@ export async function ArqueoWrapper({ searchParams }: PageWrapperType) {
   if (data.length <= 0) return <EmptyList />
 
   return (
-    <div className="flex flex-col flex-wrap gap-2 xs:flex-row">
+    <div className="flex flex-col flex-wrap gap-2 sm:flex-row">
       {data.map((item) => (
         <Contador key={item.id} arqueo={item} cambio_dolar={cambio_dolar} />
       ))}

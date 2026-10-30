@@ -9,10 +9,7 @@ import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
 import { SelectItemType, PlantillaById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import {
-  ResponsiveDrawer,
-  ResponsiveDrawerFooter,
-} from "../../responsive-drawer"
+import { ResponsiveDrawerFooter } from "../../responsive-drawer"
 import { TransaccionTipo, transaccionTipos } from "@/lib/tipos"
 import { FormInputText } from "@/components/form-elements/form-input-text"
 import { FormTextArea } from "@/components/form-elements/form-text-area"
@@ -133,6 +130,7 @@ export function EditPlantillaForm({
           <FieldGroup>
             <DeleteFormItem
               id={transaccion.id}
+              title="plantilla"
               handleDelete={deletePlantilla}
             />
           </FieldGroup>

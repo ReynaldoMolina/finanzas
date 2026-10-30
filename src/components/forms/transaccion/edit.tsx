@@ -126,6 +126,7 @@ export function EditTransaccionForm({
           <FieldGroup>
             <DeleteFormItem
               id={transaccion.id}
+              title="transacción"
               handleDelete={deleteTransaccion}
             />
           </FieldGroup>

@@ -1,6 +1,13 @@
 "use client"
 
-import { lastMonth, lastWeek, thisWeek, thisYear, today } from "@/lib/get-date"
+import {
+  lastMonth,
+  lastWeek,
+  thisWeek,
+  thisYear,
+  today,
+  yesterday,
+} from "@/lib/get-date"
 import { SearchParamsProps } from "@/types"
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group"
 import { getSearchParams } from "@/database/get-data/get-search-params"
@@ -17,10 +24,11 @@ export function DateRangeButtons({
 
   const rangeOptions = [
     { label: "Mes", range: { from: undefined, to: undefined } },
-    { label: "Mes pasado", range: lastMonth() },
     { label: "Semana", range: thisWeek() },
-    { label: "Semana pasada", range: lastWeek() },
     { label: "Hoy", range: today() },
+    { label: "Mes pasado", range: lastMonth() },
+    { label: "Sem. pasada", range: lastWeek() },
+    { label: "Ayer", range: yesterday() },
     { label: "Año", range: thisYear() },
   ]
 
@@ -47,7 +55,7 @@ export function DateRangeButtons({
             onClick={() =>
               updateParams({ from: range.from, to: range.to, page: null })
             }
-            className="rounded-full text-xs"
+            className="text-xs"
           >
             {label}
           </ToggleGroupItem>

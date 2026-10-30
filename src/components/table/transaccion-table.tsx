@@ -56,10 +56,16 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
               <Card size="sm">
                 <CardHeader className="gap-2">
                   <CardTitle className="truncate text-sm">
-                    {item.categoria_origen} · {item.cuenta_origen}
+                    {item.descripcion ? (
+                      item.descripcion
+                    ) : (
+                      <span className="text-muted-foreground italic">
+                        Sin descripción
+                      </span>
+                    )}
                   </CardTitle>
                   <CardDescription className="flex flex-col gap-2">
-                    {item.descripcion && <span>{item.descripcion}</span>}
+                    {item.categoria_origen} · {item.cuenta_origen}
                     <Badge
                       variant="secondary"
                       className="text-muted-foreground"
@@ -100,9 +106,9 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             <TableHead>Editar</TableHead>
             <TableHead>Fecha</TableHead>
             <TableHead className="text-right">Monto</TableHead>
+            <TableHead>Descripción</TableHead>
             <TableHead>Categoría</TableHead>
             <TableHead>Cuenta</TableHead>
-            <TableHead className="w-full">Descripción</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -128,16 +134,22 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                 >
                   {sign} {formatNumber(Number(item.monto))}
                 </TableCell>
-                <TableCell>
+                <TableCell className="truncate">
+                  {item.descripcion ? (
+                    item.descripcion
+                  ) : (
+                    <span className="text-muted-foreground italic">
+                      Sin descripción
+                    </span>
+                  )}
+                </TableCell>
+                <TableCell className="text-muted-foreground">
                   {item.categoria_origen} · {item.cuenta_origen}
                 </TableCell>
                 <TableCell className="text-muted-foreground">
                   <Badge variant="secondary" className="text-muted-foreground">
                     {item.categoria_destino} · {item.cuenta_destino}
                   </Badge>
-                </TableCell>
-                <TableCell className="max-w-xs truncate text-muted-foreground">
-                  {item.descripcion ? item.descripcion : "-"}
                 </TableCell>
               </TableRow>
             )

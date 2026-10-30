@@ -45,21 +45,16 @@ export function PlantillaTabla({ data }: DataTableProps) {
         <Link key={item.id} href={`/ajustes/plantilla/${item.id}`}>
           <Card size="sm">
             <CardHeader className="gap-2">
-              <CardTitle className="truncate">
+              <CardTitle className="truncate text-sm">{item.nombre}</CardTitle>
+              <CardDescription className="flex flex-col gap-2">
                 {item.categoria_origen} · {item.cuenta_origen}
-              </CardTitle>
-              <CardDescription className="flex flex-col gap-2.5">
-                {item.descripcion && <span>{item.descripcion}</span>}
                 <Badge variant="secondary" className="text-muted-foreground">
                   {item.categoria_destino} · {item.cuenta_destino}
                 </Badge>
               </CardDescription>
-              <CardAction className="flex flex-col items-end gap-1.5">
+              <CardAction>
                 <span className={cn("text-sm font-semibold", textColor)}>
                   {sign} {formatNumber(Number(item.monto))}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {item.nombre}
                 </span>
               </CardAction>
             </CardHeader>
@@ -75,9 +70,9 @@ export function PlantillaTabla({ data }: DataTableProps) {
           <TableHead>Editar</TableHead>
           <TableHead>Nombre</TableHead>
           <TableHead className="text-right">Monto</TableHead>
+          <TableHead>Descripción</TableHead>
           <TableHead>Categoría</TableHead>
           <TableHead>Cuenta</TableHead>
-          <TableHead className="w-full">Descripción</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -93,22 +88,26 @@ export function PlantillaTabla({ data }: DataTableProps) {
                   </Button>
                 </Link>
               </TableCell>
-              <TableCell className="text-muted-foreground">
-                {item.nombre}
-              </TableCell>
+              <TableCell>{item.nombre}</TableCell>
               <TableCell className={cn("text-right font-semibold", textColor)}>
                 {sign} {formatNumber(Number(item.monto))}
               </TableCell>
-              <TableCell>
+              <TableCell className="max-w-xs truncate text-muted-foreground">
+                {item.descripcion ? (
+                  item.descripcion
+                ) : (
+                  <span className="text-muted-foreground italic">
+                    Sin descripción
+                  </span>
+                )}
+              </TableCell>
+              <TableCell className="text-muted-foreground">
                 {item.categoria_origen} · {item.cuenta_origen}
               </TableCell>
               <TableCell className="text-muted-foreground">
                 <Badge variant="secondary" className="text-muted-foreground">
                   {item.categoria_destino} · {item.cuenta_destino}
                 </Badge>
-              </TableCell>
-              <TableCell className="max-w-xs truncate text-muted-foreground">
-                {item.descripcion ? item.descripcion : "-"}
               </TableCell>
             </TableRow>
           )

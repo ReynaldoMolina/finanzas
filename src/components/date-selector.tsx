@@ -62,8 +62,8 @@ export function DateSelector({ searchParams, isActive = false }: DateSelector) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger
         render={
-          <ToggleGroupItem value="Rango" className="rounded-full text-xs">
-            <CalendarIcon className="size-4" />
+          <ToggleGroupItem value="Rango" className="text-xs">
+            <CalendarIcon className="size-3.5" />
             {buttonText}
             {!isActive && "Fecha"}
           </ToggleGroupItem>
@@ -71,9 +71,9 @@ export function DateSelector({ searchParams, isActive = false }: DateSelector) {
       />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Seleccionar fechas</DialogTitle>
+          <DialogTitle>Filtrar fechas</DialogTitle>
           <DialogDescription>
-            Elige el período que quieres consultar.
+            Elige el período que quieres filtrar.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-6">
@@ -83,28 +83,26 @@ export function DateSelector({ searchParams, isActive = false }: DateSelector) {
               checked={isSingle}
               onCheckedChange={setIsSingle}
             />
-            <Label htmlFor="is-single">Seleccionar solo un día</Label>
+            <Label htmlFor="is-single">Seleccionar solo una fecha</Label>
           </div>
-          {isSingle ? (
-            <SingleDatePicker date={range.from} setRange={setRange} />
-          ) : (
-            <Field className="xs:flex-row">
-              <FieldGroup>
-                <DateRangePicker
-                  name="from"
-                  label="Desde"
-                  range={range}
-                  setRange={setRange}
-                />
+          <Field>
+            <FieldGroup className="xs:flex-row">
+              <DateRangePicker
+                name="from"
+                label="Desde"
+                range={range}
+                setRange={setRange}
+              />
+              {!isSingle && (
                 <DateRangePicker
                   name="to"
                   label="Hasta"
                   range={range}
                   setRange={setRange}
                 />
-              </FieldGroup>
-            </Field>
-          )}
+              )}
+            </FieldGroup>
+          </Field>
         </div>
         <DialogFooter>
           <DialogClose render={<Button variant="outline">Cancelar</Button>} />
@@ -113,7 +111,7 @@ export function DateSelector({ searchParams, isActive = false }: DateSelector) {
             onClick={() => {
               updateParams({
                 from: range.from,
-                to: range.to,
+                to: isSingle ? range.from : range.to,
               })
               setOpen(false)
             }}
@@ -123,28 +121,6 @@ export function DateSelector({ searchParams, isActive = false }: DateSelector) {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
-
-interface SingleDatePicker {
-  date: string
-  setRange: Dispatch<SetStateAction<DateRange>>
-}
-
-function SingleDatePicker({ date, setRange }: SingleDatePicker) {
-  function handleChange(date: Date | undefined) {
-    if (date) {
-      const formattedDate = dateToIso(date)
-      setRange({ from: formattedDate, to: formattedDate })
-    }
-  }
-
-  return (
-    <DatePicker
-      label="Fecha"
-      date={dateIsoToDate(date)}
-      handleChange={handleChange}
-    />
   )
 }
 

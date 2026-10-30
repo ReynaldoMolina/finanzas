@@ -23,7 +23,6 @@ import { PlantillaPage } from "@/types"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { TRANSACCION_TIPO } from "@/lib/tipos"
 import { LinkButton } from "./link-button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
@@ -72,7 +71,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
               className="flex flex-col gap-1"
             >
               <LinkButton
-                variant="secondary"
+                variant="ghost"
                 className="w-full font-normal"
                 size="sm"
                 href={`/transaccion/crear?tipo=${item.tipo}`}
@@ -84,7 +83,7 @@ export function PlantillasMenu({ plantillas }: PlantillasMenu) {
               {item.items.map((i) => (
                 <LinkButton
                   key={i.nombre}
-                  variant="secondary"
+                  variant="ghost"
                   className="w-full font-normal"
                   size="sm"
                   href={`/transaccion/crear?tipo=${item.tipo}&monto=${Number(i.monto) === 0 ? "" : i.monto}&origen=${i.id_cuenta_origen}&destino=${i.id_cuenta_destino}&descripcion=${i.descripcion}`}
