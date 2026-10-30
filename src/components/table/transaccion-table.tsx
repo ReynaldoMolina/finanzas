@@ -75,7 +75,8 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                   </CardDescription>
                   <CardAction className="flex flex-col items-end gap-2.5">
                     <span className={cn("font-semibold", textColor)}>
-                      {sign} {formatNumber(Number(item.monto))}
+                      {sign}
+                      {formatNumber(Number(item.monto))}
                     </span>
                     <span className="text-xs text-muted-foreground">
                       {formatDate({ date: item.fecha, natural: true })}
@@ -132,7 +133,8 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                 <TableCell
                   className={cn("text-right font-semibold", textColor)}
                 >
-                  {sign} {formatNumber(Number(item.monto))}
+                  {sign}
+                  {formatNumber(Number(item.monto))}
                 </TableCell>
                 <TableCell className="truncate">
                   {item.descripcion ? (

@@ -54,7 +54,8 @@ export function PlantillaTabla({ data }: DataTableProps) {
               </CardDescription>
               <CardAction>
                 <span className={cn("text-sm font-semibold", textColor)}>
-                  {sign} {formatNumber(Number(item.monto))}
+                  {sign}
+                  {formatNumber(Number(item.monto))}
                 </span>
               </CardAction>
             </CardHeader>
@@ -90,7 +91,8 @@ export function PlantillaTabla({ data }: DataTableProps) {
               </TableCell>
               <TableCell>{item.nombre}</TableCell>
               <TableCell className={cn("text-right font-semibold", textColor)}>
-                {sign} {formatNumber(Number(item.monto))}
+                {sign}
+                {formatNumber(Number(item.monto))}
               </TableCell>
               <TableCell className="max-w-xs truncate text-muted-foreground">
                 {item.descripcion ? (

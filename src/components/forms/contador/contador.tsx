@@ -19,16 +19,7 @@ import { cn } from "@/lib/utils"
 import { ArqueoPage, ArqueoType } from "@/types"
 import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  CheckIcon,
-  ChevronDown,
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleMinusIcon,
-  PencilIcon,
-  SaveIcon,
-  XIcon,
-} from "lucide-react"
+import { CheckIcon, ChevronDown, PencilIcon, SaveIcon } from "lucide-react"
 import { useActionState, startTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -153,7 +144,9 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                 {cuadrado ? (
                   !saldoCero && <CheckIcon className="text-green-600" />
                 ) : (
-                  <XIcon className="text-red-400" />
+                  <span className="text-xs text-red-400">
+                    {formatNumber(diferencia)}
+                  </span>
                 )}
               </div>
               <ChevronDown className="transition group-data-panel-open/button:rotate-180" />
