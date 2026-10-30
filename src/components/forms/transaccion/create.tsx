@@ -9,10 +9,7 @@ import { startTransition, useActionState } from "react"
 import { stateDefault } from "@/database/actions/state-message"
 import { SelectItemType, TransaccionById } from "@/types"
 import { useServerActionFeedback } from "@/hooks/use-server-status"
-import {
-  ResponsiveDrawer,
-  ResponsiveDrawerFooter,
-} from "../../responsive-drawer"
+import { ResponsiveDrawerFooter } from "../../responsive-drawer"
 import { TransaccionTipo, transaccionTipos } from "@/lib/tipos"
 import { createTransaccion } from "@/database/actions/transaccion"
 import { FormDatePicker } from "@/components/form-elements/form-date-picker"

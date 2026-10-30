@@ -19,6 +19,7 @@ import { DatePicker } from "./date-picker"
 import { CalendarIcon } from "lucide-react"
 import { Switch } from "./ui/switch"
 import { Label } from "./ui/label"
+import { Field, FieldGroup } from "./ui/field"
 
 interface DateSelector {
   searchParams: SearchParamsProps
@@ -87,20 +88,22 @@ export function DateSelector({ searchParams, isActive = false }: DateSelector) {
           {isSingle ? (
             <SingleDatePicker date={range.from} setRange={setRange} />
           ) : (
-            <div className="flex flex-col gap-2 xs:flex-row">
-              <DateRangePicker
-                name="from"
-                label="Desde"
-                range={range}
-                setRange={setRange}
-              />
-              <DateRangePicker
-                name="to"
-                label="Hasta"
-                range={range}
-                setRange={setRange}
-              />
-            </div>
+            <Field className="xs:flex-row">
+              <FieldGroup>
+                <DateRangePicker
+                  name="from"
+                  label="Desde"
+                  range={range}
+                  setRange={setRange}
+                />
+                <DateRangePicker
+                  name="to"
+                  label="Hasta"
+                  range={range}
+                  setRange={setRange}
+                />
+              </FieldGroup>
+            </Field>
           )}
         </div>
         <DialogFooter>

@@ -1,5 +1,6 @@
 import {
   format,
+  formatISO,
   isAfter,
   isSameYear,
   isThisWeek,
@@ -61,5 +62,5 @@ export function dateIsoToDate(date: string) {
 }
 
 export function dateToIso(date: Date) {
-  return date?.toISOString().split("T")[0]
+  return format(date, "yyyy-MM-dd")
 }
