@@ -47,7 +47,7 @@ const DENOMINATIONS: DenominationConfig[] = [
   { name: "dolar_5", label: "$5", value: 5, isDollar: true },
   { name: "dolar_2", label: "$2", value: 2, isDollar: true },
   { name: "dolar_1", label: "$1", value: 1, isDollar: true, separator: true },
-  { name: "nio_1000", label: "1000", value: 1000 },
+  { name: "nio_1000", label: "1,000", value: 1000 },
   { name: "nio_500", label: "500", value: 500 },
   { name: "nio_200", label: "200", value: 200 },
   { name: "nio_100", label: "100", value: 100 },
@@ -219,7 +219,12 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                 <td className="h-5.5 max-w-20 border px-1 text-right">
                   ${formatNumber(granTotalNIO / cambio_dolar)}
                 </td>
-                <td className="min-w-25 border px-1 text-right">
+                <td
+                  className={cn(
+                    "min-w-25 border px-1 text-right",
+                    cuadrado ? "" : "bg-red-100 dark:bg-red-900/70"
+                  )}
+                >
                   {formatNumber(granTotalNIO)}
                 </td>
               </tr>
@@ -232,7 +237,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                   {formatNumber(totalCordobas)}
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td className="border px-1 text-right">
                   {diferencia === 0 ? "" : diferencia < 0 ? "Faltan" : "Sobran"}
                 </td>
@@ -247,7 +252,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                 <td className="min-w-25 border bg-yellow-100 px-1 text-right dark:bg-yellow-700/70">
                   {formatNumber(arqueo.saldo)}
                 </td>
-              </tr>
+              </tr> */}
             </tfoot>
           </table>
         </CollapsibleContent>
