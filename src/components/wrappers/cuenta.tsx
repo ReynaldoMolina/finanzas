@@ -11,6 +11,8 @@ export async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const { data } = await getCuentas(searchParams)
   const { cambio_dolar } = await getAjustesCambioDolar()
 
+  if (data.length <= 0) return <EmptyList />
+
   const gastos = data.find((item) => item.nombre === "Gasto")
   const ingresos = data.find((item) => item.nombre === "Ingreso")
 
@@ -26,8 +28,6 @@ export async function CuentaWrapper({ searchParams }: PageWrapperType) {
   const from = searchParams.from ?? ""
   const to = searchParams.to ?? ""
   const rangeString = Boolean(from && to) ? `&from=${from}&to=${to}` : ""
-
-  if (data.length <= 0) return <EmptyList />
 
   return (
     <div className="mt-4 max-w-2xl space-y-12">
@@ -64,9 +64,7 @@ export async function CuentaWrapper({ searchParams }: PageWrapperType) {
           <div className="mx-2.5 flex items-center gap-2 pb-2 font-semibold">
             <TagIcon size={16} />
             <h2>Utilidad</h2>
-            <span className="ml-auto">
-              {formatNumber(utilidad + gananciaPeya)}
-            </span>
+            <span className="ml-auto"></span>
           </div>
 
           <ul className="ml-6">
