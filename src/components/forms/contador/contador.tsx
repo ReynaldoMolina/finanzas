@@ -154,27 +154,6 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
           }
         />
         <CollapsibleContent className="mb-12 space-y-2">
-          <div className="flex gap-2">
-            <LinkButton
-              className="flex-1"
-              href={`/arqueo/${arqueo.id}`}
-              variant="outline"
-              size="sm"
-            >
-              <PencilIcon />
-              Editar
-            </LinkButton>
-            <Button
-              variant="outline"
-              size="sm"
-              type="submit"
-              id={formId}
-              className="flex-1"
-            >
-              {isPending ? <Spinner /> : <SaveIcon />}
-              Guardar
-            </Button>
-          </div>
           <table className="w-full">
             <tbody className="">
               {DENOMINATIONS.map(
@@ -237,24 +216,22 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
                   {formatNumber(totalCordobas)}
                 </td>
               </tr>
-              {/* <tr>
-                <td className="border px-1 text-right">
-                  {diferencia === 0 ? "" : diferencia < 0 ? "Faltan" : "Sobran"}
-                </td>
-                <td
-                  className={cn(
-                    "h-5.5 max-w-20 border px-1 text-right",
-                    cuadrado ? "" : "bg-red-100 dark:bg-red-900/70"
-                  )}
-                >
-                  {formatNumber(diferencia)}
-                </td>
-                <td className="min-w-25 border bg-yellow-100 px-1 text-right dark:bg-yellow-700/70">
-                  {formatNumber(arqueo.saldo)}
-                </td>
-              </tr> */}
             </tfoot>
           </table>
+          <div className="flex flex-col gap-2">
+            <Button size="sm" type="submit" id={formId}>
+              {isPending ? <Spinner /> : <SaveIcon />}
+              Guardar
+            </Button>
+            <LinkButton
+              href={`/arqueo/${arqueo.id}`}
+              variant="outline"
+              size="sm"
+            >
+              <PencilIcon />
+              Editar
+            </LinkButton>
+          </div>
         </CollapsibleContent>
       </Collapsible>
     </form>
