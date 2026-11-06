@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
 import { ArqueoPage, ArqueoType } from "@/types"
 import { contadorSchema } from "@/validation/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CheckIcon, ChevronDown, PencilIcon, SaveIcon } from "lucide-react"
+import { CheckIcon, ChevronDown } from "lucide-react"
 import { useActionState, startTransition } from "react"
 import { useForm } from "react-hook-form"
 import z from "zod"
@@ -220,7 +220,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
           </table>
           <div className="flex flex-col gap-2">
             <Button size="sm" type="submit" id={formId}>
-              {isPending ? <Spinner /> : <SaveIcon />}
+              {isPending && <Spinner />}
               Guardar
             </Button>
             <LinkButton
@@ -228,7 +228,6 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
               variant="outline"
               size="sm"
             >
-              <PencilIcon />
               Editar
             </LinkButton>
           </div>
