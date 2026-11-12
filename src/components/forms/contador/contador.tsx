@@ -219,7 +219,7 @@ export function Contador({ arqueo, cambio_dolar }: ContadorProps) {
             </tfoot>
           </table>
           <div className="flex flex-col gap-2">
-            <Button size="sm" type="submit" id={formId}>
+            <Button size="sm" type="submit" id={formId} disabled={isPending}>
               {isPending && <Spinner />}
               Guardar
             </Button>

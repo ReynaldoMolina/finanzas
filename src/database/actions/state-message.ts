@@ -7,7 +7,7 @@ export const stateDefault: ServerStatus = {
 
 export const stateCreateSuccess: ServerStatus = {
   success: true,
-  title: "Se creó correctamente.",
+  title: "Creado correctamente.",
 }
 
 export const stateCreateError: ServerStatus = {
@@ -17,17 +17,17 @@ export const stateCreateError: ServerStatus = {
 
 export const stateUpdateSuccess: ServerStatus = {
   success: true,
-  title: "Cambios guardados.",
+  title: "Guardado.",
 }
 
 export const stateUpdateError: ServerStatus = {
   success: false,
-  title: "Error al guardar cambios.",
+  title: "Error al guardar.",
 }
 
 export const stateDeleteSuccess: ServerStatus = {
   success: true,
-  title: "Se eliminó correctamente.",
+  title: "Eliminado correctamente.",
 }
 
 export const stateDeleteError: ServerStatus = {

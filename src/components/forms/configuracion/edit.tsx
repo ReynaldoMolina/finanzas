@@ -64,7 +64,7 @@ export function EditAjustesForm({ ajustes, cuentas }: EditAjustesFormProps) {
           />
         </FieldGroup>
       </FieldSet>
-      <Button type="submit" form={formId}>
+      <Button type="submit" form={formId} disabled={isPending}>
         {isPending && <Spinner />}
         Guardar
       </Button>

@@ -9,10 +9,14 @@ import { cuentaCategoria, cuenta, plantilla } from "../schema/schema"
 import { aliasedTable, eq, sql, and, asc } from "drizzle-orm"
 import { buildSearchFilter } from "./build-search-filter"
 import { TransaccionTipo } from "@/lib/tipos"
+import { getSearchParams } from "./get-search-params"
 
 export async function getPlantillas(searchParams: SearchParamsProps): Promise<{
   data: PlantillaTable[]
+  totalPages: number
 }> {
+  const { limit, offset } = getSearchParams(searchParams)
+
   try {
     const cuentaOrigen = aliasedTable(cuenta, "cuenta_origen")
     const cuentaDestino = aliasedTable(cuenta, "cuenta_destino")
@@ -41,6 +45,8 @@ export async function getPlantillas(searchParams: SearchParamsProps): Promise<{
       plantilla.descripcion,
     ])
 
+    const conditions = and(filterBySearch)
+
     const data = await db
       .select(selectedFields)
       .from(plantilla)
@@ -57,10 +63,32 @@ export async function getPlantillas(searchParams: SearchParamsProps): Promise<{
         categoriaDestino,
         eq(cuentaDestino.id_categoria, categoriaDestino.id)
       )
-      .where(and(filterBySearch))
+      .where(conditions)
       .orderBy(asc(plantilla.tipo), asc(plantilla.nombre))
+      .limit(limit)
+      .offset(offset)
 
-    return { data }
+    const [{ count }] = await db
+      .select({ count: sql<number>`COUNT(*)` })
+      .from(plantilla)
+      .innerJoin(cuentaOrigen, eq(plantilla.id_cuenta_origen, cuentaOrigen.id))
+      .innerJoin(
+        cuentaDestino,
+        eq(plantilla.id_cuenta_destino, cuentaDestino.id)
+      )
+      .innerJoin(
+        categoriaOrigen,
+        eq(cuentaOrigen.id_categoria, categoriaOrigen.id)
+      )
+      .innerJoin(
+        categoriaDestino,
+        eq(cuentaDestino.id_categoria, categoriaDestino.id)
+      )
+      .where(conditions)
+
+    const totalPages = Math.ceil(count / limit) || 1
+
+    return { data, totalPages }
   } catch (error) {
     console.error(error)
     throw new Error("No se pudieron obtener las plantillas.")

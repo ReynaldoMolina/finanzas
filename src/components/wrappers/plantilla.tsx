@@ -5,7 +5,7 @@ import { PlantillaTabla } from "../table/plantilla-table"
 export default async function PlantillaWrapper({
   searchParams,
 }: PageWrapperType) {
-  const { data } = await getPlantillas(searchParams)
+  const { data, totalPages } = await getPlantillas(searchParams)
 
-  return <PlantillaTabla data={data} />
+  return <PlantillaTabla data={data} totalPages={totalPages} />
 }

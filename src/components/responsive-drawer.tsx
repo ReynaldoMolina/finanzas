@@ -61,7 +61,7 @@ export function ResponsiveDrawerFooter({
 }: ResponsiveDrawerFooter) {
   return (
     <DrawerFooter>
-      <Button type="submit" form={formId}>
+      <Button type="submit" form={formId} disabled={isPending}>
         {isPending && <Spinner />}
         Guardar
       </Button>

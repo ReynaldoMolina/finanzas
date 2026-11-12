@@ -13,7 +13,6 @@ import {
 } from "../ui/table"
 import Link from "next/link"
 import { TransaccionTablaType } from "@/types"
-import { useIsMobile } from "@/hooks/use-mobile"
 import {
   Card,
   CardAction,
@@ -27,6 +26,7 @@ import { Badge } from "../ui/badge"
 import { EmptyList } from "./empty-list"
 import { Pagination } from "./pagination"
 import { LinkButton } from "../link-button"
+import { useSearchParams } from "next/navigation"
 
 interface DataTableProps {
   data: TransaccionTablaType[]
@@ -34,8 +34,6 @@ interface DataTableProps {
 }
 
 export function TransaccionTable({ data, totalPages }: DataTableProps) {
-  const isMobile = useIsMobile()
-
   if (data.length <= 0) {
     return <EmptyList />
   }
@@ -45,9 +43,12 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
     return acc + suma
   }, 0)
 
-  if (isMobile)
-    return (
-      <>
+  const searchParams = useSearchParams()
+  const isFiltered = !!searchParams.get("tipo")
+
+  return (
+    <>
+      <div className="flex flex-col gap-2 md:hidden">
         {data.map((item) => {
           const { textColor, sign } = getTransaccionStyle(item.tipo)
 
@@ -87,87 +88,93 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             </Link>
           )
         })}
-        <Card size="sm" className="bg-muted/50">
-          <CardHeader>
-            <CardTitle className="truncate text-sm">Total</CardTitle>
-            <CardAction className="font-semibold">
-              {formatNumber(totalMonto)}
-            </CardAction>
-          </CardHeader>
-        </Card>
-        <Pagination totalPages={totalPages} />
-      </>
-    )
+        {isFiltered && (
+          <Card size="sm" className="bg-muted/50">
+            <CardHeader>
+              <CardTitle className="truncate text-sm">Total</CardTitle>
+              <CardAction className="font-semibold">
+                {formatNumber(totalMonto)}
+              </CardAction>
+            </CardHeader>
+          </Card>
+        )}
+      </div>
 
-  return (
-    <>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Editar</TableHead>
-            <TableHead>Fecha</TableHead>
-            <TableHead className="text-right">Monto</TableHead>
-            <TableHead>Descripción</TableHead>
-            <TableHead>Categoría</TableHead>
-            <TableHead>Cuenta</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map((item) => {
-            const { textColor, sign } = getTransaccionStyle(item.tipo)
+      <div className="hidden md:block">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Editar</TableHead>
+              <TableHead>Fecha</TableHead>
+              <TableHead className="text-right">Monto</TableHead>
+              <TableHead>Descripción</TableHead>
+              <TableHead>Categoría</TableHead>
+              <TableHead>Cuenta</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((item) => {
+              const { textColor, sign } = getTransaccionStyle(item.tipo)
 
-            return (
-              <TableRow key={item.id}>
-                <TableCell>
-                  <LinkButton
-                    href={`/transaccion/${item.id}`}
-                    variant="outline"
-                    size="icon-xs"
+              return (
+                <TableRow key={item.id}>
+                  <TableCell>
+                    <LinkButton
+                      href={`/transaccion/${item.id}`}
+                      variant="outline"
+                      size="icon-xs"
+                    >
+                      <PencilIcon />
+                    </LinkButton>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {formatDate({ date: item.fecha, natural: true })}
+                  </TableCell>
+                  <TableCell
+                    className={cn("text-right font-semibold", textColor)}
                   >
-                    <PencilIcon />
-                  </LinkButton>
+                    {sign}
+                    {formatNumber(Number(item.monto))}
+                  </TableCell>
+                  <TableCell className="truncate">
+                    {item.descripcion ? (
+                      item.descripcion
+                    ) : (
+                      <span className="text-muted-foreground italic">
+                        Sin descripción
+                      </span>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {item.categoria_origen} · {item.cuenta_origen}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    <Badge
+                      variant="secondary"
+                      className="text-muted-foreground"
+                    >
+                      {item.categoria_destino} · {item.cuenta_destino}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+          {isFiltered && (
+            <TableFooter>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell className="text-right">
+                  {formatNumber(totalMonto)}
                 </TableCell>
-                <TableCell className="text-muted-foreground">
-                  {formatDate({ date: item.fecha, natural: true })}
-                </TableCell>
-                <TableCell
-                  className={cn("text-right font-semibold", textColor)}
-                >
-                  {sign}
-                  {formatNumber(Number(item.monto))}
-                </TableCell>
-                <TableCell className="truncate">
-                  {item.descripcion ? (
-                    item.descripcion
-                  ) : (
-                    <span className="text-muted-foreground italic">
-                      Sin descripción
-                    </span>
-                  )}
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  {item.categoria_origen} · {item.cuenta_origen}
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  <Badge variant="secondary" className="text-muted-foreground">
-                    {item.categoria_destino} · {item.cuenta_destino}
-                  </Badge>
-                </TableCell>
+                <TableCell colSpan={3}></TableCell>
               </TableRow>
-            )
-          })}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell>Total</TableCell>
-            <TableCell className="text-right">
-              {formatNumber(totalMonto)}
-            </TableCell>
-            <TableCell colSpan={3}></TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
+            </TableFooter>
+          )}
+        </Table>
+      </div>
+
       <Pagination totalPages={totalPages} />
     </>
   )

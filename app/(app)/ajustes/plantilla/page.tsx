@@ -15,7 +15,7 @@ export const metadata = { title }
 export default async function Page({ searchParams }: PageProps) {
   return (
     <>
-      <AppHeader title={title} showBackButton />
+      <AppHeader title={title} />
       <PageWrapper>
         <SearchInput>
           <LinkButton href="/ajustes/plantilla/crear">
