@@ -20,7 +20,7 @@ export function AppDock() {
           >
             <div
               className={cn(
-                isActive && "bg-primary",
+                isActive && "bg-primary text-background",
                 "flex w-12 justify-center rounded-md p-1"
               )}
             >
