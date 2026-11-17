@@ -16,13 +16,19 @@ export function AppDock() {
           <Link
             key={item.name}
             href={item.url}
-            className={cn(
-              isActive && "bg-secondary",
-              "flex flex-col items-center gap-1 rounded-lg p-2"
-            )}
+            className="flex flex-col items-center gap-1"
           >
-            <item.icon size={17} />
-            <span className="text-xs">{item.name}</span>
+            <div
+              className={cn(
+                isActive && "bg-primary",
+                "flex w-12 justify-center rounded-md p-1"
+              )}
+            >
+              <item.icon size={17} />
+            </div>
+            <span className={cn(isActive && "font-semibold", "text-xs")}>
+              {item.name}
+            </span>
           </Link>
         )
       })}

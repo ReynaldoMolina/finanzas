@@ -25,101 +25,122 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { LinkButton } from "./link-button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+import { TRANSACCION_TIPO } from "@/lib/tipos"
 
-interface PlantillasMenu {
+interface PlantillasMenuProps {
   plantillas: PlantillaPage[]
 }
 
-export function PlantillasMenu({ plantillas }: PlantillasMenu) {
+export function PlantillasMenu({ plantillas }: PlantillasMenuProps) {
   const isMobile = useIsMobile()
-  const [isOpen, setIsOpen] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
-    <Drawer
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      showSwipeHandle={isMobile}
-      swipeDirection={isMobile ? "down" : "right"}
-    >
-      <DrawerTrigger
-        render={
-          <Button>
-            <PlusIcon />
-            Nuevo
-          </Button>
-        }
-      />
-      <DrawerContent className="h-96vh">
-        <DrawerHeader>
-          <DrawerTitle>Crear transacción</DrawerTitle>
-          <DrawerDescription>Elige una plantilla</DrawerDescription>
-        </DrawerHeader>
-
-        <Tabs
-          defaultValue="Gasto"
-          className="h-[96vh] scroll-fade overflow-y-auto p-4"
-        >
-          <TabsList className="w-full">
-            <TabsTrigger value="Gasto">Gasto</TabsTrigger>
-            <TabsTrigger value="Ingreso">Ingreso</TabsTrigger>
-            <TabsTrigger value="Transferencia">Transferencia</TabsTrigger>
-          </TabsList>
-          {plantillas.map((item) => (
-            <TabsContent
-              key={item.tipo}
-              value={item.tipo}
-              className="flex flex-col gap-1"
-            >
-              <LinkButton
-                variant="ghost"
-                className="w-full font-normal"
-                size="sm"
-                href={`/transaccion/crear?tipo=${item.tipo}`}
-                onClick={() => setIsOpen(false)}
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button>
+              <PlusIcon />
+              Nuevo
+            </Button>
+          }
+        />
+        <DropdownMenuContent>
+          <DropdownMenuGroup>
+            {TRANSACCION_TIPO.map((item) => (
+              <DropdownMenuItem
+                key={item}
+                render={<Link href={`/transaccion/crear?tipo=${item}`} />}
               >
-                En blanco
-                <ChevronRightIcon className="ml-auto" />
-              </LinkButton>
-              {item.items.map((i) => (
-                <LinkButton
-                  key={i.nombre}
-                  variant="ghost"
-                  className="w-full font-normal"
-                  size="sm"
-                  href={`/transaccion/crear?tipo=${item.tipo}&monto=${Number(i.monto) === 0 ? "" : i.monto}&origen=${i.id_cuenta_origen}&destino=${i.id_cuenta_destino}&descripcion=${i.descripcion}`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span className="truncate">{i.nombre}</span>
-                  <ChevronRightIcon className="ml-auto" />
-                </LinkButton>
-              ))}
-            </TabsContent>
-          ))}
-        </Tabs>
-        <DrawerFooter>
-          <Item
-            variant="outline"
-            size="xs"
-            render={<Link href="/ajustes/plantilla" />}
+                {item}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem onClick={() => setIsDrawerOpen(true)}>
+            Plantillas
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Drawer
+        open={isDrawerOpen}
+        onOpenChange={setIsDrawerOpen}
+        showSwipeHandle={isMobile}
+        swipeDirection={isMobile ? "down" : "right"}
+      >
+        <DrawerContent className="h-96vh">
+          <DrawerHeader>
+            <DrawerTitle>Crear transacción</DrawerTitle>
+            <DrawerDescription>Elige una plantilla</DrawerDescription>
+          </DrawerHeader>
+
+          <Tabs
+            defaultValue="Gasto"
+            className="h-[96vh] scroll-fade overflow-y-auto p-4"
           >
-            <ItemMedia variant="icon">
-              <ZapIcon />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>Editar plantillas</ItemTitle>
-            </ItemContent>
-            <ItemActions>
-              <ChevronRightIcon size="16" />
-            </ItemActions>
-          </Item>
-          <DrawerClose
-            onClick={() => setIsOpen(false)}
-            render={<Button variant="outline" />}
-          >
-            Cerrar
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+            <TabsList className="w-full">
+              <TabsTrigger value="Gasto">Gasto</TabsTrigger>
+              <TabsTrigger value="Ingreso">Ingreso</TabsTrigger>
+              <TabsTrigger value="Transferencia">Transferencia</TabsTrigger>
+            </TabsList>
+            {plantillas.map((item) => (
+              <TabsContent
+                key={item.tipo}
+                value={item.tipo}
+                className="flex flex-col gap-1"
+              >
+                {item.items.map((i) => (
+                  <LinkButton
+                    key={i.nombre}
+                    variant="ghost"
+                    className="w-full font-normal"
+                    size="sm"
+                    href={`/transaccion/crear?tipo=${item.tipo}&monto=${Number(i.monto) === 0 ? "" : i.monto}&origen=${i.id_cuenta_origen}&destino=${i.id_cuenta_destino}&descripcion=${i.descripcion}`}
+                    onClick={() => setIsDrawerOpen(false)}
+                  >
+                    <span className="truncate">{i.nombre}</span>
+                    <ChevronRightIcon className="ml-auto" />
+                  </LinkButton>
+                ))}
+              </TabsContent>
+            ))}
+          </Tabs>
+          <DrawerFooter>
+            <Item
+              variant="outline"
+              size="xs"
+              render={<Link href="/ajustes/plantilla" />}
+            >
+              <ItemMedia variant="icon">
+                <ZapIcon />
+              </ItemMedia>
+              <ItemContent>
+                <ItemTitle>Editar plantillas</ItemTitle>
+              </ItemContent>
+              <ItemActions>
+                <ChevronRightIcon size="16" />
+              </ItemActions>
+            </Item>
+            <DrawerClose
+              onClick={() => setIsDrawerOpen(false)}
+              render={<Button variant="outline" />}
+            >
+              Cerrar
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }

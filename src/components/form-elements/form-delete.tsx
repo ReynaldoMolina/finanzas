@@ -66,10 +66,8 @@ export function DeleteFormItem({
 
       <ItemActions>
         <AlertDialog>
-          <AlertDialogTrigger
-            render={<Button variant="destructive" disabled={isPending} />}
-          >
-            {isPending && <Spinner />} Eliminar
+          <AlertDialogTrigger render={<Button variant="destructive" />}>
+            Eliminar
           </AlertDialogTrigger>
 
           <AlertDialogContent>

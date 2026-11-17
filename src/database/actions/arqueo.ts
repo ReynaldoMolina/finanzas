@@ -9,7 +9,7 @@ import {
   stateDeleteError,
   stateCreateSuccess,
 } from "./state-message"
-import { ArqueoById, ArqueoType, ServerStatus } from "@/types"
+import { ArqueoById, ServerStatus } from "@/types"
 import { db } from ".."
 import { arqueo } from "../schema/schema"
 
@@ -54,7 +54,7 @@ export async function updateArqueo(
 
 interface UpdateArqueoConteo {
   id: number | string
-  values: ArqueoType
+  values: ArqueoById
 }
 
 export async function updateArqueoConteo(

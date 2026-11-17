@@ -29,11 +29,6 @@ export const menuItems = [
     url: "/arqueo",
     icon: Coins,
   },
-  {
-    name: "Ajustes",
-    url: "/ajustes",
-    icon: Settings,
-  },
 ]
 
 export type MenuItemType = (typeof menuItems)[number]

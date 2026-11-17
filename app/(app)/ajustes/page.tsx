@@ -16,21 +16,9 @@ export default async function Page() {
     <>
       <AppHeader title={title} />
       <PageWrapper className="gap-4 sm:max-w-md">
-        <Tabs defaultValue="valores">
-          <TabsList className="w-full md:w-fit">
-            <TabsTrigger value="valores">Valores</TabsTrigger>
-            <TabsTrigger value="perfil">Perfil</TabsTrigger>
-          </TabsList>
-          <TabsContent value="valores">
-            <Suspense fallback={<SkeletonForm />}>
-              <AjustesWrapper />
-            </Suspense>
-          </TabsContent>
-          <TabsContent value="perfil" className="space-y-2">
-            <ThemePicker />
-            <LogoutForm />
-          </TabsContent>
-        </Tabs>
+        <Suspense fallback={<SkeletonForm />}>
+          <AjustesWrapper />
+        </Suspense>
       </PageWrapper>
     </>
   )

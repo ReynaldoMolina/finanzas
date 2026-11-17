@@ -33,6 +33,25 @@ export const plantillaSchema = z.object({
 
 export const arqueoSchema = z.object({
   id_cuenta: zTextToNumber("Selecciona una opción."),
+  dolar_100: zNumberNullable(),
+  dolar_50: zNumberNullable(),
+  dolar_20: zNumberNullable(),
+  dolar_10: zNumberNullable(),
+  dolar_5: zNumberNullable(),
+  dolar_2: zNumberNullable(),
+  dolar_1: zNumberNullable(),
+  nio_1000: zNumberNullable(),
+  nio_500: zNumberNullable(),
+  nio_200: zNumberNullable(),
+  nio_100: zNumberNullable(),
+  nio_50: zNumberNullable(),
+  nio_20: zNumberNullable(),
+  nio_10: zNumberNullable(),
+  nio_5: zNumberNullable(),
+  nio_1: zNumberNullable(),
+  nio_050: zNumberNullable(),
+  nio_025: zNumberNullable(),
+  nio_010: zNumberNullable(),
 })
 
 export const ajustesSchema = z.object({

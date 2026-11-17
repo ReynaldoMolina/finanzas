@@ -1,18 +1,18 @@
 "use client"
 
-import { ChevronDown, MonitorIcon, MoonIcon, SunIcon } from "lucide-react"
+import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu"
 
 import { useState } from "react"
-import { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from "./ui/item"
 
 export function ThemePicker() {
   const { theme, setTheme } = useTheme()
@@ -37,41 +37,33 @@ export function ThemePicker() {
   ]
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        nativeButton={false}
-        render={
-          <Item variant="outline">
-            <ItemMedia>
-              <SunIcon className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-              <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>Tema</ItemTitle>
-            </ItemContent>
-            <ItemActions>
-              <ChevronDown size={17} />
-            </ItemActions>
-          </Item>
-        }
-      />
-
-      <DropdownMenuContent align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuRadioGroup value={selected} onValueChange={setSelected}>
-            {items.map((item) => (
-              <DropdownMenuRadioItem
-                key={item.value}
-                value={item.value}
-                onClick={() => setTheme(item.value)}
-              >
-                {item.icon}
-                {item.label}
-              </DropdownMenuRadioItem>
-            ))}
-          </DropdownMenuRadioGroup>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <SunIcon className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        Tema
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent align="end">
+          <DropdownMenuGroup>
+            <DropdownMenuRadioGroup
+              value={selected}
+              onValueChange={setSelected}
+            >
+              {items.map((item) => (
+                <DropdownMenuRadioItem
+                  key={item.value}
+                  value={item.value}
+                  onClick={() => setTheme(item.value)}
+                >
+                  {item.icon}
+                  {item.label}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuGroup>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   )
 }

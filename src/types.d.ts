@@ -141,7 +141,9 @@ interface PlantillaById {
   descripcion: string | null
 }
 
-export interface ArqueoType {
+export interface ArqueoById {
+  id: number
+  id_cuenta: number
   dolar_100: string | null
   dolar_50: string | null
   dolar_20: string | null
@@ -161,17 +163,15 @@ export interface ArqueoType {
   nio_050: string | null
   nio_025: string | null
   nio_010: string | null
+  saldo: number
+  total?: number
 }
 
-export interface ArqueoById {
-  id: number
-  id_cuenta: number
-}
-
-export interface ArqueoPage extends ArqueoType {
+export interface ArqueoPage {
   id: number
   cuenta: string
   saldo: number
+  total: number
 }
 
 export interface Ajustes {

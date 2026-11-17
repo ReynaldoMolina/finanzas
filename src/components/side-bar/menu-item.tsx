@@ -20,7 +20,6 @@ export function MenuItem({ item }: MenuItemProps) {
         render={<Link href={item.url} />}
         onClick={() => setOpenMobile(false)}
         isActive={isActive}
-        size="lg"
       >
         <item.icon />
         <span className="text-sm">{item.name}</span>

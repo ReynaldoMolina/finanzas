@@ -48,7 +48,7 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
 
   return (
     <>
-      <div className="flex flex-col gap-2 md:hidden">
+      <div className="flex flex-col gap-2 sm:hidden">
         {data.map((item) => {
           const { textColor, sign } = getTransaccionStyle(item.tipo)
 
@@ -66,7 +66,12 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                     )}
                   </CardTitle>
                   <CardDescription className="flex flex-col gap-2">
-                    {item.categoria_origen} · {item.cuenta_origen}
+                    <Badge
+                      variant="secondary"
+                      className="text-muted-foreground"
+                    >
+                      {item.categoria_origen} · {item.cuenta_origen}
+                    </Badge>
                     <Badge
                       variant="secondary"
                       className="text-muted-foreground"
@@ -146,7 +151,12 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
                     )}
                   </TableCell>
                   <TableCell className="text-muted-foreground">
-                    {item.categoria_origen} · {item.cuenta_origen}
+                    <Badge
+                      variant="secondary"
+                      className="text-muted-foreground"
+                    >
+                      {item.categoria_origen} · {item.cuenta_origen}
+                    </Badge>
                   </TableCell>
                   <TableCell className="text-muted-foreground">
                     <Badge
