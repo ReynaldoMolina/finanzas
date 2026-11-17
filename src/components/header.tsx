@@ -30,13 +30,13 @@ export function AppHeader({ title }: SiteHeader) {
   }
 
   return (
-    <header className="sticky top-0 z-20 flex w-full items-center gap-2 border-b bg-background px-3 py-2">
+    <header className="sticky top-0 z-20 flex w-full items-center gap-2 border-b bg-background px-2 py-1 md:px-3">
       <span>{title}</span>
       <DropdownMenu>
         <DropdownMenuTrigger
           nativeButton={false}
           render={
-            <Avatar size="sm" className="ml-auto">
+            <Avatar className="ml-auto">
               <AvatarImage src={user.image ?? undefined} alt={user.name} />
               <AvatarFallback>
                 {user.name.substring(0, 1).toLocaleUpperCase()}
