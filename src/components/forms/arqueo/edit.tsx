@@ -141,14 +141,6 @@ export function EditArqueoForm({
       >
         <FieldSet>
           <FieldGroup>
-            <FormComboBox
-              control={form.control}
-              name="id_cuenta"
-              items={cuentas}
-              label="Cuenta"
-            />
-          </FieldGroup>
-          <FieldGroup>
             <div className="space-y-2">
               <table className="w-full">
                 <tbody className="">
@@ -215,7 +207,13 @@ export function EditArqueoForm({
                     </td>
                   </tr>
                   <tr>
-                    <td className="border px-1 text-right">Diferencia</td>
+                    <td className="border px-1 text-right">
+                      {diferencia === 0
+                        ? "Bien"
+                        : diferencia > 0
+                          ? "Sobran"
+                          : "Faltan"}
+                    </td>
                     <td
                       className={cn(
                         cuadrado ? "" : "text-red-600 dark:text-red-400",
@@ -233,6 +231,12 @@ export function EditArqueoForm({
             </div>
           </FieldGroup>
           <FieldGroup>
+            <FormComboBox
+              control={form.control}
+              name="id_cuenta"
+              items={cuentas}
+              label="Cuenta"
+            />
             <DeleteFormItem
               id={arqueo.id}
               title="arqueo"

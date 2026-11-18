@@ -26,7 +26,6 @@ import { Badge } from "../ui/badge"
 import { EmptyList } from "./empty-list"
 import { Pagination } from "./pagination"
 import { LinkButton } from "../link-button"
-import { useSearchParams } from "next/navigation"
 
 interface DataTableProps {
   data: TransaccionTablaType[]
@@ -39,12 +38,16 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
   }
 
   const totalMonto = data.reduce((acc, trx) => {
-    const suma = parseFloat(trx.monto) || 0
-    return acc + suma
+    const monto = parseFloat(trx.monto) || 0
+    if (trx.tipo === "Gasto") {
+      return acc - monto
+    } else if (trx.tipo === "Ingreso") {
+      return acc + monto
+    } else if (trx.tipo === "Transferencia") {
+      return acc
+    }
+    return acc + monto
   }, 0)
-
-  const searchParams = useSearchParams()
-  const isFiltered = !!searchParams.get("tipo")
 
   return (
     <>
@@ -93,16 +96,14 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
             </Link>
           )
         })}
-        {isFiltered && (
-          <Card size="sm" className="bg-muted/50">
-            <CardHeader>
-              <CardTitle className="truncate text-sm">Total</CardTitle>
-              <CardAction className="font-semibold">
-                {formatNumber(totalMonto)}
-              </CardAction>
-            </CardHeader>
-          </Card>
-        )}
+        <Card size="sm" className="bg-muted/50">
+          <CardHeader>
+            <CardTitle className="truncate text-sm">Total</CardTitle>
+            <CardAction className="font-semibold">
+              {formatNumber(totalMonto)}
+            </CardAction>
+          </CardHeader>
+        </Card>
       </div>
 
       <div className="hidden md:block">
@@ -170,18 +171,16 @@ export function TransaccionTable({ data, totalPages }: DataTableProps) {
               )
             })}
           </TableBody>
-          {isFiltered && (
-            <TableFooter>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell>Total</TableCell>
-                <TableCell className="text-right">
-                  {formatNumber(totalMonto)}
-                </TableCell>
-                <TableCell colSpan={3}></TableCell>
-              </TableRow>
-            </TableFooter>
-          )}
+          <TableFooter>
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell>Total</TableCell>
+              <TableCell className="text-right">
+                {formatNumber(totalMonto)}
+              </TableCell>
+              <TableCell colSpan={3}></TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
       </div>
 
